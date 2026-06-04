@@ -38,6 +38,7 @@ export default function Products() {
     {
       header: "ID",
       key: "id",
+      sortable: true,
       render: (prod) => (
         <span className="text-slate-400 font-mono">#{prod.id}</span>
       ),
@@ -45,6 +46,7 @@ export default function Products() {
     {
       header: "Nome do Produto",
       key: "nome",
+      sortable: true,
       render: (prod) => (
         <span className="text-slate-900 font-semibold">{prod.nome}</span>
       ),
@@ -52,6 +54,7 @@ export default function Products() {
     {
       header: "Preço",
       key: "preco",
+      sortable: true,
       render: (prod) => (
         <span className="text-slate-700">
           R$ {prod.preco.toFixed(2).replace(".", ",")}
@@ -61,6 +64,7 @@ export default function Products() {
     {
       header: "Estoque",
       key: "estoque",
+      sortable: true,
       render: (prod) => (
         <span
           className={`font-bold ${prod.estoque === 0 ? "text-rose-500" : "text-slate-700"}`}
@@ -73,6 +77,7 @@ export default function Products() {
     {
       header: "Status",
       key: "status",
+      sortable: true,
       render: (prod) => (
         /* Badges com design moderno "Dot + Pill" */
         <span
