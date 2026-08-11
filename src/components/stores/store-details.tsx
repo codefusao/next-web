@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { DeleteStoreDialog } from "@/components/stores/delete-store-dialog";
-import { EditStoreForm } from "@/components/stores/edit-store-form";
+import { EditStoreModal } from "@/components/stores/edit-store-modal";
 import { StoreActionsMenu } from "@/components/stores/store-actions-menu";
 import { StoreInformation } from "@/components/stores/store-information";
 import { StoreLocationMap } from "@/components/stores/store-location-map";
@@ -24,7 +24,7 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 		state.stores.find((item) => item.id === storeId),
 	);
 	const removeStore = useStoresStore((state) => state.removeStore);
-	const [isEditing, setIsEditing] = useState(false);
+	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
 	function deleteStore() {
@@ -75,14 +75,10 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 							<ArrowLeft aria-hidden="true" className="size-4" />
 							Voltar para lojas
 						</Link>
-						{isEditing ? null : (
-							<div className="rounded-[var(--radius-control)] bg-card/95 p-1 shadow-sm backdrop-blur-sm">
-								<StoreActionsMenu
-									onEdit={() => setIsEditing(true)}
-									onDelete={() => setIsDeleteDialogOpen(true)}
-								/>
-							</div>
-						)}
+						<StoreActionsMenu
+							onEdit={() => setIsEditModalOpen(true)}
+							onDelete={() => setIsDeleteDialogOpen(true)}
+						/>
 					</div>
 					<div className="mt-auto w-full max-w-xl self-end">
 						<StoreLocationMap address={store.address} storeName={store.name} />
@@ -91,16 +87,14 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 			</div>
 
 			<div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
-				{isEditing ? (
-					<EditStoreForm
-						store={store}
-						onCancel={() => setIsEditing(false)}
-						onSave={() => setIsEditing(false)}
-					/>
-				) : (
-					<StoreInformation store={store} />
-				)}
+				<StoreInformation store={store} />
 			</div>
+
+			<EditStoreModal
+				isOpen={isEditModalOpen}
+				onClose={() => setIsEditModalOpen(false)}
+				store={store}
+			/>
 
 			{isDeleteDialogOpen ? (
 				<DeleteStoreDialog
