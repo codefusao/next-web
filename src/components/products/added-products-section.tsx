@@ -1,9 +1,12 @@
 "use client";
 
-import { Boxes } from "lucide-react";
+import { Boxes, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { useProductStore } from "@/store/product-store";
+
+const itemsPerPage = 10;
 
 function ProductThumbnail({
 	source,
@@ -40,6 +43,12 @@ function ProductThumbnail({
 
 export function AddedProductsSection() {
 	const products = useProductStore((state) => state.products);
+	const [currentPage, setCurrentPage] = useState(1);
+	const totalPages = Math.ceil(products.length / itemsPerPage);
+	const visibleProducts = products.slice(
+		(currentPage - 1) * itemsPerPage,
+		currentPage * itemsPerPage,
+	);
 
 	return (
 		<section className="mt-8" aria-labelledby="local-products-title">
@@ -69,46 +78,76 @@ export function AddedProductsSection() {
 					</p>
 				</div>
 			) : (
-				<div className="overflow-x-auto rounded-[var(--radius-card)] border border-border bg-card">
-					<table className="min-w-full text-left text-sm">
-						<thead className="border-b border-border bg-background text-xs uppercase tracking-wide text-muted">
-							<tr>
-								<th className="px-4 py-3 font-semibold">Imagem</th>
-								<th className="px-4 py-3 font-semibold">Código</th>
-								<th className="px-4 py-3 font-semibold">Produto</th>
-								<th className="px-4 py-3 font-semibold">Categoria</th>
-								<th className="px-4 py-3 font-semibold">Preços e condições</th>
-							</tr>
-						</thead>
-						<tbody>
-							{products.map((product) => (
-								<tr
-									key={product.id}
-									className="border-b border-border last:border-0"
-								>
-									<td className="px-4 py-3">
-										<ProductThumbnail
-											source={product.imagem_thumb ?? product.imagem}
-											productName={product.nome}
-										/>
-									</td>
-									<td className="whitespace-nowrap px-4 py-4 font-semibold">
-										{product.codigo}
-									</td>
-									<td className="min-w-56 px-4 py-4 font-medium">
-										{product.nome}
-									</td>
-									<td className="whitespace-nowrap px-4 py-4 text-muted">
-										{product.categoria.label}
-									</td>
-									<td className="min-w-72 px-4 py-4 text-muted">
-										{product.precos_e_condicoes.join(" · ")}
-									</td>
+				<>
+					<div className="overflow-x-auto rounded-[var(--radius-card)] border border-border bg-card">
+						<table className="min-w-full text-left text-sm">
+							<thead className="border-b border-border bg-background text-xs uppercase tracking-wide text-muted">
+								<tr>
+									<th className="px-4 py-3 font-semibold">Imagem</th>
+									<th className="px-4 py-3 font-semibold">Código</th>
+									<th className="px-4 py-3 font-semibold">Produto</th>
+									<th className="px-4 py-3 font-semibold">Categoria</th>
+									<th className="px-4 py-3 font-semibold">
+										Preços e condições
+									</th>
 								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
+							</thead>
+							<tbody>
+								{visibleProducts.map((product) => (
+									<tr
+										key={product.id}
+										className="border-b border-border last:border-0"
+									>
+										<td className="px-4 py-3">
+											<ProductThumbnail
+												source={product.imagem_thumb ?? product.imagem}
+												productName={product.nome}
+											/>
+										</td>
+										<td className="whitespace-nowrap px-4 py-4 font-semibold">
+											{product.codigo}
+										</td>
+										<td className="min-w-56 px-4 py-4 font-medium">
+											{product.nome}
+										</td>
+										<td className="whitespace-nowrap px-4 py-4 text-muted">
+											{product.categoria.label}
+										</td>
+										<td className="min-w-72 px-4 py-4 text-muted">
+											{product.precos_e_condicoes.join(" · ")}
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+					<nav
+						className="mt-4 flex items-center justify-end gap-3"
+						aria-label="Paginação de produtos"
+					>
+						<Button
+							variant="outline"
+							size="compact"
+							onClick={() => setCurrentPage((page) => page - 1)}
+							disabled={currentPage === 1}
+						>
+							<ChevronLeft aria-hidden="true" className="size-4" />
+							Anterior
+						</Button>
+						<span className="text-sm font-medium text-muted" aria-live="polite">
+							Página {currentPage} de {totalPages}
+						</span>
+						<Button
+							variant="outline"
+							size="compact"
+							onClick={() => setCurrentPage((page) => page + 1)}
+							disabled={currentPage === totalPages}
+						>
+							Próxima
+							<ChevronRight aria-hidden="true" className="size-4" />
+						</Button>
+					</nav>
+				</>
 			)}
 		</section>
 	);
