@@ -71,7 +71,7 @@ export function AddProductForm() {
 			imagem_thumb: fields.thumbnailUrl || null,
 		});
 		reset(defaultValues);
-		setNotice("Produto placeholder adicionado à lista local.");
+		setNotice("Produto adicionado à lista local.");
 	}
 
 	return (
