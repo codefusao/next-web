@@ -1,6 +1,6 @@
 "use client";
 
-import { Boxes, LogOut, Moon, Settings, Store, Sun } from "lucide-react";
+import { Boxes, LogOut, Moon, Store, Sun } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -12,7 +12,6 @@ import { AuthStatus, useAuthStore } from "@/store/auth-store";
 const tabs = [
 	{ href: "/products", label: "Produtos", icon: Boxes },
 	{ href: "/stores", label: "Lojas", icon: Store },
-	{ href: "/settings", label: "Configurações", icon: Settings },
 ] as const;
 
 export default function TabsLayout({
@@ -46,20 +45,17 @@ export default function TabsLayout({
 			data-theme={theme}
 			className="min-h-full flex-1 bg-background text-foreground"
 		>
-			<header className="border-b border-border bg-card">
+			<header className="bg-card">
 				<div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
 					<Image
 						src="/leroy-merlin-logo.png"
 						alt="Leroy Merlin"
-						width={40}
-						height={40}
+						width={80}
+						height={80}
 						className="rounded-lg"
 						priority
 					/>
-					<div className="min-w-0 flex-1">
-						<p className="text-sm font-bold text-primary">LEROY MERLIN</p>
-						<h1 className="truncate text-base font-semibold">Administração</h1>
-					</div>
+					<div className="min-w-0 flex-1" />
 					<p className="hidden text-sm text-muted sm:block">{user.email}</p>
 					<Button
 						variant="outline"
@@ -105,9 +101,6 @@ export default function TabsLayout({
 							>
 								<Icon aria-hidden="true" className="size-4" />
 								{label}
-								{href === "/settings" ? (
-									<span className="text-xs font-medium">Em breve</span>
-								) : null}
 							</Link>
 						);
 					})}
