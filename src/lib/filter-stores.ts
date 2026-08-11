@@ -6,7 +6,7 @@ export function filterStores(stores: readonly StoreListItem[], query: string) {
 	if (!normalizedQuery) return stores;
 
 	return stores.filter((store) =>
-		[store.name, store.address].some((value) =>
+		[store.name, store.address ?? ""].some((value) =>
 			normalizeSearchText(value).includes(normalizedQuery),
 		),
 	);

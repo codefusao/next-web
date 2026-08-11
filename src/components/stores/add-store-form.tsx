@@ -6,7 +6,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FormField, inputBorderClass } from "@/components/ui/form-field";
-import { type StoreFields, storeSchema } from "@/schemas/store";
+import {
+	type StoreFields,
+	type StoreFormInputs,
+	storeSchema,
+} from "@/schemas/store";
 import { useStoresStore } from "@/store/stores-store";
 
 const inputClass = (hasError: boolean) =>
@@ -19,9 +23,9 @@ export function AddStoreForm() {
 		handleSubmit,
 		reset,
 		formState: { errors },
-	} = useForm<StoreFields>({
+	} = useForm<StoreFormInputs, undefined, StoreFields>({
 		resolver: zodResolver(storeSchema),
-		defaultValues: { name: "", address: "" },
+		defaultValues: { parentId: "", name: "", cnpj: "", description: "" },
 		reValidateMode: "onChange",
 	});
 
@@ -52,6 +56,20 @@ export function AddStoreForm() {
 			<form onSubmit={handleSubmit(submitStore)} noValidate>
 				<div className="grid gap-5 md:grid-cols-2">
 					<FormField
+						label="ID da empresa matriz"
+						inputId="store-parent-id"
+						error={errors.parentId?.message}
+						hint="Opcional. Informe o UUID da empresa matriz."
+					>
+						<input
+							{...register("parentId")}
+							id="store-parent-id"
+							placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+							className={inputClass(Boolean(errors.parentId))}
+							aria-invalid={Boolean(errors.parentId)}
+						/>
+					</FormField>
+					<FormField
 						label="Nome da loja"
 						inputId="store-name"
 						error={errors.name?.message}
@@ -65,16 +83,33 @@ export function AddStoreForm() {
 						/>
 					</FormField>
 					<FormField
-						label="Endereço"
-						inputId="store-address"
-						error={errors.address?.message}
+						label="CNPJ"
+						inputId="store-cnpj"
+						error={errors.cnpj?.message}
 					>
 						<input
-							{...register("address")}
-							id="store-address"
-							placeholder="Ex.: Rua Exemplo, 100 - Centro"
-							className={inputClass(Boolean(errors.address))}
-							aria-invalid={Boolean(errors.address)}
+							{...register("cnpj")}
+							id="store-cnpj"
+							inputMode="numeric"
+							placeholder="00.000.000/0000-00"
+							className={inputClass(Boolean(errors.cnpj))}
+							aria-invalid={Boolean(errors.cnpj)}
+						/>
+					</FormField>
+				</div>
+				<div className="mt-5">
+					<FormField
+						label="Descrição"
+						inputId="store-description"
+						error={errors.description?.message}
+						hint="Opcional. Máximo de 500 caracteres."
+					>
+						<textarea
+							{...register("description")}
+							id="store-description"
+							placeholder="Descreva a unidade."
+							className={`min-h-28 w-full resize-y rounded-[var(--radius-control)] border-[1.5px] bg-background px-3.5 py-3 text-[15px] text-foreground outline-none transition-colors placeholder:text-placeholder focus:border-primary ${inputBorderClass(Boolean(errors.description))}`}
+							aria-invalid={Boolean(errors.description)}
 						/>
 					</FormField>
 				</div>

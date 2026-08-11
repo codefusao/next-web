@@ -54,10 +54,15 @@ export function StoresList() {
 							</span>
 							<div className="min-w-0 flex-1">
 								<h3 className="font-semibold text-foreground">{store.name}</h3>
-								<address className="mt-1 flex items-start gap-1.5 text-sm not-italic leading-6 text-muted">
-									<MapPin aria-hidden="true" className="mt-1 size-4 shrink-0" />
-									<span>{store.address}</span>
-								</address>
+								{store.address ? (
+									<address className="mt-1 flex items-start gap-1.5 text-sm not-italic leading-6 text-muted">
+										<MapPin
+											aria-hidden="true"
+											className="mt-1 size-4 shrink-0"
+										/>
+										<span>{store.address}</span>
+									</address>
+								) : null}
 							</div>
 							<Button
 								variant="ghost"
