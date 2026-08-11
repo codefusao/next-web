@@ -3,7 +3,10 @@
 import { Boxes, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { AddProductModal } from "@/components/products/add-product-modal";
 import { Button } from "@/components/ui/button";
+import { SearchInput } from "@/components/ui/search-input";
+import { filterProducts } from "@/lib/filter-products";
 import { useProductStore } from "@/store/product-store";
 
 const itemsPerPage = 10;
@@ -44,37 +47,44 @@ function ProductThumbnail({
 export function AddedProductsSection() {
 	const products = useProductStore((state) => state.products);
 	const [currentPage, setCurrentPage] = useState(1);
-	const totalPages = Math.ceil(products.length / itemsPerPage);
-	const visibleProducts = products.slice(
-		(currentPage - 1) * itemsPerPage,
-		currentPage * itemsPerPage,
+	const [query, setQuery] = useState("");
+	const filteredProducts = filterProducts(products, query);
+	const totalPages = Math.max(
+		1,
+		Math.ceil(filteredProducts.length / itemsPerPage),
+	);
+	const activePage = Math.min(currentPage, totalPages);
+	const visibleProducts = filteredProducts.slice(
+		(activePage - 1) * itemsPerPage,
+		activePage * itemsPerPage,
 	);
 
+	function handleSearch(query: string) {
+		setQuery(query);
+		setCurrentPage(1);
+	}
+
 	return (
-		<section className="mt-8" aria-labelledby="local-products-title">
-			<div className="mb-4 flex items-end justify-between gap-4">
-				<div>
-					<h2 id="local-products-title" className="text-xl font-bold">
-						Produtos adicionados
-					</h2>
-					<p className="mt-1 text-sm text-muted">
-						Lista local desta sessão. Ela será substituída pela integração com o
-						servidor.
-					</p>
-				</div>
-				<span className="rounded-full bg-card px-3 py-1 text-sm font-bold text-muted">
-					{products.length}
-				</span>
+		<section aria-label="Lista de produtos">
+			<div className="mb-4 flex items-start gap-3">
+				<SearchInput
+					query={query}
+					onQueryChange={handleSearch}
+					placeholder="Buscar por produto, código ou categoria"
+					label="Buscar produtos"
+					className="mb-0 flex-1"
+				/>
+				<AddProductModal />
 			</div>
-			{products.length === 0 ? (
+			{filteredProducts.length === 0 ? (
 				<div className="rounded-[var(--radius-card)] border border-dashed border-border bg-card px-6 py-12 text-center">
 					<Boxes
 						aria-hidden="true"
 						className="mx-auto mb-3 size-9 text-muted"
 					/>
-					<p className="font-semibold">Nenhum produto adicionado</p>
+					<p className="font-semibold">Nenhum produto encontrado</p>
 					<p className="mt-1 text-sm text-muted">
-						Os produtos criados aparecerão aqui.
+						Tente buscar por outro produto, código ou categoria.
 					</p>
 				</div>
 			) : (
@@ -129,19 +139,19 @@ export function AddedProductsSection() {
 							variant="outline"
 							size="compact"
 							onClick={() => setCurrentPage((page) => page - 1)}
-							disabled={currentPage === 1}
+							disabled={activePage === 1}
 						>
 							<ChevronLeft aria-hidden="true" className="size-4" />
 							Anterior
 						</Button>
 						<span className="text-sm font-medium text-muted" aria-live="polite">
-							Página {currentPage} de {totalPages}
+							Página {activePage} de {totalPages}
 						</span>
 						<Button
 							variant="outline"
 							size="compact"
 							onClick={() => setCurrentPage((page) => page + 1)}
-							disabled={currentPage === totalPages}
+							disabled={activePage === totalPages}
 						>
 							Próxima
 							<ChevronRight aria-hidden="true" className="size-4" />

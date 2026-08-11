@@ -41,7 +41,11 @@ function productPriceConditions(fields: ProductPlaceholderFields) {
 	return lines;
 }
 
-export function AddProductForm() {
+type AddProductFormProps = {
+	onSuccess: () => void;
+};
+
+export function AddProductForm({ onSuccess }: AddProductFormProps) {
 	const addProduct = useProductStore((state) => state.addProduct);
 	const {
 		register,
@@ -71,36 +75,18 @@ export function AddProductForm() {
 		});
 		reset(defaultValues);
 		toast.success("Produto adicionado à lista local.");
+		onSuccess();
 	}
 
 	return (
-		<section aria-labelledby="add-product-title">
-			<div className="mb-8 flex flex-col gap-1">
-				<p className="text-sm font-semibold text-primary">Catálogo</p>
-				<h2
-					id="add-product-title"
-					className="text-3xl font-bold tracking-tight"
-				>
+		<form onSubmit={handleSubmit(submitProduct)} noValidate className="mt-6">
+			<ProductFormFields register={register} errors={errors} />
+			<div className="mt-7 flex justify-end border-t border-border pt-6">
+				<Button type="submit">
+					<PackagePlus aria-hidden="true" className="size-5" />
 					Adicionar produto
-				</h2>
-				<p className="max-w-3xl text-sm leading-6 text-muted">
-					Crie um produto de catálogo.
-				</p>
+				</Button>
 			</div>
-
-			<form
-				onSubmit={handleSubmit(submitProduct)}
-				noValidate
-				className="rounded-[var(--radius-card)] border border-border bg-card p-5 shadow-sm sm:p-7"
-			>
-				<ProductFormFields register={register} errors={errors} />
-				<div className="mt-7 flex justify-end border-t border-border pt-6">
-					<Button type="submit">
-						<PackagePlus aria-hidden="true" className="size-5" />
-						Adicionar produto
-					</Button>
-				</div>
-			</form>
-		</section>
+		</form>
 	);
 }
