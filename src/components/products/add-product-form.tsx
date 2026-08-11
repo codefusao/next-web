@@ -2,8 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PackagePlus } from "lucide-react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { ProductFormFields } from "@/components/products/product-form-fields";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,7 +43,6 @@ function productPriceConditions(fields: ProductPlaceholderFields) {
 
 export function AddProductForm() {
 	const addProduct = useProductStore((state) => state.addProduct);
-	const [notice, setNotice] = useState<string | null>(null);
 	const {
 		register,
 		handleSubmit,
@@ -71,7 +70,7 @@ export function AddProductForm() {
 			imagem_thumb: fields.thumbnailUrl || null,
 		});
 		reset(defaultValues);
-		setNotice("Produto adicionado à lista local.");
+		toast.success("Produto adicionado à lista local.");
 	}
 
 	return (
@@ -95,10 +94,7 @@ export function AddProductForm() {
 				className="rounded-[var(--radius-card)] border border-border bg-card p-5 shadow-sm sm:p-7"
 			>
 				<ProductFormFields register={register} errors={errors} />
-				<div className="mt-7 flex flex-col-reverse gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
-					<p aria-live="polite" className="text-sm font-medium text-primary">
-						{notice}
-					</p>
+				<div className="mt-7 flex justify-end border-t border-border pt-6">
 					<Button type="submit">
 						<PackagePlus aria-hidden="true" className="size-5" />
 						Adicionar produto
