@@ -2,7 +2,7 @@
 @import "../styles/styleguide.css";
 
 body {
-  background: var(--ui-background);
-  color: var(--ui-foreground);
-  font-family: var(--ui-font-sans);
+	background: var(--ui-background);
+	color: var(--ui-foreground);
+	font-family: var(--ui-font-sans);
 }
