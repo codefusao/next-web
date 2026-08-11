@@ -61,6 +61,13 @@
 }
 
 [data-theme="light"] {
+  --ui-background: var(--brand-white);
+  --ui-foreground: var(--brand-black);
+  --ui-card: #f7f7f7;
+  --ui-border: #e8e8e8;
+  --ui-placeholder: #c0c4c8;
+  --ui-muted: #6b7280;
+  --ui-destructive: var(--brand-destructive);
   color-scheme: light;
 }
 
