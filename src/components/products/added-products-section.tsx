@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AddProductModal } from "@/components/products/add-product-modal";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
+import { usePagination } from "@/hooks/use-pagination";
 import { filterProducts } from "@/lib/filter-products";
 import { useProductStore } from "@/store/product-store";
 
@@ -46,22 +47,20 @@ function ProductThumbnail({
 
 export function AddedProductsSection() {
 	const products = useProductStore((state) => state.products);
-	const [currentPage, setCurrentPage] = useState(1);
 	const [query, setQuery] = useState("");
 	const filteredProducts = filterProducts(products, query);
-	const totalPages = Math.max(
-		1,
-		Math.ceil(filteredProducts.length / itemsPerPage),
-	);
-	const activePage = Math.min(currentPage, totalPages);
-	const visibleProducts = filteredProducts.slice(
-		(activePage - 1) * itemsPerPage,
-		activePage * itemsPerPage,
-	);
+	const {
+		activePage,
+		goToNextPage,
+		goToPreviousPage,
+		resetPage,
+		totalPages,
+		visibleItems: visibleProducts,
+	} = usePagination(filteredProducts, itemsPerPage);
 
 	function handleSearch(query: string) {
 		setQuery(query);
-		setCurrentPage(1);
+		resetPage();
 	}
 
 	return (
@@ -138,7 +137,7 @@ export function AddedProductsSection() {
 						<Button
 							variant="outline"
 							size="compact"
-							onClick={() => setCurrentPage((page) => page - 1)}
+							onClick={goToPreviousPage}
 							disabled={activePage === 1}
 						>
 							<ChevronLeft aria-hidden="true" className="size-4" />
@@ -150,7 +149,7 @@ export function AddedProductsSection() {
 						<Button
 							variant="outline"
 							size="compact"
-							onClick={() => setCurrentPage((page) => page + 1)}
+							onClick={goToNextPage}
 							disabled={activePage === totalPages}
 						>
 							Próxima

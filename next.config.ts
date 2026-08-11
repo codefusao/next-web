@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
 				hostname: "cdn.leroymerlin.com.br",
 				pathname: "/products/**",
 			},
+			{
+				protocol: "https",
+				hostname: "cdn.leroymerlin.com.br",
+				pathname: "/contents/**",
+			},
 		],
 	},
 };
