@@ -12,4 +12,6 @@ Avoid useEffect, prefers declarative logics.
 
 Common functions to parse, order, communicate externaly, should be in `lib` folder.
 
+Any design change should follow the `src/styleguide.css`
+
 Check `docs` folder for more informations.

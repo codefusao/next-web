@@ -1,11 +1,11 @@
 "use client";
 
-import { Boxes, LogOut, Moon, Store, Sun } from "lucide-react";
+import { Boxes, Store } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { UserActionsMenu } from "@/components/admin/user-actions-menu";
 import { useTheme } from "@/hooks/use-theme";
 import { AuthStatus, useAuthStore } from "@/store/auth-store";
 
@@ -19,7 +19,7 @@ export default function TabsLayout({
 }: Readonly<{ children: React.ReactNode }>) {
 	const pathname = usePathname();
 	const router = useRouter();
-	const { mode: theme, toggle: toggleTheme } = useTheme();
+	const { mode: theme } = useTheme();
 	const user = useAuthStore((state) => state.user);
 	const authStatus = useAuthStore((state) => state.authStatus);
 	const logout = useAuthStore((state) => state.logout);
@@ -56,32 +56,13 @@ export default function TabsLayout({
 						priority
 					/>
 					<div className="min-w-0 flex-1" />
-					<p className="hidden text-sm text-muted sm:block">{user.email}</p>
-					<Button
-						variant="outline"
-						size="icon"
-						onClick={toggleTheme}
-						className="text-muted hover:text-foreground"
-						aria-label={`Ativar tema ${theme === "light" ? "escuro" : "claro"}`}
-					>
-						{theme === "dark" ? (
-							<Sun aria-hidden="true" className="size-5" />
-						) : (
-							<Moon aria-hidden="true" className="size-5" />
-						)}
-					</Button>
-					<Button
-						variant="outline"
-						size="compact"
-						onClick={() => {
+					<UserActionsMenu
+						email={user.email}
+						onLogout={() => {
 							logout();
 							router.replace("/login");
 						}}
-					>
-						<LogOut aria-hidden="true" className="size-4" />
-						<span className="hidden sm:inline">Sair</span>
-						<span className="sr-only sm:hidden">Sair</span>
-					</Button>
+					/>
 				</div>
 			</header>
 
