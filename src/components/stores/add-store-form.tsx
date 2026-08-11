@@ -29,7 +29,13 @@ export function AddStoreForm({ onSuccess }: AddStoreFormProps) {
 		formState: { errors },
 	} = useForm<StoreFormInputs, undefined, StoreFields>({
 		resolver: zodResolver(storeSchema),
-		defaultValues: { parentId: "", name: "", cnpj: "", description: "" },
+		defaultValues: {
+			parentId: "",
+			name: "",
+			address: "",
+			cnpj: "",
+			description: "",
+		},
 		reValidateMode: "onChange",
 	});
 
@@ -68,6 +74,19 @@ export function AddStoreForm({ onSuccess }: AddStoreFormProps) {
 						placeholder="Ex.: Leroy Merlin Centro"
 						className={inputClass(Boolean(errors.name))}
 						aria-invalid={Boolean(errors.name)}
+					/>
+				</FormField>
+				<FormField
+					label="Endereço"
+					inputId="store-address"
+					error={errors.address?.message}
+				>
+					<input
+						{...register("address")}
+						id="store-address"
+						placeholder="Ex.: Av. Exemplo, 1000 - Centro"
+						className={inputClass(Boolean(errors.address))}
+						aria-invalid={Boolean(errors.address)}
 					/>
 				</FormField>
 				<FormField

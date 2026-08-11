@@ -1,10 +1,8 @@
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { defaultStoreImage } from "@/constants/store";
 import type { StoreListItem } from "@/types/store";
-
-const defaultStoreImage =
-	"https://cdn.leroymerlin.com.br/contents/rio_barra_c340_880x480.jpg";
 
 type StoreCardProps = {
 	store: StoreListItem;

@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const addressSchema = z.string().trim().min(5, "Informe o endereço da loja");
+
 export const storeSchema = z.object({
 	parentId: z
 		.string()
@@ -10,6 +12,7 @@ export const storeSchema = z.object({
 		)
 		.transform((value) => value || undefined),
 	name: z.string().trim().min(3, "Informe o nome da loja"),
+	address: addressSchema,
 	cnpj: z
 		.string()
 		.trim()
@@ -35,6 +38,7 @@ export const updateStoreSchema = z.object({
 		)
 		.transform((value) => value || null),
 	name: z.string().trim().min(3, "Informe o nome da loja"),
+	address: addressSchema,
 	cnpj: z
 		.string()
 		.trim()

@@ -34,6 +34,7 @@ export function EditStoreForm({ store, onCancel, onSave }: EditStoreFormProps) {
 		defaultValues: {
 			parentId: store.parentId ?? "",
 			name: store.name,
+			address: store.address ?? "",
 			cnpj: store.cnpj ?? "",
 			description: store.description ?? "",
 		},
@@ -73,6 +74,18 @@ export function EditStoreForm({ store, onCancel, onSave }: EditStoreFormProps) {
 						id="edit-store-name"
 						className={inputClass(Boolean(errors.name))}
 						aria-invalid={Boolean(errors.name)}
+					/>
+				</FormField>
+				<FormField
+					label="Endereço"
+					inputId="edit-store-address"
+					error={errors.address?.message}
+				>
+					<input
+						{...register("address")}
+						id="edit-store-address"
+						className={inputClass(Boolean(errors.address))}
+						aria-invalid={Boolean(errors.address)}
 					/>
 				</FormField>
 				<FormField
