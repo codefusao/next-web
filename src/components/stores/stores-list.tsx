@@ -1,16 +1,14 @@
 "use client";
 
-import { MapPin, Store, Trash2 } from "lucide-react";
+import { ChevronRight, MapPin, Store } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
-import { toast } from "sonner";
 import { StoresSearch } from "@/components/stores/stores-search";
-import { Button } from "@/components/ui/button";
 import { filterStores } from "@/lib/filter-stores";
 import { useStoresStore } from "@/store/stores-store";
 
 export function StoresList() {
 	const stores = useStoresStore((state) => state.stores);
-	const removeStore = useStoresStore((state) => state.removeStore);
 	const [query, setQuery] = useState("");
 	const filteredStores = filterStores(stores, query);
 
@@ -64,17 +62,13 @@ export function StoresList() {
 									</address>
 								) : null}
 							</div>
-							<Button
-								variant="ghost"
-								size="icon-sm"
-								onClick={() => {
-									removeStore(store.id);
-									toast.success("Loja removida da lista local.");
-								}}
-								aria-label={`Excluir ${store.name}`}
+							<Link
+								href={`/stores/${store.id}`}
+								className="inline-flex h-10 shrink-0 items-center gap-1 rounded-[var(--radius-control)] border border-primary px-3 text-sm font-bold text-primary transition-colors hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
 							>
-								<Trash2 aria-hidden="true" className="size-4" />
-							</Button>
+								Ver loja
+								<ChevronRight aria-hidden="true" className="size-4" />
+							</Link>
 						</li>
 					))}
 				</ul>

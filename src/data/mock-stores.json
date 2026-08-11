@@ -1,131 +1,131 @@
 [
 	{
-		"id": "Campo Grande",
+		"id": "12754732-d3e8-4a2d-9917-5b07938e1f80",
 		"name": "Campo Grande",
 		"address": "Av. Cônsul Assaf Trad, 6170 - Parque dos Novos Estados"
 	},
 	{
-		"id": "Brasília - Sul",
+		"id": "c288bdce-307a-48df-9b13-0c4bd2cbab39",
 		"name": "Brasília Sul",
 		"address": "SMAS, Trecho 3, Lote 5, Guará I"
 	},
 	{
-		"id": "Brasília - Norte",
+		"id": "630f946b-a46e-4b66-8dca-05855c4ae289",
 		"name": "Brasília Norte",
 		"address": "SOF Norte, 01 - Área Especial"
 	},
 	{
-		"id": "Jardim Botânico",
+		"id": "294b29a7-0a47-4c12-9571-f1560e818b1e",
 		"name": "Jardim Botânico",
 		"address": "CJ SMDB Area Especial D Bloco 3 - Setor de Mansões Dom - Bosco (Lago Sul), Brasília - DF"
 	},
 	{
-		"id": "Maceió",
+		"id": "dbb047c0-244a-4447-8e42-445ff594af05",
 		"name": "Maceió",
 		"address": "Av. Comendador Gustavo Paiva, 5886 - Cruz das Almas, Maceió - AL"
 	},
 	{
-		"id": "Fortaleza",
+		"id": "2102cb80-80aa-461e-844d-11a7dbe8b918",
 		"name": "Fortaleza",
 		"address": "Av. Sebastião de Abreu, Bairro Edson Queiroz"
 	},
 	{
-		"id": "Natal",
+		"id": "6be717c0-ed16-4496-840a-6d5960a7c247",
 		"name": "Natal",
 		"address": "R. Maria Dolores Costa, 30 - Nova Parnamirim, Parnamirim - RN"
 	},
 	{
-		"id": "Contagem",
+		"id": "04470fb3-8617-4f7e-bde1-404043778954",
 		"name": "Contagem",
 		"address": "Avenida Babita Camargos, 1920"
 	},
 	{
-		"id": "BH Sul (Belvedere)",
+		"id": "3481b48f-83dc-43a4-973b-02ac9f4f7936",
 		"name": "BH Sul / Belvedere",
 		"address": "Rodovia BR 356, 7515"
 	},
 	{
-		"id": "Uberlândia",
+		"id": "4d1f1334-579e-4270-ace0-f92ea2a3310b",
 		"name": "Uberlândia",
 		"address": "Av. Paulo Gracindo, 15 - Loja LSU06"
 	},
 	{
-		"id": "Del Castilho (Rio Norte)",
+		"id": "e6c642e2-e26a-4410-ab26-16d835874393",
 		"name": "Del Castilho (Rio Norte)",
 		"address": "Rua das Projetadas, 550 - Del Castilho, Rio de Janeiro - RJ"
 	},
 	{
-		"id": "Rio Barra",
+		"id": "cb5452ea-da01-4730-b085-6565e87a295d",
 		"name": "Rio Barra",
 		"address": "Av. Ayrton Senna, 2000 - Barra da Tijuca, Rio de Janeiro - RJ"
 	},
 	{
-		"id": "Niterói",
+		"id": "6f668115-3cac-4a7a-9626-e3af8db51e32",
 		"name": "Niterói",
 		"address": "R. Carlos Gomes, 65 - Largo do Barradas, Niterói - RJ"
 	},
 	{
-		"id": "Marginal Tietê",
+		"id": "d9facde4-b1b8-4fa0-bfb8-f2e2d376a22d",
 		"name": "Marginal Tietê",
 		"address": "Avenida Presidente Castelo Branco, 6061"
 	},
 	{
-		"id": "Interlagos",
+		"id": "3bae695d-460e-419c-8c36-c48625a7bd19",
 		"name": "Interlagos",
 		"address": "Avenida Interlagos, 2255"
 	},
 	{
-		"id": "São Caetano do Sul",
+		"id": "0b0c067c-edb9-472c-b1cb-bfaa481c93aa",
 		"name": "São Caetano do Sul",
 		"address": "Avenida do Estado, 1750"
 	},
 	{
-		"id": "Sorocaba",
+		"id": "45ddb98e-656e-4df4-8efd-58e0555a1edc",
 		"name": "Sorocaba",
 		"address": "Rodovia Raposo Tavares, Km 101"
 	},
 	{
-		"id": "Ribeirão Preto",
+		"id": "f9db7a10-f793-4096-ba3e-89b9860129b8",
 		"name": "Ribeirão Preto",
 		"address": "Avenida Castelo Branco, 3000"
 	},
 	{
-		"id": "Londrina",
+		"id": "de3bdb2d-8cf4-4821-a4f2-88dba38a59a9",
 		"name": "Londrina",
 		"address": "Avenida Theodoro Victorelli, 650L - Jardim Helena"
 	},
 	{
-		"id": "Curitiba Sul",
+		"id": "ed83137f-bea6-47e7-8f8a-8984d6ff3eaa",
 		"name": "Curitiba Sul",
 		"address": "Avenida Presidente Wenceslau Braz, 88"
 	},
 	{
-		"id": "Curitiba Atuba",
+		"id": "b760f55b-fee1-4f39-8824-ae0a37598335",
 		"name": "Curitiba Atuba",
 		"address": "Rodovia BR-116, 600, Lote 9C1"
 	},
 	{
-		"id": "Porto Alegre",
+		"id": "c8bedc2e-4e1d-4697-866a-7f991c3fa978",
 		"name": "Porto Alegre",
 		"address": "Avenida Sertório, 6767"
 	},
 	{
-		"id": "Pontal Estaleiro",
+		"id": "368e82cb-1428-46a1-84a4-d331e5f47994",
 		"name": "Pontal Estaleiro",
 		"address": "Avenida Padre Cacique, 2893 - 3º andar do Complexo Pontal"
 	},
 	{
-		"id": "São José - Santa Catarina",
+		"id": "79917a59-2150-42f1-aba1-b71705b76269",
 		"name": "São José",
 		"address": "Rodovia BR-101 KM 210"
 	},
 	{
-		"id": "Express - Florianópolis",
+		"id": "e38a93ab-80f3-4b65-bd54-a9a3e3d4231f",
 		"name": "Express - Florianópolis",
 		"address": "Rodovia SC-401, KM 5 - Saco Grande, Florianópolis - SC"
 	},
 	{
-		"id": "Joinville",
+		"id": "9136e866-9a22-4db8-aff2-f6f41ab12309",
 		"name": "Joinville",
 		"address": "Av. Santos Dumont, 1893 - Bom Retiro, Joinville - SC"
 	}
