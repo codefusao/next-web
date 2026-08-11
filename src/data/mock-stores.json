@@ -1,0 +1,132 @@
+[
+	{
+		"id": "Campo Grande",
+		"name": "Campo Grande",
+		"address": "Av. Cônsul Assaf Trad, 6170 - Parque dos Novos Estados"
+	},
+	{
+		"id": "Brasília - Sul",
+		"name": "Brasília Sul",
+		"address": "SMAS, Trecho 3, Lote 5, Guará I"
+	},
+	{
+		"id": "Brasília - Norte",
+		"name": "Brasília Norte",
+		"address": "SOF Norte, 01 - Área Especial"
+	},
+	{
+		"id": "Jardim Botânico",
+		"name": "Jardim Botânico",
+		"address": "CJ SMDB Area Especial D Bloco 3 - Setor de Mansões Dom - Bosco (Lago Sul), Brasília - DF"
+	},
+	{
+		"id": "Maceió",
+		"name": "Maceió",
+		"address": "Av. Comendador Gustavo Paiva, 5886 - Cruz das Almas, Maceió - AL"
+	},
+	{
+		"id": "Fortaleza",
+		"name": "Fortaleza",
+		"address": "Av. Sebastião de Abreu, Bairro Edson Queiroz"
+	},
+	{
+		"id": "Natal",
+		"name": "Natal",
+		"address": "R. Maria Dolores Costa, 30 - Nova Parnamirim, Parnamirim - RN"
+	},
+	{
+		"id": "Contagem",
+		"name": "Contagem",
+		"address": "Avenida Babita Camargos, 1920"
+	},
+	{
+		"id": "BH Sul (Belvedere)",
+		"name": "BH Sul / Belvedere",
+		"address": "Rodovia BR 356, 7515"
+	},
+	{
+		"id": "Uberlândia",
+		"name": "Uberlândia",
+		"address": "Av. Paulo Gracindo, 15 - Loja LSU06"
+	},
+	{
+		"id": "Del Castilho (Rio Norte)",
+		"name": "Del Castilho (Rio Norte)",
+		"address": "Rua das Projetadas, 550 - Del Castilho, Rio de Janeiro - RJ"
+	},
+	{
+		"id": "Rio Barra",
+		"name": "Rio Barra",
+		"address": "Av. Ayrton Senna, 2000 - Barra da Tijuca, Rio de Janeiro - RJ"
+	},
+	{
+		"id": "Niterói",
+		"name": "Niterói",
+		"address": "R. Carlos Gomes, 65 - Largo do Barradas, Niterói - RJ"
+	},
+	{
+		"id": "Marginal Tietê",
+		"name": "Marginal Tietê",
+		"address": "Avenida Presidente Castelo Branco, 6061"
+	},
+	{
+		"id": "Interlagos",
+		"name": "Interlagos",
+		"address": "Avenida Interlagos, 2255"
+	},
+	{
+		"id": "São Caetano do Sul",
+		"name": "São Caetano do Sul",
+		"address": "Avenida do Estado, 1750"
+	},
+	{
+		"id": "Sorocaba",
+		"name": "Sorocaba",
+		"address": "Rodovia Raposo Tavares, Km 101"
+	},
+	{
+		"id": "Ribeirão Preto",
+		"name": "Ribeirão Preto",
+		"address": "Avenida Castelo Branco, 3000"
+	},
+	{
+		"id": "Londrina",
+		"name": "Londrina",
+		"address": "Avenida Theodoro Victorelli, 650L - Jardim Helena"
+	},
+	{
+		"id": "Curitiba Sul",
+		"name": "Curitiba Sul",
+		"address": "Avenida Presidente Wenceslau Braz, 88"
+	},
+	{
+		"id": "Curitiba Atuba",
+		"name": "Curitiba Atuba",
+		"address": "Rodovia BR-116, 600, Lote 9C1"
+	},
+	{
+		"id": "Porto Alegre",
+		"name": "Porto Alegre",
+		"address": "Avenida Sertório, 6767"
+	},
+	{
+		"id": "Pontal Estaleiro",
+		"name": "Pontal Estaleiro",
+		"address": "Avenida Padre Cacique, 2893 - 3º andar do Complexo Pontal"
+	},
+	{
+		"id": "São José - Santa Catarina",
+		"name": "São José",
+		"address": "Rodovia BR-101 KM 210"
+	},
+	{
+		"id": "Express - Florianópolis",
+		"name": "Express - Florianópolis",
+		"address": "Rodovia SC-401, KM 5 - Saco Grande, Florianópolis - SC"
+	},
+	{
+		"id": "Joinville",
+		"name": "Joinville",
+		"address": "Av. Santos Dumont, 1893 - Bom Retiro, Joinville - SC"
+	}
+]
