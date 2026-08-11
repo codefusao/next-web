@@ -1,5 +1,5 @@
+import { AddStoreForm } from "@/components/stores/add-store-form";
 import { StoresList } from "@/components/stores/stores-list";
-import mockStores from "@/data/mock-stores.json";
 
 export default function StoresPage() {
 	return (
@@ -12,7 +12,8 @@ export default function StoresPage() {
 					consultar informações operacionais.
 				</p>
 			</div>
-			<StoresList stores={mockStores} />
+			<AddStoreForm />
+			<StoresList />
 		</section>
 	);
 }

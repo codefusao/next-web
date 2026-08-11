@@ -1,16 +1,16 @@
 "use client";
 
-import { MapPin, Store } from "lucide-react";
+import { MapPin, Store, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { StoresSearch } from "@/components/stores/stores-search";
+import { Button } from "@/components/ui/button";
 import { filterStores } from "@/lib/filter-stores";
-import type { StoreListItem } from "@/types/store";
+import { useStoresStore } from "@/store/stores-store";
 
-type StoresListProps = {
-	stores: readonly StoreListItem[];
-};
-
-export function StoresList({ stores }: StoresListProps) {
+export function StoresList() {
+	const stores = useStoresStore((state) => state.stores);
+	const removeStore = useStoresStore((state) => state.removeStore);
 	const [query, setQuery] = useState("");
 	const filteredStores = filterStores(stores, query);
 
@@ -52,13 +52,24 @@ export function StoresList({ stores }: StoresListProps) {
 							<span className="rounded-lg bg-primary/10 p-2 text-primary">
 								<Store aria-hidden="true" className="size-5" />
 							</span>
-							<div className="min-w-0">
+							<div className="min-w-0 flex-1">
 								<h3 className="font-semibold text-foreground">{store.name}</h3>
 								<address className="mt-1 flex items-start gap-1.5 text-sm not-italic leading-6 text-muted">
 									<MapPin aria-hidden="true" className="mt-1 size-4 shrink-0" />
 									<span>{store.address}</span>
 								</address>
 							</div>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={() => {
+									removeStore(store.id);
+									toast.success("Loja removida da lista local.");
+								}}
+								aria-label={`Excluir ${store.name}`}
+							>
+								<Trash2 aria-hidden="true" className="size-4" />
+							</Button>
 						</li>
 					))}
 				</ul>
