@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-type ButtonVariant = "primary" | "outline" | "ghost";
+type ButtonVariant = "primary" | "outline" | "ghost" | "destructive";
 type ButtonSize = "default" | "compact" | "icon" | "icon-sm";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -16,6 +16,8 @@ const variantClasses: Record<ButtonVariant, string> = {
 		"border border-border text-foreground hover:bg-background focus-visible:outline-primary",
 	ghost:
 		"text-muted hover:bg-card hover:text-foreground focus-visible:outline-primary",
+	destructive:
+		"bg-destructive text-destructive-foreground hover:opacity-90 focus-visible:outline-destructive",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {

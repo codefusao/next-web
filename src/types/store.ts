@@ -1,8 +1,8 @@
 export type StoreListItem = {
 	id: string;
-	parentId?: string;
+	parentId?: string | null;
 	name: string;
 	cnpj?: string;
-	description?: string;
+	description?: string | null;
 	address?: string;
 };

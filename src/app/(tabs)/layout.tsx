@@ -105,7 +105,7 @@ export default function TabsLayout({
 							>
 								<Icon aria-hidden="true" className="size-4" />
 								{label}
-								{href !== "/products" ? (
+								{href === "/settings" ? (
 									<span className="text-xs font-medium">Em breve</span>
 								) : null}
 							</Link>
