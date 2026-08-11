@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import { DeleteStoreDialog } from "@/components/stores/delete-store-dialog";
 import { EditStoreModal } from "@/components/stores/edit-store-modal";
 import { StoreActionsMenu } from "@/components/stores/store-actions-menu";
-import { StoreInformation } from "@/components/stores/store-information";
 import { StoreLocationMap } from "@/components/stores/store-location-map";
 import { defaultStoreImage } from "@/constants/store";
 import { useStoresStore } from "@/store/stores-store";
@@ -55,39 +54,65 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 
 	return (
 		<section>
-			<h1 className="sr-only">Detalhes da loja {store.name}</h1>
-			<div className="relative min-h-[38rem] overflow-hidden bg-foreground">
-				<Image
-					src={defaultStoreImage}
-					alt="Imagem padrão de loja Leroy Merlin"
-					fill
-					priority
-					sizes="100vw"
-					className="object-cover"
-				/>
-				<div className="absolute inset-0 bg-black/45" />
-				<div className="relative mx-auto flex min-h-[38rem] max-w-7xl flex-col px-4 py-6 sm:px-6 sm:py-8">
-					<div className="flex items-start justify-between gap-4">
-						<Link
-							href="/stores"
-							className="inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-card/95 px-3 py-2 text-sm font-bold text-primary shadow-sm backdrop-blur-sm hover:bg-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-						>
-							<ArrowLeft aria-hidden="true" className="size-4" />
-							Voltar para lojas
-						</Link>
+			<div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
+				<Link
+					href="/stores"
+					className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+				>
+					<ArrowLeft aria-hidden="true" className="size-4" />
+					Voltar para lojas
+				</Link>
+				<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+					<div>
+						<div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+							<h1 className="text-3xl font-bold tracking-tight text-foreground">
+								{store.name}
+							</h1>
+							{store.cnpj ? (
+								<span className="text-sm font-semibold text-muted">
+									— CNPJ {store.cnpj}
+								</span>
+							) : null}
+						</div>
+						{store.address ? (
+							<address className="mt-2 flex items-center gap-1.5 text-sm not-italic text-muted">
+								<MapPin
+									aria-hidden="true"
+									className="size-4 shrink-0 text-primary"
+								/>
+								{store.address}
+							</address>
+						) : null}
+					</div>
+					<div className="sm:ml-auto">
 						<StoreActionsMenu
 							onEdit={() => setIsEditModalOpen(true)}
 							onDelete={() => setIsDeleteDialogOpen(true)}
 						/>
 					</div>
-					<div className="mt-auto w-full max-w-xl self-end">
-						<StoreLocationMap address={store.address} storeName={store.name} />
-					</div>
 				</div>
 			</div>
 
-			<div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
-				<StoreInformation store={store} />
+			<div className="mx-auto max-w-7xl px-4 sm:px-6">
+				<div className="relative h-[32rem] overflow-hidden rounded-[var(--radius-card)] bg-foreground">
+					<Image
+						src={defaultStoreImage}
+						alt="Imagem padrão de loja Leroy Merlin"
+						fill
+						priority
+						sizes="(min-width: 1280px) 1280px, 100vw"
+						className="object-cover"
+					/>
+					<div className="absolute inset-0 bg-black/45" />
+					<div className="relative flex h-full flex-col p-4 sm:p-6">
+						<div className="mt-auto w-full max-w-xl self-end">
+							<StoreLocationMap
+								address={store.address}
+								storeName={store.name}
+							/>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<EditStoreModal
