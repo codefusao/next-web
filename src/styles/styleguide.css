@@ -1,0 +1,92 @@
+:root {
+  /* Leroy Merlin brand palette */
+  --brand-primary: #158110;
+  --brand-secondary-light: #78be20;
+  --brand-dark-green: #0b5e0a;
+  --brand-white: #ffffff;
+  --brand-black: #000000;
+  --brand-destructive: #e05252;
+
+  /* Light semantic theme */
+  --ui-background: var(--brand-white);
+  --ui-foreground: var(--brand-black);
+  --ui-card: #f7f7f7;
+  --ui-border: #e8e8e8;
+  --ui-placeholder: #c0c4c8;
+  --ui-muted: #6b7280;
+  --ui-primary: var(--brand-primary);
+  --ui-primary-foreground: var(--brand-white);
+  --ui-secondary: var(--brand-secondary-light);
+  --ui-secondary-foreground: var(--brand-black);
+  --ui-destructive: var(--brand-destructive);
+  --ui-destructive-foreground: var(--brand-white);
+
+  /* Typography */
+  --ui-font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+
+  /* Shape and controls */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-control: 12px;
+  --radius-card: 14px;
+  --radius-pill: 20px;
+  --control-height-button: 56px;
+  --control-height-input: 52px;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --ui-background: var(--brand-black);
+    --ui-foreground: var(--brand-white);
+    --ui-card: #141414;
+    --ui-border: #2a2a2a;
+    --ui-placeholder: #8a8a8a;
+    --ui-muted: #9ca3af;
+    --ui-destructive: #f07070;
+    color-scheme: dark;
+  }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --ui-background: var(--brand-black);
+  --ui-foreground: var(--brand-white);
+  --ui-card: #141414;
+  --ui-border: #2a2a2a;
+  --ui-placeholder: #8a8a8a;
+  --ui-muted: #9ca3af;
+  --ui-destructive: #f07070;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--ui-background);
+  --color-foreground: var(--ui-foreground);
+  --color-card: var(--ui-card);
+  --color-border: var(--ui-border);
+  --color-placeholder: var(--ui-placeholder);
+  --color-muted: var(--ui-muted);
+  --color-primary: var(--ui-primary);
+  --color-primary-foreground: var(--ui-primary-foreground);
+  --color-secondary: var(--ui-secondary);
+  --color-secondary-foreground: var(--ui-secondary-foreground);
+  --color-destructive: var(--ui-destructive);
+  --color-destructive-foreground: var(--ui-destructive-foreground);
+  --font-sans: var(--ui-font-sans);
+}
