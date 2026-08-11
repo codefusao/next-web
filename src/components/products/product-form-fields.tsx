@@ -69,7 +69,6 @@ export function ProductFormFields({
 					label="Preço regular"
 					inputId="product-regular-price"
 					error={errors.regularPrice?.message}
-					hint="Use vírgula ou ponto decimal."
 				>
 					<input
 						{...register("regularPrice")}

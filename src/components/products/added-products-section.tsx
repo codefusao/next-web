@@ -1,7 +1,42 @@
 "use client";
 
 import { Boxes } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 import { useProductStore } from "@/store/product-store";
+
+function ProductThumbnail({
+	source,
+	productName,
+}: {
+	source: string | null;
+	productName: string;
+}) {
+	const [hasError, setHasError] = useState(false);
+
+	if (!source || hasError) {
+		return (
+			<div
+				className="flex size-14 items-center justify-center rounded-[var(--radius-sm)] bg-background text-muted"
+				role="img"
+				aria-label={`Imagem indisponível para ${productName}`}
+			>
+				<Boxes aria-hidden="true" className="size-5" />
+			</div>
+		);
+	}
+
+	return (
+		<Image
+			src={source}
+			alt={`Imagem de ${productName}`}
+			width={56}
+			height={56}
+			className="size-14 rounded-[var(--radius-sm)] bg-background object-contain"
+			onError={() => setHasError(true)}
+		/>
+	);
+}
 
 export function AddedProductsSection() {
 	const products = useProductStore((state) => state.products);
@@ -38,6 +73,7 @@ export function AddedProductsSection() {
 					<table className="min-w-full text-left text-sm">
 						<thead className="border-b border-border bg-background text-xs uppercase tracking-wide text-muted">
 							<tr>
+								<th className="px-4 py-3 font-semibold">Imagem</th>
 								<th className="px-4 py-3 font-semibold">Código</th>
 								<th className="px-4 py-3 font-semibold">Produto</th>
 								<th className="px-4 py-3 font-semibold">Categoria</th>
@@ -50,6 +86,12 @@ export function AddedProductsSection() {
 									key={product.id}
 									className="border-b border-border last:border-0"
 								>
+									<td className="px-4 py-3">
+										<ProductThumbnail
+											source={product.imagem_thumb ?? product.imagem}
+											productName={product.nome}
+										/>
+									</td>
 									<td className="whitespace-nowrap px-4 py-4 font-semibold">
 										{product.codigo}
 									</td>

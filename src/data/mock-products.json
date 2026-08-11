@@ -1,0 +1,1248 @@
+[
+	{
+		"id": "mock-1571698172",
+		"codigo": "1571698172",
+		"nome": "Garrafa De Água Squeeze 2 Litros Com Adesivos 3d, Frases E Marcação De Horário",
+		"categoria": {
+			"id": "organizacao",
+			"label": "Organização"
+		},
+		"precos_e_condicoes": [
+			"R$ 39,90 cada",
+			"à vista no pix",
+			"Parcelas: R$ 39,90 em até 3x de R$ 13,30 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/garrafa_de_agua_squeeze_2_litros_com_adesivos_3d_frases_e_ma_1571698172_c81b_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/garrafa_de_agua_squeeze_2_litros_com_adesivos_3d_frases_e_ma_1571698172_c81b_300x300.jpg"
+	},
+	{
+		"id": "mock-92103802",
+		"codigo": "92103802",
+		"nome": "Ar Condicionado Janela Frio 7500BTUs Mecânico 127V (110V) CCB07FB Consul",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": [
+			"R$ 1.665,56 cada",
+			"R$ 1.499,00 cada",
+			"à vista no pix",
+			"Parcelas: R$ 1.665,56 em até 8x de R$ 208,19 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/ar_condicionado_janela_7500_btus_frio_127v_92103802_d891_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/ar_condicionado_janela_7500_btus_frio_127v_92103802_d891_300x300.jpg"
+	},
+	{
+		"id": "mock-88126794",
+		"codigo": "88126794",
+		"nome": "Sifão Universal Plástico Branco Tigre",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 6,99 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tubo_extensivo_universal_plastico_branco_tigre_88126794_99e6_600x600.jpeg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tubo_extensivo_universal_plastico_branco_tigre_88126794_99e6_300x300.jpeg"
+	},
+	{
+		"id": "mock-90052543",
+		"codigo": "90052543",
+		"nome": "Protetor de Piso 25x1m Salva Piso",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 171,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/protetor_de_piso_25x1m_salva_piso_90052543_0001_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/protetor_de_piso_25x1m_salva_piso_90052543_0001_300x300.jpg"
+	},
+	{
+		"id": "mock-90819225",
+		"codigo": "90819225",
+		"nome": "Válvula para Pia de Banheiro 2.3/8\" Polido sem Ladrão Equation",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 58,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/valvula_para_pia_de_banheiro_metal_extra_longa_2_3_8_equation_90819225_0002_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/valvula_para_pia_de_banheiro_metal_extra_longa_2_3_8_equation_90819225_0002_300x300.jpg"
+	},
+	{
+		"id": "mock-89341595",
+		"codigo": "89341595",
+		"nome": "Telha de PVC Plan 88x242cm 1,6mm Cerâmica Precon",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 84,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/telha_de_pvc_plan_ceramica_2,42x0,88m_precon_89341595_0001_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/telha_de_pvc_plan_ceramica_2,42x0,88m_precon_89341595_0001_300x300.jpg"
+	},
+	{
+		"id": "mock-90457661",
+		"codigo": "90457661",
+		"nome": "Mangueira Flexível para Água Inox 1/2\" 60cm Equation",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 29,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/mangueira_flexivel_para_agua_inox_1_2_60cm_equation_90457661_0a0d_600x600.jpeg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/mangueira_flexivel_para_agua_inox_1_2_60cm_equation_90457661_0a0d_300x300.jpeg"
+	},
+	{
+		"id": "mock-88539325",
+		"codigo": "88539325",
+		"nome": "Tubo Extensivo Universal Plástico Branco 1\", 1.1/4\" e 1.1/2\" 30cm Equation",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 6,59 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tubo_extensivo_universal_plastico_1_1_1_4_e_1_1_2_30cm_88539325_542f_600x600.jpeg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tubo_extensivo_universal_plastico_1_1_1_4_e_1_1_2_30cm_88539325_542f_300x300.jpeg"
+	},
+	{
+		"id": "mock-92303834",
+		"codigo": "92303834",
+		"nome": "Tinta Emborrachada Fosco Standard Externo Elefante 20Kg Luxens",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 334,90 cada",
+			"Parcelas: R$ 334,90 em até 3x de R$ 111,63 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_emborrachada_fosco_standard_externo_elefante_20kg_luxens_92303834_702a_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_emborrachada_fosco_standard_externo_elefante_20kg_luxens_92303834_702a_300x300.jpg"
+	},
+	{
+		"id": "mock-90648271",
+		"codigo": "90648271",
+		"nome": "Chuveiro Elétrico Eletrônico 220V 7800w Branco Quadrado Acqua Duo Ultra Lorenzetti",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": [
+			"R$ 599,89 cada",
+			"Parcelas: R$ 599,89 em até 5x de R$ 119,98 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/chuveiro_eletronico_220v_7800w_acqua_duo_lorenzetti_90648271_aa79_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/chuveiro_eletronico_220v_7800w_acqua_duo_lorenzetti_90648271_aa79_300x300.jpg"
+	},
+	{
+		"id": "mock-92406692",
+		"codigo": "92406692",
+		"nome": "Assento Sanitário Zip Plus com Fechamento Comum Oval Polipropileno Branco Roca",
+		"categoria": {
+			"id": "sanitarios",
+			"label": "Sanitários"
+		},
+		"precos_e_condicoes": ["R$ 79,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/assento_sanitario_fechamento_suave_zip_plus_roca_92406692_3e90_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/assento_sanitario_fechamento_suave_zip_plus_roca_92406692_3e90_300x300.jpg"
+	},
+	{
+		"id": "mock-88275453",
+		"codigo": "88275453",
+		"nome": "Chuveiro Elétrico Eletrônico 220V 7500w Branco Redondo com Pressurizador Advanced Lorenzetti",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": [
+			"R$ 349,90 cada",
+			"à vista",
+			"Parcelas: R$ 372,23 em até 3x de R$ 124,08 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/chuveiro_eletronico_220v_advanced_com_pressurizador_lorenzetti_88275453_8055_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/chuveiro_eletronico_220v_advanced_com_pressurizador_lorenzetti_88275453_8055_300x300.jpg"
+	},
+	{
+		"id": "mock-91848771",
+		"codigo": "91848771",
+		"nome": "Piso Laminado Click Paraty Trindade 6,5x21,5x120cm m²",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 66,89 m²"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_paraty_trindade_m2_artens_91848771_0004_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_paraty_trindade_m2_artens_91848771_0004_300x300.jpg"
+	},
+	{
+		"id": "mock-92251390",
+		"codigo": "92251390",
+		"nome": "Suporte para TV Articulado de 23\" a 60\" de Parede Lexman Movimento Total Universal Preto",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": ["R$ 119,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/suporte_para_tv_articulado_movimento_total_ate_60_preto_92251390_0163_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/suporte_para_tv_articulado_movimento_total_ate_60_preto_92251390_0163_300x300.jpg"
+	},
+	{
+		"id": "mock-88048464",
+		"codigo": "88048464",
+		"nome": "Chuveiro Elétrico Eletrônico 220V 7500w Branco Redondo Advanced Lorenzetti",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": [
+			"R$ 234,89 cada",
+			"Parcelas: R$ 234,89 em até 2x de R$ 117,44 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/chuveiro_eletrico_eletronico_220v_advanced_lorenzetti_88048464_2e9c_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/chuveiro_eletrico_eletronico_220v_advanced_lorenzetti_88048464_2e9c_300x300.jpg"
+	},
+	{
+		"id": "mock-90329456",
+		"codigo": "90329456",
+		"nome": "Telha Ecológica de Plástico Reciclado Térmica 92x220cm 6mm Prata Ibaplac",
+		"categoria": {
+			"id": "materiais",
+			"label": "Materiais de construção"
+		},
+		"precos_e_condicoes": ["R$ 99,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/telha_ecologica_reciclada_termica_2,20mx92cm_cinza_ibaplac_90329456_0001_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/telha_ecologica_reciclada_termica_2,20mx92cm_cinza_ibaplac_90329456_0001_300x300.jpg"
+	},
+	{
+		"id": "mock-89664120",
+		"codigo": "89664120",
+		"nome": "Assento Sanitário Almofadado Convencional com Fechamento Comum Oval Polietileno Branco Sensea",
+		"categoria": {
+			"id": "sanitarios",
+			"label": "Sanitários"
+		},
+		"precos_e_condicoes": ["R$ 84,90 cada"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/assento_sanitario_convencional__branco_sensea_89664120_f083_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/assento_sanitario_convencional__branco_sensea_89664120_f083_300x300.jpg"
+	},
+	{
+		"id": "mock-92034873",
+		"codigo": "92034873",
+		"nome": "Estante de Aço e Madeira MDF com 5 Prateleiras Cinza Carga 196x100x50cm 1500kg Spaceo",
+		"categoria": {
+			"id": "organizacao",
+			"label": "Organização"
+		},
+		"precos_e_condicoes": [
+			"R$ 699,90 cada",
+			"à vista",
+			"Parcelas: R$ 744,57 em até 7x de R$ 106,37 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/estante_aco_e_madeira_mdf_cinza_carga_196x100x50cm_1500kg_92034873_2af1_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/estante_aco_e_madeira_mdf_cinza_carga_196x100x50cm_1500kg_92034873_2af1_300x300.jpg"
+	},
+	{
+		"id": "mock-90432104",
+		"codigo": "90432104",
+		"nome": "Betoneira 400L Prime 220V Menegotti",
+		"categoria": {
+			"id": "ferramentas",
+			"label": "Ferramentas"
+		},
+		"precos_e_condicoes": [
+			"R$ 4.790,00 cada",
+			"à vista",
+			"Parcelas: R$ 5.095,74 em até 8x de R$ 636,97 s/juros",
+			"OFERTA -5%"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/betoneira_400l_prime_220v_menegotti_90432104_26d3_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/betoneira_400l_prime_220v_menegotti_90432104_26d3_300x300.png"
+	},
+	{
+		"id": "mock-90648264",
+		"codigo": "90648264",
+		"nome": "Chuveiro Elétrico Eletrônico 220V 6800w Branco Quadrado Acqua Duo Ultra Lorenzetti",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": [
+			"R$ 534,15 cada",
+			"R$ 507,44 cada",
+			"à vista no pix",
+			"Parcelas: R$ 534,15 em até 5x de R$ 106,83 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/chuveiro_eletronico_220v_6800w_acqua_duo_lorenzetti_90648264_4bb0_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/chuveiro_eletronico_220v_6800w_acqua_duo_lorenzetti_90648264_4bb0_300x300.jpg"
+	},
+	{
+		"id": "mock-92034880",
+		"codigo": "92034880",
+		"nome": "Estante de Aço e Madeira MDF com 5 Prateleiras Cinza Carga 196x120x50cm 1500kg Spaceo",
+		"categoria": {
+			"id": "organizacao",
+			"label": "Organização"
+		},
+		"precos_e_condicoes": [
+			"R$ 779,89 cada",
+			"Parcelas: R$ 779,89 em até 7x de R$ 111,41 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/estante_aco_e_madeira_mdf_cinza_carga_196x120x50cm_1500kg_92034880_029e_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/estante_aco_e_madeira_mdf_cinza_carga_196x120x50cm_1500kg_92034880_029e_300x300.jpg"
+	},
+	{
+		"id": "mock-92303813",
+		"codigo": "92303813",
+		"nome": "Tinta Emborrachada Fosco Standard Externo Crômio 20Kg Luxens",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 334,90 cada",
+			"Parcelas: R$ 334,90 em até 3x de R$ 111,63 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_emborracha_fosco_standard_externo_cromio_20kg_luxens_92303813_a296_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_emborracha_fosco_standard_externo_cromio_20kg_luxens_92303813_a296_300x300.jpg"
+	},
+	{
+		"id": "mock-91848722",
+		"codigo": "91848722",
+		"nome": "Piso Laminado Click Paraty Grauna 6,5x21,5x120cm m²",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 66,89 m²"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_paraty_grauna_6,5x21,5x120cm_m2_artens_91848722_a3cd_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_paraty_grauna_6,5x21,5x120cm_m2_artens_91848722_a3cd_300x300.jpg"
+	},
+	{
+		"id": "mock-92303855",
+		"codigo": "92303855",
+		"nome": "Tinta Emborrachada Fosco Standard Externo Camurça 20Kg Luxens",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 334,90 cada",
+			"Parcelas: R$ 334,90 em até 3x de R$ 111,63 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_emborrachada_fosco_standard_externo_camurca_20kg_luxens_92303855_4491_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_emborrachada_fosco_standard_externo_camurca_20kg_luxens_92303855_4491_300x300.jpg"
+	},
+	{
+		"id": "mock-92251334",
+		"codigo": "92251334",
+		"nome": "Suporte para TV Fixo de 37\" a 75\" de Parede Lexman Universal Preto",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": ["R$ 119,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/suporte_para_tv_fixo_parede_de_32_a_70_preto_92251334_4e93_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/suporte_para_tv_fixo_parede_de_32_a_70_preto_92251334_4e93_300x300.jpg"
+	},
+	{
+		"id": "mock-92136534",
+		"codigo": "92136534",
+		"nome": "Tinta Acrílica para Piso Fosca Premium Cinza Escuro 18L Luxens",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 239,90 cada",
+			"Parcelas: R$ 239,90 em até 2x de R$ 119,95 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_acrilica_para_piso_fosca_premium_cinza_escuro_18l_92136534_28c5_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_acrilica_para_piso_fosca_premium_cinza_escuro_18l_92136534_28c5_300x300.jpg"
+	},
+	{
+		"id": "mock-92419621",
+		"codigo": "92419621",
+		"nome": "Piso Laminado Click Flor Morado 120x21,5cm m²",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 54,90 m²", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_flor_morado_120x21,5cm_unilin_92419621_ce8a_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_flor_morado_120x21,5cm_unilin_92419621_ce8a_300x300.jpg"
+	},
+	{
+		"id": "mock-92282666",
+		"codigo": "92282666",
+		"nome": "Cuba para Cozinha Gourmet Sobrepor Inox 201 60x42x20cm 0,7mm 4.1/2\" com Tábua Cesto e Dosador de Sabão Casablanca",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": [
+			"R$ 499,90 cada",
+			"à vista",
+			"Parcelas: R$ 531,81 em até 5x de R$ 106,36 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/cuba_de_cozinha_gourmet_sobrepor_inox_201_42x60cm_casablanca_92282666_d16d_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/cuba_de_cozinha_gourmet_sobrepor_inox_201_42x60cm_casablanca_92282666_d16d_300x300.jpg"
+	},
+	{
+		"id": "mock-92303862",
+		"codigo": "92303862",
+		"nome": "Tinta Emborrachada Fosco Standard Externo Algodão Egípcio 20Kg",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 334,90 cada",
+			"Parcelas: R$ 334,90 em até 3x de R$ 111,63 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_emborrachada_fosco_standard_externo_algodao_egipcio_20kg_92303862_93f0_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_emborrachada_fosco_standard_externo_algodao_egipcio_20kg_92303862_93f0_300x300.png"
+	},
+	{
+		"id": "mock-92034894",
+		"codigo": "92034894",
+		"nome": "Estante de Aço e Madeira MDF com 4 Prateleiras Cinza Carga 190x150x60cm 1200kg Spaceo",
+		"categoria": {
+			"id": "organizacao",
+			"label": "Organização"
+		},
+		"precos_e_condicoes": [
+			"R$ 1.158,99 cada",
+			"Parcelas: R$ 1.158,99 em até 8x de R$ 144,87 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/estante_aco_e_madeira_mdf_cinza_carga_190x150x60cm_1200kg_92034894_d116_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/estante_aco_e_madeira_mdf_cinza_carga_190x150x60cm_1200kg_92034894_d116_300x300.jpg"
+	},
+	{
+		"id": "mock-89896884",
+		"codigo": "89896884",
+		"nome": "Vídeo Porteiro Intelbras IVR 1010",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": [
+			"R$ 498,90 cada",
+			"à vista",
+			"Parcelas: R$ 530,74 em até 5x de R$ 106,15 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/video_porteiro_color_ivr_1010_intelbras_89896884_c7eb_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/video_porteiro_color_ivr_1010_intelbras_89896884_c7eb_300x300.jpg"
+	},
+	{
+		"id": "mock-92263493",
+		"codigo": "92263493",
+		"nome": "Telha de PVC Americana Colonial 86x230cm 2mm Cerâmica Precon",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 115,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/telha_de_pvc_colonial_americana_2,30mx86cm_ceramica_precon_92263493_49c6_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/telha_de_pvc_colonial_americana_2,30mx86cm_ceramica_precon_92263493_49c6_300x300.jpg"
+	},
+	{
+		"id": "mock-92400462",
+		"codigo": "92400462",
+		"nome": "Protetor de Piso Atcoprotege 25x1m Branco Atco",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 149,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/protecao_de_piso_atcoprotege_25x1m_branco_atco_92400462_ae0d_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/protecao_de_piso_atcoprotege_25x1m_branco_atco_92400462_ae0d_300x300.png"
+	},
+	{
+		"id": "mock-90648250",
+		"codigo": "90648250",
+		"nome": "Chuveiro Elétrico Eletrônico 127V (110V) 5500w Branco Quadrado Acqua Duo Ultra Lorenzetti",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": [
+			"R$ 599,89 cada",
+			"Parcelas: R$ 599,89 em até 5x de R$ 119,98 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/chuveiro_eletronico_110v_5500w_acqua_duo_lorenzetti_90648250_760e_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/chuveiro_eletronico_110v_5500w_acqua_duo_lorenzetti_90648250_760e_300x300.jpg"
+	},
+	{
+		"id": "mock-92252482",
+		"codigo": "92252482",
+		"nome": "Betoneira 400L Rental Monofásico 2CV 220V CSM",
+		"categoria": {
+			"id": "ferramentas",
+			"label": "Ferramentas"
+		},
+		"precos_e_condicoes": [
+			"R$ 5.299,00 cada",
+			"à vista",
+			"Parcelas: R$ 5.637,23 em até 8x de R$ 704,65 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/betoneira_400l_renal_mono_220v_csm_92252482_64c2_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/betoneira_400l_renal_mono_220v_csm_92252482_64c2_300x300.jpg"
+	},
+	{
+		"id": "mock-92326633",
+		"codigo": "92326633",
+		"nome": "Climatizador de Ar Cadence 8,4L 220V CLI530 Compactar",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": [
+			"R$ 349,00 cada",
+			"à vista",
+			"Parcelas: R$ 371,28 em até 3x de R$ 123,76 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/climatizador_de_ar_cadence_8,4l_220v_cli530_92326633_84f0_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/climatizador_de_ar_cadence_8,4l_220v_cli530_92326633_84f0_300x300.png"
+	},
+	{
+		"id": "mock-91918162",
+		"codigo": "91918162",
+		"nome": "Tinta Acrílica Fosca Pronta para Uso Premium Exterior Monumento 18 L Luxens",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 544,90 cada",
+			"à vista",
+			"Parcelas: R$ 579,68 em até 5x de R$ 115,94 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_acrilica_fosca_exterior_monumento_18l_91918162_4f62_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_acrilica_fosca_exterior_monumento_18l_91918162_4f62_300x300.jpg"
+	},
+	{
+		"id": "mock-91710346",
+		"codigo": "91710346",
+		"nome": "Coluna para Tanque 50x19cm Branco Brilhante Kohler Fiori",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 82,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/coluna_para_tanque_50x19cm_branco_brilhante_kohler_fiori_91710346_fbcd_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/coluna_para_tanque_50x19cm_branco_brilhante_kohler_fiori_91710346_fbcd_300x300.jpg"
+	},
+	{
+		"id": "mock-92326605",
+		"codigo": "92326605",
+		"nome": "Piso Laminado Click Paraty Malte 19x120cm m² Artens",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 67,90 m²", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_paraty_malte_120x19cm_artens_92326605_43a6_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_paraty_malte_120x19cm_artens_92326605_43a6_300x300.jpg"
+	},
+	{
+		"id": "mock-92419691",
+		"codigo": "92419691",
+		"nome": "Tinta Fosco Emborrachada Fachada Protegida Elefante 18L Suvinil",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 799,90 cada",
+			"à vista",
+			"Parcelas: R$ 850,96 em até 8x de R$ 106,37 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_fosco_fachada_protegida_elefante_18l_suvinil_92419691_07a1_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_fosco_fachada_protegida_elefante_18l_suvinil_92419691_07a1_300x300.jpg"
+	},
+	{
+		"id": "mock-89793375",
+		"codigo": "89793375",
+		"nome": "Telha de PVC Colonial Americana 86x230cm 2mm Cinza Concreto Precon",
+		"categoria": {
+			"id": "materiais",
+			"label": "Materiais de construção"
+		},
+		"precos_e_condicoes": ["R$ 137,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/telha_de_pcv_colonial_86x230cm_concreto_precon_89793375_0578_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/telha_de_pcv_colonial_86x230cm_concreto_precon_89793375_0578_300x300.jpg"
+	},
+	{
+		"id": "mock-89705742",
+		"codigo": "89705742",
+		"nome": "Tinta Acrílica Fosca Proteção Sol & Chuva Premium Exterior Bronze Lenda 18 L Coral",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 599,90 cada",
+			"Parcelas: R$ 599,90 em até 5x de R$ 119,98 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_acrilica_fosca_solechuva_exterior_bronze_lenda_18l_89705742_bbd5_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_acrilica_fosca_solechuva_exterior_bronze_lenda_18l_89705742_bbd5_300x300.jpg"
+	},
+	{
+		"id": "mock-92326626",
+		"codigo": "92326626",
+		"nome": "Climatizador de Ar Cadence 8,4L 127(110V) CLI530",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": [
+			"R$ 399,90 cada",
+			"Parcelas: R$ 399,90 em até 3x de R$ 133,30 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/climatizador_de_ar_cadence_8,4l_127_110v__cli530_92326626_576e_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/climatizador_de_ar_cadence_8,4l_127_110v__cli530_92326626_576e_300x300.png"
+	},
+	{
+		"id": "mock-92419705",
+		"codigo": "92419705",
+		"nome": "Tinta Fosco Emborrachada Fachada Protegida Camurça 18L Suvinil",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 799,90 cada",
+			"à vista",
+			"Parcelas: R$ 850,96 em até 8x de R$ 106,37 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_fosco_fachada_protegida_camurca_18l_suvinil_92419705_3e66_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_fosco_fachada_protegida_camurca_18l_suvinil_92419705_3e66_300x300.jpg"
+	},
+	{
+		"id": "mock-92377705",
+		"codigo": "92377705",
+		"nome": "Cuba de Cozinha Simples de Embutir em Aço Inox Brilhante Retangular 40x34x14cm 3.1/2 Ghel Plus",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 94,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/cuba_de_cozinha_simples_embutir_14x34x40cm_aco_inox_ghel_plus_92377705_d009_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/cuba_de_cozinha_simples_embutir_14x34x40cm_aco_inox_ghel_plus_92377705_d009_300x300.jpg"
+	},
+	{
+		"id": "mock-92403906",
+		"codigo": "92403906",
+		"nome": "Caixa de Gordura Polipropileno 12L 100mm com Cesto de Limpeza e Tampa Parafusada TAF",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 109,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/caixa_sifonada_cesto_de_limpeza_12lts_saida_100mm_parafusada_1569818414_d920_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/caixa_sifonada_cesto_de_limpeza_12lts_saida_100mm_parafusada_1569818414_d920_300x300.jpg"
+	},
+	{
+		"id": "mock-92373344",
+		"codigo": "92373344",
+		"nome": "Tapete Funcional Polipropileno Bege Internas 150x200cm",
+		"categoria": {
+			"id": "decoracao",
+			"label": "Decoração"
+		},
+		"precos_e_condicoes": [
+			"R$ 259,90 cada",
+			"à vista",
+			"Parcelas: R$ 276,49 em até 2x de R$ 138,24 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tapete_funcional_polipropileno_bege_150x200cm_j_serrano_92373344_18db_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tapete_funcional_polipropileno_bege_150x200cm_j_serrano_92373344_18db_300x300.jpg"
+	},
+	{
+		"id": "mock-92403892",
+		"codigo": "92403892",
+		"nome": "Caixa de Gordura Plástico 42L com Cesto para Limpeza e Tampa Removível TAF",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 109,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/caixa_gordura_com_cesto_para_limpeza_tampa_removivel_e_cesto_1569065805_b927_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/caixa_gordura_com_cesto_para_limpeza_tampa_removivel_e_cesto_1569065805_b927_300x300.png"
+	},
+	{
+		"id": "mock-92373330",
+		"codigo": "92373330",
+		"nome": "Tapete Funcional Polipropileno Bege Internas 100x150cm",
+		"categoria": {
+			"id": "decoracao",
+			"label": "Decoração"
+		},
+		"precos_e_condicoes": ["R$ 129,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tapete_funcional_polipropileno_bege_100x150cm_j_serrano_92373330_7fb0_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tapete_funcional_polipropileno_bege_100x150cm_j_serrano_92373330_7fb0_300x300.jpg"
+	},
+	{
+		"id": "mock-92467242",
+		"codigo": "92467242",
+		"nome": "Papel de Parede Tnt Luxe Texturizado Bege 50x10m Tokfix",
+		"categoria": {
+			"id": "decoracao",
+			"label": "Decoração"
+		},
+		"precos_e_condicoes": [
+			"R$ 319,90 cada",
+			"à vista",
+			"Parcelas: R$ 340,32 em até 3x de R$ 113,44 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/papel_de_parede_tnt_luxe_texturizado_bege_50x10m_92467242_d6a7_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/papel_de_parede_tnt_luxe_texturizado_bege_50x10m_92467242_d6a7_300x300.png"
+	},
+	{
+		"id": "mock-92467235",
+		"codigo": "92467235",
+		"nome": "Papel De Parede Tnt Luxe Texturizado Verde 50x10m Tokfix",
+		"categoria": {
+			"id": "decoracao",
+			"label": "Decoração"
+		},
+		"precos_e_condicoes": [
+			"R$ 319,90 cada",
+			"à vista",
+			"Parcelas: R$ 340,32 em até 3x de R$ 113,44 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/papel_de_parede_tnt_luxe_texturizado_verde_50x10m_92467235_88ac_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/papel_de_parede_tnt_luxe_texturizado_verde_50x10m_92467235_88ac_300x300.png"
+	},
+	{
+		"id": "mock-92467263",
+		"codigo": "92467263",
+		"nome": "Papel De Parede Tnt Luxe Texturizado Vinho 50x10m Tokfix",
+		"categoria": {
+			"id": "decoracao",
+			"label": "Decoração"
+		},
+		"precos_e_condicoes": [
+			"R$ 319,90 cada",
+			"à vista",
+			"Parcelas: R$ 340,32 em até 3x de R$ 113,44 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/papel_de_parede_tnt_luxe_texturizado_vinho_50x10m_92467263_05e4_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/papel_de_parede_tnt_luxe_texturizado_vinho_50x10m_92467263_05e4_300x300.png"
+	},
+	{
+		"id": "mock-89296172",
+		"codigo": "89296172",
+		"nome": "Argamassa Colante Multiuso ACIII Interno|Externo 20kg Cinza Axton",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 42,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/argamassa_aciii_interno|externo_20kg_axton_89296172_fa25_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/argamassa_aciii_interno|externo_20kg_axton_89296172_fa25_300x300.png"
+	},
+	{
+		"id": "mock-92161020",
+		"codigo": "92161020",
+		"nome": "Estante de Metal Aço Cromado com 6 Prateleiras Line Aramada 180x90x35cm 300kg Spaceo",
+		"categoria": {
+			"id": "organizacao",
+			"label": "Organização"
+		},
+		"precos_e_condicoes": [
+			"R$ 699,90 cada",
+			"Parcelas: R$ 699,90 em até 6x de R$ 116,65 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/estante_metal_aco_cromado_line_aramada_180x90x35cm_300kg_92161020_877a_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/estante_metal_aco_cromado_line_aramada_180x90x35cm_300kg_92161020_877a_300x300.jpg"
+	},
+	{
+		"id": "mock-89238114",
+		"codigo": "89238114",
+		"nome": "Piso Laminado Click Elmo Ravena 136x21,7cm m² Artens",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 59,90 m²", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_elmo_ravena_136x21,7cm_m2_artens_89238114_0004_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/piso_laminado_click_elmo_ravena_136x21,7cm_m2_artens_89238114_0004_300x300.jpg"
+	},
+	{
+		"id": "mock-92083446",
+		"codigo": "92083446",
+		"nome": "Churrasqueira Centaurus a Bafo Carvão 108x112cm Beta II Naterial",
+		"categoria": {
+			"id": "jardim",
+			"label": "Jardim"
+		},
+		"precos_e_condicoes": [
+			"R$ 1.899,00 cada",
+			"à vista",
+			"Parcelas: R$ 2.020,21 em até 8x de R$ 252,53 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/churrasqueira_a_carvao_centaurus_naterial_92083446_777f_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/churrasqueira_a_carvao_centaurus_naterial_92083446_777f_300x300.jpg"
+	},
+	{
+		"id": "mock-91916881",
+		"codigo": "91916881",
+		"nome": "Massa Corrida Interna 25kg Axton",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": ["R$ 69,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/massa_corrida_interna_25kg_axton_91916881_4dc7_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/massa_corrida_interna_25kg_axton_91916881_4dc7_300x300.jpg"
+	},
+	{
+		"id": "mock-92287671",
+		"codigo": "92287671",
+		"nome": "Kit Porta Madeira de Giro Direito e Esquerdo Branco 210x80cm Sarrafeada Batente 7,5 a 16cm Vivace UV Lisa Artens",
+		"categoria": {
+			"id": "materiais",
+			"label": "Materiais de construção"
+		},
+		"precos_e_condicoes": [
+			"R$ 929,90 cada",
+			"Parcelas: R$ 929,90 em até 8x de R$ 116,24 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/porta_giro_direito_esquerdo_liso_210x80cm_batente_7,5_a_16cm_92287671_0d33_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/porta_giro_direito_esquerdo_liso_210x80cm_batente_7,5_a_16cm_92287671_0d33_300x300.jpg"
+	},
+	{
+		"id": "mock-90967485",
+		"codigo": "90967485",
+		"nome": "Kit de Cabides para Roupas em Geral 8 Unidades Madeira Spaceo",
+		"categoria": {
+			"id": "organizacao",
+			"label": "Organização"
+		},
+		"precos_e_condicoes": ["R$ 46,90 cada"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/kit_de_cabides_para_roupas_em_geral_8_unidades_spaceo_90967485_c90e_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/kit_de_cabides_para_roupas_em_geral_8_unidades_spaceo_90967485_c90e_300x300.jpg"
+	},
+	{
+		"id": "mock-89707016",
+		"codigo": "89707016",
+		"nome": "Cloro para Piscina 10kg Axton Granulado 5 em 1 Multiação",
+		"categoria": {
+			"id": "organizacao",
+			"label": "Organização"
+		},
+		"precos_e_condicoes": [
+			"R$ 239,90 cada",
+			"à vista",
+			"Parcelas: R$ 255,21 em até 2x de R$ 127,60 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/cloro_5_em_1_multiacao_10kg_89707016_786c_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/cloro_5_em_1_multiacao_10kg_89707016_786c_300x300.jpg"
+	},
+	{
+		"id": "mock-89316353",
+		"codigo": "89316353",
+		"nome": "Ducha Higiênica 1,2m Branca e Cromada Metal e Plástico Sensea",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 79,90 cada"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/ducha_higienica_cromado_2_funcoes_produto_importado_87849916_cc2c_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/ducha_higienica_cromado_2_funcoes_produto_importado_87849916_cc2c_300x300.jpg"
+	},
+	{
+		"id": "mock-92303834",
+		"codigo": "92303834",
+		"nome": "Tinta Emborrachada Fosco Standard Externo Elefante 20Kg Luxens",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 334,90 cada",
+			"Parcelas: R$ 334,90 em até 3x de R$ 111,63 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_emborrachada_fosco_standard_externo_elefante_20kg_luxens_92303834_702a_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_emborrachada_fosco_standard_externo_elefante_20kg_luxens_92303834_702a_300x300.jpg"
+	},
+	{
+		"id": "mock-91716401",
+		"codigo": "91716401",
+		"nome": "Trena Manual 5 metros 460610 Dexter",
+		"categoria": {
+			"id": "ferramentas",
+			"label": "Ferramentas"
+		},
+		"precos_e_condicoes": ["R$ 32,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/trena_manual_5mx19mm_460610_dexter_91716401_b391_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/trena_manual_5mx19mm_460610_dexter_91716401_b391_300x300.jpg"
+	},
+	{
+		"id": "mock-92139124",
+		"codigo": "92139124",
+		"nome": "Ombrelone Lateral 2,58x2,88x2,88m Articulável em Alumínio Taupe Sonora II LED Naterial",
+		"categoria": {
+			"id": "iluminacao",
+			"label": "Iluminação"
+		},
+		"precos_e_condicoes": [
+			"R$ 4.999,00 cada",
+			"à vista",
+			"Parcelas: R$ 5.318,09 em até 8x de R$ 664,76 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/ombrelone_lateral_articulavel_2,58x2,9x2,9m_poliester_taupe_92139124_17f4_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/ombrelone_lateral_articulavel_2,58x2,9x2,9m_poliester_taupe_92139124_17f4_300x300.jpg"
+	},
+	{
+		"id": "mock-92251390",
+		"codigo": "92251390",
+		"nome": "Suporte para TV Articulado de 23\" a 60\" de Parede Lexman Movimento Total Universal Preto",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": ["R$ 119,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/suporte_para_tv_articulado_movimento_total_ate_60_preto_92251390_0163_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/suporte_para_tv_articulado_movimento_total_ate_60_preto_92251390_0163_300x300.jpg"
+	},
+	{
+		"id": "mock-92409135",
+		"codigo": "92409135",
+		"nome": "Painel Ripado de Madeira MDF 12mm Carvalho York 15x270cm Artens",
+		"categoria": {
+			"id": "decoracao",
+			"label": "Decoração"
+		},
+		"precos_e_condicoes": ["R$ 109,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/painel_ripado_em_mdf_270x15x1,2cm_carvalho_york_premium_92409135_7ef0_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/painel_ripado_em_mdf_270x15x1,2cm_carvalho_york_premium_92409135_7ef0_300x300.jpg"
+	},
+	{
+		"id": "mock-91917014",
+		"codigo": "91917014",
+		"nome": "Tinta Acrílica Fosca Econômica Interior Branca 18 L Luxens",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 189,90 cada",
+			"à vista",
+			"Parcelas: R$ 202,02 em até 2x de R$ 101,01 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/tinta_acrilica_fosca_interior_branca_18l_91917014_e4ad_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/tinta_acrilica_fosca_interior_branca_18l_91917014_e4ad_300x300.jpg"
+	},
+	{
+		"id": "mock-90457675",
+		"codigo": "90457675",
+		"nome": "Mangueira Flexível para Água Inox 1/2\" 40cm Equation",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": ["R$ 24,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/mangueira_flexivel_para_agua_inox_1_2_40cm_equation_90457675_8f3e_600x600.jpeg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/mangueira_flexivel_para_agua_inox_1_2_40cm_equation_90457675_8f3e_300x300.jpeg"
+	},
+	{
+		"id": "mock-89664120",
+		"codigo": "89664120",
+		"nome": "Assento Sanitário Almofadado Convencional com Fechamento Comum Oval Polietileno Branco Sensea",
+		"categoria": {
+			"id": "sanitarios",
+			"label": "Sanitários"
+		},
+		"precos_e_condicoes": ["R$ 84,90 cada"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/assento_sanitario_convencional__branco_sensea_89664120_f083_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/assento_sanitario_convencional__branco_sensea_89664120_f083_300x300.jpg"
+	},
+	{
+		"id": "mock-92161384",
+		"codigo": "92161384",
+		"nome": "Argamassa Polimérica Impermeabilizante Axton TOP 7000 Fibras 18kg Cinza",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 164,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/argamassa_polimerica_axton_top_7000_fibras_18kg_92161384_9d98_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/argamassa_polimerica_axton_top_7000_fibras_18kg_92161384_9d98_300x300.jpg"
+	},
+	{
+		"id": "mock-89716123",
+		"codigo": "89716123",
+		"nome": "Kit de Ferramentas Dexter Aço Cromo-Vanádio com Maleta 108 Peças",
+		"categoria": {
+			"id": "ferramentas",
+			"label": "Ferramentas"
+		},
+		"precos_e_condicoes": [
+			"R$ 534,89 cada",
+			"Parcelas: R$ 534,89 em até 5x de R$ 106,98 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/jogo_de_ferramentas_108_pecas_dexter_89716123_e774_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/jogo_de_ferramentas_108_pecas_dexter_89716123_e774_300x300.jpg"
+	},
+	{
+		"id": "mock-92217111",
+		"codigo": "92217111",
+		"nome": "Persiana Rolô Blackout Astella Poliéster Cinza 2,20x2,40m Inspire",
+		"categoria": {
+			"id": "decoracao",
+			"label": "Decoração"
+		},
+		"precos_e_condicoes": [
+			"R$ 639,90 cada",
+			"à vista",
+			"Parcelas: R$ 680,74 em até 6x de R$ 113,46 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/persiana_rolo_blackout_astella_poliester_cinza_2,20x2,40m_92217111_0267_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/persiana_rolo_blackout_astella_poliester_cinza_2,20x2,40m_92217111_0267_300x300.jpg"
+	},
+	{
+		"id": "mock-92313564",
+		"codigo": "92313564",
+		"nome": "Kit Spot com Trilho com Led 3 em 1 Inspire Preto Bivolt",
+		"categoria": {
+			"id": "iluminacao",
+			"label": "Iluminação"
+		},
+		"precos_e_condicoes": ["R$ 193,90 cada"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/kit_spot_para_trilho_magnetico_com_led_3_em_1_inspire_preto_92313564_dde5_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/kit_spot_para_trilho_magnetico_com_led_3_em_1_inspire_preto_92313564_dde5_300x300.jpg"
+	},
+	{
+		"id": "mock-92098860",
+		"codigo": "92098860",
+		"nome": "Porcelanato Cimenticio Acetinado Borda Reta Interno 61x61cm Beton Gray 61988 Artens",
+		"categoria": {
+			"id": "pisos",
+			"label": "Pisos & Revestimentos"
+		},
+		"precos_e_condicoes": ["R$ 39,89 m²"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/porcelanato_cimenticio_acetinado_61x61cm_beton_gray_92098860_a690_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/porcelanato_cimenticio_acetinado_61x61cm_beton_gray_92098860_a690_300x300.jpg"
+	},
+	{
+		"id": "mock-92347850",
+		"codigo": "92347850",
+		"nome": "Kit Vaso Sanitário com Caixa Acoplada e Assento Branco Quadrado 3 e 6 litros Lyon Plus Sensea",
+		"categoria": {
+			"id": "sanitarios",
+			"label": "Sanitários"
+		},
+		"precos_e_condicoes": [
+			"R$ 999,90 cada",
+			"à vista",
+			"Parcelas: R$ 1.063,72 em até 8x de R$ 132,96 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/kit_vaso_sanitario_caixa_acoplada_branco_3_6l_lyon_plus_sensea_92347850_168e_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/kit_vaso_sanitario_caixa_acoplada_branco_3_6l_lyon_plus_sensea_92347850_168e_300x300.jpg"
+	},
+	{
+		"id": "mock-89326916",
+		"codigo": "89326916",
+		"nome": "Grade para Porta de Aço 84x70cm com Extensor de 10cm Branco Standers",
+		"categoria": {
+			"id": "materiais",
+			"label": "Materiais de construção"
+		},
+		"precos_e_condicoes": ["R$ 172,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/grade_para_portas_metal___extensor_de_10cm_standers_89326916_b7f8_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/grade_para_portas_metal___extensor_de_10cm_standers_89326916_b7f8_300x300.jpg"
+	},
+	{
+		"id": "mock-91092365",
+		"codigo": "91092365",
+		"nome": "Carrinho de Carga Plataforma Dobrável até 150kg Standers",
+		"categoria": {
+			"id": "ferramentas",
+			"label": "Ferramentas"
+		},
+		"precos_e_condicoes": [
+			"R$ 299,90 cada",
+			"Parcelas: R$ 299,90 em até 2x de R$ 149,95 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/carrinho_de_carga_plataforma_dobravel_ate_150kg_standers_91092365_12cc_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/carrinho_de_carga_plataforma_dobravel_ate_150kg_standers_91092365_12cc_300x300.jpg"
+	},
+	{
+		"id": "mock-91822164",
+		"codigo": "91822164",
+		"nome": "Conjunto 1 Tomada Energia 20A 4x2 Branco Fosco Madrid Lexman",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": ["R$ 24,90 cada"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/conj_4x2_1_tomada_2p_t_20a__c_sup___branco_fosco__lx_91822164_0d47_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/conj_4x2_1_tomada_2p_t_20a__c_sup___branco_fosco__lx_91822164_0d47_300x300.jpg"
+	},
+	{
+		"id": "mock-90867805",
+		"codigo": "90867805",
+		"nome": "Papel de Parede TNT Albert Rosê 53cmx10m Inspire",
+		"categoria": {
+			"id": "decoracao",
+			"label": "Decoração"
+		},
+		"precos_e_condicoes": ["R$ 142,90 cada"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/papel_de_parede_tnt_albert_bege_53cmx10m_inspire_90867805_0001_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/papel_de_parede_tnt_albert_bege_53cmx10m_inspire_90867805_0001_300x300.jpg"
+	},
+	{
+		"id": "mock-92240981",
+		"codigo": "92240981",
+		"nome": "Tinta Esmalte Epóxi Base Água Multissuperfície Acetinado Pronta para Uso Branco 3,6L Luxens",
+		"categoria": {
+			"id": "tintas",
+			"label": "Tintas"
+		},
+		"precos_e_condicoes": [
+			"R$ 219,90 cada",
+			"à vista",
+			"Parcelas: R$ 233,94 em até 2x de R$ 116,97 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/esmalte_epoxi_base_agua_multissuperficie_acetinado_branco_3,6l_92240981_7f56_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/esmalte_epoxi_base_agua_multissuperficie_acetinado_branco_3,6l_92240981_7f56_300x300.jpg"
+	},
+	{
+		"id": "mock-89645311",
+		"codigo": "89645311",
+		"nome": "Sapateira em Bambu Preta 33x66x28cm Spaceo",
+		"categoria": {
+			"id": "organizacao",
+			"label": "Organização"
+		},
+		"precos_e_condicoes": ["R$ 199,00 cada"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/sapateira_em_bambu_preta_33x66x28cm_spaceo_89645311_0a4a_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/sapateira_em_bambu_preta_33x66x28cm_spaceo_89645311_0a4a_300x300.jpg"
+	},
+	{
+		"id": "mock-92251334",
+		"codigo": "92251334",
+		"nome": "Suporte para TV Fixo de 37\" a 75\" de Parede Lexman Universal Preto",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": ["R$ 119,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/suporte_para_tv_fixo_parede_de_32_a_70_preto_92251334_4e93_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/suporte_para_tv_fixo_parede_de_32_a_70_preto_92251334_4e93_300x300.jpg"
+	},
+	{
+		"id": "mock-92308160",
+		"codigo": "92308160",
+		"nome": "Torneira Monocomando Gourmet de Pia para Cozinha com Bica Alta Flexível Inox Escovado Tomas Delinia",
+		"categoria": {
+			"id": "hidraulica",
+			"label": "Hidráulica"
+		},
+		"precos_e_condicoes": [
+			"R$ 699,90 cada",
+			"Parcelas: R$ 699,90 em até 6x de R$ 116,65 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/torneira_monocomando_de_pia_bica_alta_niquel_escovado_tomas_92308160_7cbe_600x600.png",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/torneira_monocomando_de_pia_bica_alta_niquel_escovado_tomas_92308160_7cbe_300x300.png"
+	},
+	{
+		"id": "mock-88304454",
+		"codigo": "88304454",
+		"nome": "Argila Expandida 5Kg Geolia",
+		"categoria": {
+			"id": "jardim",
+			"label": "Jardim"
+		},
+		"precos_e_condicoes": ["R$ 29,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/argila_expandida_5kg_geolia_88304454_0001_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/argila_expandida_5kg_geolia_88304454_0001_300x300.jpg"
+	},
+	{
+		"id": "mock-92173886",
+		"codigo": "92173886",
+		"nome": "Kit 4 Lâmpadas de LED GU10 6,5W 480lm Luz Amarela Bivolt Lexman",
+		"categoria": {
+			"id": "iluminacao",
+			"label": "Iluminação"
+		},
+		"precos_e_condicoes": ["R$ 39,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/lampada_led_bulbo_luz_amarelo_bivolt_6,5w_lexman_92173886_2a3f_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/lampada_led_bulbo_luz_amarelo_bivolt_6,5w_lexman_92173886_2a3f_300x300.jpg"
+	},
+	{
+		"id": "mock-92316350",
+		"codigo": "92316350",
+		"nome": "Escorredor Cinza Aço e Plástico Double Delinia Eleki",
+		"categoria": {
+			"id": "organizacao",
+			"label": "Organização"
+		},
+		"precos_e_condicoes": [
+			"R$ 279,90 cada",
+			"à vista",
+			"Parcelas: R$ 297,77 em até 2x de R$ 148,88 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/escorredor_cinza_aco_e_plastico_double_delinia_eleki_92316350_b76d_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/escorredor_cinza_aco_e_plastico_double_delinia_eleki_92316350_b76d_300x300.jpg"
+	},
+	{
+		"id": "mock-92319591",
+		"codigo": "92319591",
+		"nome": "Extensão Elétrica 3 Metros 3 Tomadas 10A Preto Lexman",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": ["R$ 39,90 cada", "à vista"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/extensao_eletrica_3x0,75mm_3m_preta_lexman_92319591_58dc_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/extensao_eletrica_3x0,75mm_3m_preta_lexman_92319591_58dc_300x300.jpg"
+	},
+	{
+		"id": "mock-90276221",
+		"codigo": "90276221",
+		"nome": "Conjunto de Mangueira GeoClassic 1/2\" Verde 30m Geolia",
+		"categoria": {
+			"id": "jardim",
+			"label": "Jardim"
+		},
+		"precos_e_condicoes": ["R$ 139,90 cada"],
+		"imagem": "https://cdn.leroymerlin.com.br/products/mangueira_geo_classic_verde_30m_geolia_90276221_153e_600x600.jpeg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/mangueira_geo_classic_verde_30m_geolia_90276221_153e_300x300.jpeg"
+	},
+	{
+		"id": "mock-92229046",
+		"codigo": "92229046",
+		"nome": "Ventilador Torre Equation 81cm 127V (110V) Branco Tower 2",
+		"categoria": {
+			"id": "eletrica",
+			"label": "Elétrica"
+		},
+		"precos_e_condicoes": [
+			"R$ 199,90 cada",
+			"à vista",
+			"Parcelas: R$ 212,66 em até 2x de R$ 106,33 s/juros"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/ventilador_torre_equation_81cm_rtw_at1_127v__110v__branco_92229046_26c0_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/ventilador_torre_equation_81cm_rtw_at1_127v__110v__branco_92229046_26c0_300x300.jpg"
+	},
+	{
+		"id": "mock-90409480",
+		"codigo": "90409480",
+		"nome": "Aparador de Grama Elétrico Sterwins AP1000T 1000W 110V Corte de 28cm",
+		"categoria": {
+			"id": "jardim",
+			"label": "Jardim"
+		},
+		"precos_e_condicoes": [
+			"R$ 199,90 cada",
+			"à vista",
+			"Parcelas: R$ 212,66 em até 2x de R$ 106,33 s/juros",
+			"R$ 0,00"
+		],
+		"imagem": "https://cdn.leroymerlin.com.br/products/aparador_de_grama_1000w_127v_sterwins_90409480_0003_600x600.jpg",
+		"imagem_thumb": "https://cdn.leroymerlin.com.br/products/aparador_de_grama_1000w_127v_sterwins_90409480_0003_300x300.jpg"
+	}
+]
