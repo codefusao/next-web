@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
+				hostname: "**",
+			},
+			{
+				protocol: "https",
 				hostname: "cdn.leroymerlin.com.br",
 				pathname: "/products/**",
 			},

@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, Moon, Sun, User } from "lucide-react";
+import { LogOut, Moon, Settings, Sun } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
@@ -35,13 +35,15 @@ export function UserActionsMenu({ email, onLogout }: UserActionsMenuProps) {
 		<section ref={menuRef} className="relative">
 			<Button
 				variant="outline"
-				size="icon"
+				size="compact"
 				onClick={() => setIsOpen((open) => !open)}
-				aria-label="Abrir menu do usuário"
+				aria-label="Abrir configurações"
 				aria-haspopup="menu"
 				aria-expanded={isOpen}
+				className="w-full justify-start border-transparent px-3 text-muted hover:bg-card hover:text-foreground"
 			>
-				<User aria-hidden="true" className="size-5" />
+				<Settings aria-hidden="true" className="size-5" />
+				Configurações
 			</Button>
 			{isOpen ? (
 				<section

@@ -4,8 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { StoreMetadataFormFields } from "@/components/stores/store-metadata-form-fields";
 import { Button } from "@/components/ui/button";
 import { FormField, inputBorderClass } from "@/components/ui/form-field";
+import { defaultStoreMetadata } from "@/constants/store";
 import {
 	type StoreFields,
 	type StoreFormInputs,
@@ -35,6 +37,7 @@ export function AddStoreForm({ onSuccess }: AddStoreFormProps) {
 			address: "",
 			cnpj: "",
 			description: "",
+			...defaultStoreMetadata,
 		},
 		reValidateMode: "onChange",
 	});
@@ -120,6 +123,7 @@ export function AddStoreForm({ onSuccess }: AddStoreFormProps) {
 					/>
 				</FormField>
 			</div>
+			<StoreMetadataFormFields register={register} errors={errors} />
 			<div className="mt-6 flex justify-end border-t border-border pt-6">
 				<Button type="submit">
 					<Plus aria-hidden="true" className="size-5" />

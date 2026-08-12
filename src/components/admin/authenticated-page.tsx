@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { UserActionsMenu } from "@/components/admin/user-actions-menu";
+import { AdminNavigation } from "@/components/admin/admin-navigation";
 import { useTheme } from "@/hooks/use-theme";
 import { AuthStatus, useAuthStore } from "@/store/auth-store";
 
@@ -37,29 +36,17 @@ export function AuthenticatedPage({ children }: AuthenticatedPageProps) {
 	return (
 		<main
 			data-theme={theme}
-			className="min-h-full flex-1 bg-background text-foreground"
+			className="min-h-full flex-1 bg-background text-foreground lg:flex"
 		>
-			<header className="bg-card">
-				<div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
-					<Image
-						src="/leroy-merlin-logo.png"
-						alt="Leroy Merlin"
-						width={80}
-						height={80}
-						className="rounded-lg"
-						priority
-					/>
-					<div className="min-w-0 flex-1" />
-					<UserActionsMenu
-						email={user.email}
-						onLogout={() => {
-							logout();
-							router.replace("/login");
-						}}
-					/>
-				</div>
-			</header>
-			{children}
+			<AdminNavigation
+				email={user.email}
+				name={user.name}
+				onLogout={() => {
+					logout();
+					router.replace("/login");
+				}}
+			/>
+			<div className="min-w-0 flex-1">{children}</div>
 		</main>
 	);
 }

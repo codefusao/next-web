@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Save } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { StoreMetadataFormFields } from "@/components/stores/store-metadata-form-fields";
 import { Button } from "@/components/ui/button";
 import { FormField, inputBorderClass } from "@/components/ui/form-field";
 import {
@@ -37,6 +38,13 @@ export function EditStoreForm({ store, onCancel, onSave }: EditStoreFormProps) {
 			address: store.address ?? "",
 			cnpj: store.cnpj ?? "",
 			description: store.description ?? "",
+			bannerUrl: store.bannerUrl,
+			status: store.status,
+			type: store.type,
+			manager: store.manager,
+			phone: store.phone,
+			email: store.email,
+			area: store.area,
 		},
 		reValidateMode: "onChange",
 	});
@@ -119,6 +127,7 @@ export function EditStoreForm({ store, onCancel, onSave }: EditStoreFormProps) {
 					/>
 				</FormField>
 			</div>
+			<StoreMetadataFormFields register={register} errors={errors} />
 			<div className="mt-6 flex justify-end gap-3 border-t border-border pt-6">
 				<Button type="button" variant="outline" onClick={onCancel}>
 					Cancelar

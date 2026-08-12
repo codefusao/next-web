@@ -16,7 +16,7 @@ export function StoreInventory({ storeId }: StoreInventoryProps) {
 
 	if (!store) {
 		return (
-			<section className="text-center">
+			<section className="mx-auto w-full max-w-7xl px-4 py-6 text-center sm:px-6 sm:py-8">
 				<div className="rounded-[var(--radius-card)] border border-dashed border-border bg-card px-6 py-14">
 					<h1 className="text-2xl font-bold">Loja não encontrada</h1>
 					<p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-muted">
@@ -35,7 +35,7 @@ export function StoreInventory({ storeId }: StoreInventoryProps) {
 	}
 
 	return (
-		<section>
+		<section className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
 			<Link
 				href={`/stores/${store.id}`}
 				className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
