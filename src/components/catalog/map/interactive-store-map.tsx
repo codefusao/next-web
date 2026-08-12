@@ -1,9 +1,9 @@
 "use client";
 
-import { MapPin } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { StoreMapControls } from "@/components/catalog/map/map-controls";
+import { MapLocationPin } from "@/components/catalog/map/map-location-pin";
 import { StoreMapMarkerPreview } from "@/components/catalog/map/map-marker-preview";
 import { useMapMarkerPreview } from "@/hooks/use-map-marker-preview";
 import { useStoreMapTransform } from "@/hooks/use-store-map-transform";
@@ -146,20 +146,14 @@ export function InteractiveStoreMap({
 							style={getMapMarkerStyle(marker, defaultImageSize, imageSize)}
 							className={`absolute ${isPreviewOpen ? "z-40" : "z-20"}`}
 						>
-							<MapPin
-								aria-hidden="true"
+							<MapLocationPin
+								size={markerSize}
 								className={`pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 text-primary drop-shadow-md transition-[width,height,transform] duration-200 ${
 									highlightedMarkerId === marker.id ||
 									markerPreview.hoveredMarkerId === marker.id
 										? "scale-125"
 										: ""
 								}`}
-								style={{
-									height: markerSize,
-									width: markerSize,
-								}}
-								fill="white"
-								strokeWidth={1.5}
 							/>
 							<button
 								type="button"
@@ -193,15 +187,15 @@ export function InteractiveStoreMap({
 					);
 				})}
 				{selectedPosition ? (
-					<span
-						role="img"
-						aria-label="Posição selecionada"
+					<MapLocationPin
+						label="Posição selecionada"
+						size={28}
 						style={getMapMarkerStyle(
 							selectedPosition,
 							defaultImageSize,
 							imageSize,
 						)}
-						className="absolute z-20 size-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-primary-foreground bg-primary shadow-md"
+						className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
 					/>
 				) : null}
 			</div>
