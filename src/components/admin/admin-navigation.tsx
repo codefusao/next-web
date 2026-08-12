@@ -51,20 +51,6 @@ function NavigationLinks({ onNavigate }: { onNavigate?: () => void }) {
 	);
 }
 
-function AccountSummary({ name }: { name: string }) {
-	return (
-		<div className="mt-4 flex items-center gap-3 border-t border-border px-3 pt-4">
-			<span className="inline-flex size-10 items-center justify-center rounded-full bg-foreground text-sm font-bold text-background">
-				{name.slice(0, 1).toUpperCase()}
-			</span>
-			<div className="min-w-0">
-				<p className="truncate text-sm font-bold text-foreground">{name}</p>
-				<p className="truncate text-xs text-muted">Administrador</p>
-			</div>
-		</div>
-	);
-}
-
 export function AdminNavigation({
 	email,
 	name,
@@ -104,15 +90,7 @@ export function AdminNavigation({
 						onClick={() => setIsMobileMenuOpen(false)}
 					/>
 					<aside className="relative flex h-full w-72 flex-col border-r border-border bg-background p-4 shadow-xl">
-						<div className="mb-8 flex items-center justify-between">
-							<Image
-								src="/leroy-merlin-logo.png"
-								alt="Leroy Merlin"
-								width={64}
-								height={64}
-								className="rounded-xl object-contain"
-								priority
-							/>
+						<div className="mb-8 flex justify-end">
 							<Button
 								variant="ghost"
 								size="icon"
@@ -124,8 +102,7 @@ export function AdminNavigation({
 						</div>
 						<NavigationLinks onNavigate={() => setIsMobileMenuOpen(false)} />
 						<div className="mt-auto border-t border-border pt-4">
-							<UserActionsMenu email={email} onLogout={onLogout} />
-							<AccountSummary name={name} />
+							<UserActionsMenu email={email} name={name} onLogout={onLogout} />
 						</div>
 					</aside>
 				</div>
@@ -142,8 +119,7 @@ export function AdminNavigation({
 				/>
 				<NavigationLinks />
 				<div className="mt-auto border-t border-border pt-4">
-					<UserActionsMenu email={email} onLogout={onLogout} />
-					<AccountSummary name={name} />
+					<UserActionsMenu email={email} name={name} onLogout={onLogout} />
 				</div>
 			</aside>
 		</>

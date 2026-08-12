@@ -84,7 +84,7 @@ export function StoreSettings({
 					Esta imagem é exibida no cabeçalho da loja.
 				</p>
 				<div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-					<div className="relative h-28 w-full overflow-hidden rounded-[var(--radius-control)] border border-border sm:w-56">
+					<div className="relative h-28 w-full overflow-hidden rounded-[var(--radius-control)] sm:w-56">
 						<Image
 							src={store.bannerUrl}
 							alt={`Banner da loja ${store.name}`}
