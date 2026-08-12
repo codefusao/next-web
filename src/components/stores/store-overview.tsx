@@ -69,7 +69,7 @@ function StoreSummary({ store }: StoreSummaryProps) {
 function StoreQuickActions({ store }: StoreQuickActionsProps) {
 	const actions = [
 		{
-			disabled: true,
+			href: `/stores/${store.id}/catalog`,
 			icon: Package,
 			title: "Catálogo da loja",
 			description: "Gerencie os produtos da loja.",

@@ -1,5 +1,5 @@
 import { ImageUp } from "lucide-react";
-import Image from "next/image";
+import { InteractiveStoreMap } from "@/components/stores/interactive-store-map";
 import { Button } from "@/components/ui/button";
 import type { StoreListItem } from "@/types/store";
 
@@ -28,14 +28,10 @@ export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
 					Alterar mapa
 				</Button>
 			</div>
-			<div className="relative mt-5 aspect-[3/2] w-full overflow-hidden rounded-[var(--radius-control)] bg-background">
-				<Image
-					src={store.storeMapUrl}
-					alt={`Mapa interno da loja ${store.name}`}
-					fill
-					sizes="(min-width: 1280px) 1100px, 100vw"
-					className="object-contain"
-					unoptimized={store.storeMapUrl.startsWith("data:")}
+			<div className="mt-5">
+				<InteractiveStoreMap
+					storeMapUrl={store.storeMapUrl}
+					storeName={store.name}
 				/>
 			</div>
 		</section>

@@ -6,6 +6,7 @@ type SearchInputProps = {
 	placeholder: string;
 	label: string;
 	className?: string;
+	inputClassName?: string;
 };
 
 export function SearchInput({
@@ -14,6 +15,7 @@ export function SearchInput({
 	placeholder,
 	label,
 	className = "",
+	inputClassName = "",
 }: SearchInputProps) {
 	return (
 		<div className={`relative mb-4 ${className}`}>
@@ -26,7 +28,7 @@ export function SearchInput({
 				value={query}
 				onChange={(event) => onQueryChange(event.target.value)}
 				placeholder={placeholder}
-				className="h-[var(--control-height-input)] w-full rounded-[var(--radius-control)] border-[1.5px] border-border bg-card py-3 pl-11 pr-3.5 text-[15px] text-foreground outline-none transition-colors placeholder:text-placeholder focus:border-primary"
+				className={`h-[var(--control-height-input)] w-full rounded-[var(--radius-control)] border-[1.5px] border-border bg-card py-3 pl-11 pr-3.5 text-[15px] text-foreground outline-none transition-colors placeholder:text-placeholder focus:border-primary ${inputClassName}`}
 				aria-label={label}
 			/>
 		</div>

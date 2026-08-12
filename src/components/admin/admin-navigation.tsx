@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 const navigationItems = [
 	{ href: "/products", label: "Produtos", icon: Boxes },
-	{ href: "/stores", label: "Stores", icon: Store },
+	{ href: "/stores", label: "Lojas", icon: Store },
 ] as const;
 
 type AdminNavigationProps = {
