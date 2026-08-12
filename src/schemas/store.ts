@@ -18,6 +18,27 @@ const bannerUrlSchema = z
 		(value) => new URL(value).protocol === "https:",
 		"A imagem deve usar HTTPS",
 	);
+const maxStoreMapFileSize = 5 * 1024 * 1024;
+const acceptedStoreMapTypes = ["image/jpeg", "image/png", "image/webp"];
+
+export const storeMapUploadSchema = z.object({
+	storeMap: z
+		.custom<File>(
+			(value) => typeof File !== "undefined" && value instanceof File,
+			"Selecione uma imagem do mapa",
+		)
+		.refine(
+			(file) => acceptedStoreMapTypes.includes(file.type),
+			"Use uma imagem PNG, JPEG ou WebP",
+		)
+		.refine(
+			(file) => file.size <= maxStoreMapFileSize,
+			"A imagem deve ter no máximo 5 MB",
+		),
+});
+
+export type StoreMapUploadFields = z.output<typeof storeMapUploadSchema>;
+export type StoreMapUploadFormInputs = z.input<typeof storeMapUploadSchema>;
 
 const storeMetadataSchema = {
 	status: z.enum(StoreStatus),

@@ -2,6 +2,7 @@ import { StoreStatus, StoreType } from "@/types/store";
 
 export const defaultStoreImage =
 	"https://cdn.leroymerlin.com.br/contents/rio_barra_c340_880x480.jpg";
+export const defaultStoreMapImage = "/store-map.png";
 
 export const storeStatusLabels: Record<StoreStatus, string> = {
 	[StoreStatus.Open]: "Aberta",
@@ -16,6 +17,7 @@ export const storeTypeLabels: Record<StoreType, string> = {
 
 export const defaultStoreMetadata = {
 	bannerUrl: defaultStoreImage,
+	storeMapUrl: defaultStoreMapImage,
 	status: StoreStatus.Open,
 	type: StoreType.Physical,
 	manager: "Equipe Leroy Merlin",

@@ -17,6 +17,7 @@ export type StoreListItem = {
 	description?: string | null;
 	address?: string;
 	bannerUrl: string;
+	storeMapUrl: string;
 	status: StoreStatus;
 	type: StoreType;
 	manager: string;

@@ -3,7 +3,7 @@
 import { Boxes, ChartNoAxesColumn, Package, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { StoreActionCard } from "@/components/stores/store-action-card";
-import { StoreLocationMap } from "@/components/stores/store-location-map";
+import { StoreFloorMap } from "@/components/stores/store-floor-map";
 import { StoreSettings } from "@/components/stores/store-settings";
 import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
 import type { StoreListItem } from "@/types/store";
@@ -14,6 +14,7 @@ type StoreOverviewProps = {
 	store: StoreListItem;
 	onEdit: () => void;
 	onChangeBanner: () => void;
+	onChangeMap: () => void;
 	onDelete: () => void;
 };
 
@@ -67,6 +68,7 @@ export function StoreOverview({
 	store,
 	onEdit,
 	onChangeBanner,
+	onChangeMap,
 	onDelete,
 }: StoreOverviewProps) {
 	const [activeTab, setActiveTab] =
@@ -107,15 +109,7 @@ export function StoreOverview({
 					onDelete={onDelete}
 				/>
 			) : isMapTab ? (
-				<section
-					aria-labelledby="store-location-title"
-					className="mt-6 rounded-[var(--radius-card)] border border-border bg-card p-5"
-				>
-					<h2 id="store-location-title" className="mb-4 text-lg font-bold">
-						Mapa da loja
-					</h2>
-					<StoreLocationMap address={store.address} storeName={store.name} />
-				</section>
+				<StoreFloorMap store={store} onChangeMap={onChangeMap} />
 			) : (
 				<>
 					<div className="mt-6">

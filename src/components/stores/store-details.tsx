@@ -9,6 +9,7 @@ import { DeleteStoreDialog } from "@/components/stores/delete-store-dialog";
 import { EditStoreModal } from "@/components/stores/edit-store-modal";
 import { StoreBannerModal } from "@/components/stores/store-banner-modal";
 import { StoreDetailsHero } from "@/components/stores/store-details-hero";
+import { StoreMapUploadModal } from "@/components/stores/store-map-upload-modal";
 import { StoreOverview } from "@/components/stores/store-overview";
 import { useInventoryStore } from "@/store/inventory-store";
 import { useStoresStore } from "@/store/stores-store";
@@ -24,11 +25,13 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 	);
 	const removeStore = useStoresStore((state) => state.removeStore);
 	const updateStoreBanner = useStoresStore((state) => state.updateStoreBanner);
+	const updateStoreMap = useStoresStore((state) => state.updateStoreMap);
 	const removeStoreInventory = useInventoryStore(
 		(state) => state.removeStoreInventory,
 	);
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 	const [isBannerModalOpen, setIsBannerModalOpen] = useState(false);
+	const [isMapUploadModalOpen, setIsMapUploadModalOpen] = useState(false);
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
 	function deleteStore() {
@@ -66,6 +69,7 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 					store={store}
 					onEdit={() => setIsEditModalOpen(true)}
 					onChangeBanner={() => setIsBannerModalOpen(true)}
+					onChangeMap={() => setIsMapUploadModalOpen(true)}
 					onDelete={() => setIsDeleteDialogOpen(true)}
 				/>
 			</section>
@@ -84,6 +88,17 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 						updateStoreBanner(store.id, bannerUrl);
 						toast.success("Banner da loja atualizado.");
 						setIsBannerModalOpen(false);
+					}}
+				/>
+			) : null}
+
+			{isMapUploadModalOpen ? (
+				<StoreMapUploadModal
+					onClose={() => setIsMapUploadModalOpen(false)}
+					onSave={(storeMapUrl) => {
+						updateStoreMap(store.id, storeMapUrl);
+						toast.success("Mapa da loja atualizado.");
+						setIsMapUploadModalOpen(false);
 					}}
 				/>
 			) : null}

@@ -9,6 +9,7 @@ type StoresState = {
 	addStore: (store: StoreFields) => void;
 	updateStore: (storeId: string, changes: UpdateStoreFields) => void;
 	updateStoreBanner: (storeId: string, bannerUrl: string) => void;
+	updateStoreMap: (storeId: string, storeMapUrl: string) => void;
 	removeStore: (storeId: string) => void;
 };
 
@@ -21,7 +22,10 @@ export const useStoresStore = create<StoresState>()((set) => ({
 	stores: initialStores,
 	addStore: (store) =>
 		set((state) => ({
-			stores: [{ id: crypto.randomUUID(), ...store }, ...state.stores],
+			stores: [
+				{ ...defaultStoreMetadata, id: crypto.randomUUID(), ...store },
+				...state.stores,
+			],
 		})),
 	updateStore: (storeId, changes) =>
 		set((state) => ({
@@ -39,6 +43,12 @@ export const useStoresStore = create<StoresState>()((set) => ({
 		set((state) => ({
 			stores: state.stores.map((store) =>
 				store.id === storeId ? { ...store, bannerUrl } : store,
+			),
+		})),
+	updateStoreMap: (storeId, storeMapUrl) =>
+		set((state) => ({
+			stores: state.stores.map((store) =>
+				store.id === storeId ? { ...store, storeMapUrl } : store,
 			),
 		})),
 	removeStore: (storeId) =>
