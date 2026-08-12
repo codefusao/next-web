@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { storeValidation } from "@/constants/store";
 import { StoreStatus, StoreType } from "@/types/store";
 
 const addressSchema = z.string().trim().min(5, "Informe o endereço da loja");
@@ -6,7 +7,8 @@ const phoneSchema = z
 	.string()
 	.trim()
 	.refine(
-		(value) => value.replace(/\D/g, "").length >= 10,
+		(value) =>
+			value.replace(/\D/g, "").length >= storeValidation.minimumPhoneDigits,
 		"Informe um telefone válido",
 	);
 const areaSchema = z.coerce
@@ -18,9 +20,6 @@ const bannerUrlSchema = z
 		(value) => new URL(value).protocol === "https:",
 		"A imagem deve usar HTTPS",
 	);
-const maxStoreMapFileSize = 5 * 1024 * 1024;
-const acceptedStoreMapTypes = ["image/jpeg", "image/png", "image/webp"];
-
 export const storeMapUploadSchema = z.object({
 	storeMap: z
 		.custom<File>(
@@ -28,11 +27,11 @@ export const storeMapUploadSchema = z.object({
 			"Selecione uma imagem do mapa",
 		)
 		.refine(
-			(file) => acceptedStoreMapTypes.includes(file.type),
+			(file) => storeValidation.acceptedMapTypes.includes(file.type as never),
 			"Use uma imagem PNG, JPEG ou WebP",
 		)
 		.refine(
-			(file) => file.size <= maxStoreMapFileSize,
+			(file) => file.size <= storeValidation.maximumMapFileSize,
 			"A imagem deve ter no máximo 5 MB",
 		),
 });
@@ -64,11 +63,17 @@ export const storeSchema = z.object({
 		.string()
 		.trim()
 		.transform((value) => value.replace(/\D/g, ""))
-		.refine((value) => value.length === 14, "O CNPJ deve conter 14 dígitos"),
+		.refine(
+			(value) => value.length === storeValidation.cnpjDigits,
+			"O CNPJ deve conter 14 dígitos",
+		),
 	description: z
 		.string()
 		.trim()
-		.max(500, "A descrição pode ter no máximo 500 caracteres")
+		.max(
+			storeValidation.maximumDescriptionLength,
+			"A descrição pode ter no máximo 500 caracteres",
+		)
 		.transform((value) => value || undefined),
 	bannerUrl: bannerUrlSchema,
 	...storeMetadataSchema,
@@ -93,13 +98,17 @@ export const updateStoreSchema = z.object({
 		.trim()
 		.transform((value) => value.replace(/\D/g, "") || undefined)
 		.refine(
-			(value) => value === undefined || value.length === 14,
+			(value) =>
+				value === undefined || value.length === storeValidation.cnpjDigits,
 			"O CNPJ deve conter 14 dígitos",
 		),
 	description: z
 		.string()
 		.trim()
-		.max(500, "A descrição pode ter no máximo 500 caracteres")
+		.max(
+			storeValidation.maximumDescriptionLength,
+			"A descrição pode ter no máximo 500 caracteres",
+		)
 		.transform((value) => value || null),
 	bannerUrl: bannerUrlSchema,
 	...storeMetadataSchema,

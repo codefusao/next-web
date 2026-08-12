@@ -3,6 +3,7 @@
 import { ArrowLeft, Boxes, MapPin } from "lucide-react";
 import Link from "next/link";
 import { InventoryList } from "@/components/inventory/inventory-list";
+import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
 import { useStoresStore } from "@/store/stores-store";
 
 type StoreInventoryProps = {
@@ -16,21 +17,7 @@ export function StoreInventory({ storeId }: StoreInventoryProps) {
 
 	if (!store) {
 		return (
-			<section className="mx-auto w-full max-w-7xl px-4 py-6 text-center sm:px-6 sm:py-8">
-				<div className="rounded-[var(--radius-card)] border border-dashed border-border bg-card px-6 py-14">
-					<h1 className="text-2xl font-bold">Loja não encontrada</h1>
-					<p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-muted">
-						A loja solicitada não está disponível na lista local.
-					</p>
-					<Link
-						href="/stores"
-						className="mt-6 inline-flex h-10 items-center gap-2 rounded-[var(--radius-control)] bg-primary px-4 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-					>
-						<ArrowLeft aria-hidden="true" className="size-4" />
-						Voltar para lojas
-					</Link>
-				</div>
-			</section>
+			<StoreNotFoundState className="mx-auto w-full max-w-7xl px-4 py-6 text-center sm:px-6 sm:py-8" />
 		);
 	}
 

@@ -1,3 +1,5 @@
+import { demoStockConfig } from "@/constants/inventory";
+
 type Identifiable = {
 	id: string;
 };
@@ -8,7 +10,8 @@ function hashValue(value: string) {
 	let hash = 0;
 
 	for (const character of value) {
-		hash = (hash * 31 + character.charCodeAt(0)) >>> 0;
+		hash =
+			(hash * demoStockConfig.hashMultiplier + character.charCodeAt(0)) >>> 0;
 	}
 
 	return hash;
@@ -17,7 +20,10 @@ function hashValue(value: string) {
 export function getDemoStockQuantity(storeId: string, productId: string) {
 	const hash = hashValue(`${storeId}:${productId}`);
 
-	return hash % 11 === 0 ? 0 : (hash % 240) + 10;
+	return hash % demoStockConfig.zeroStockDivisor === 0
+		? 0
+		: (hash % demoStockConfig.maximumQuantity) +
+				demoStockConfig.minimumQuantity;
 }
 
 export function createDemoStockByStoreId(

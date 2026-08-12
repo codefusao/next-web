@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { defaultStoreMetadata } from "@/constants/store";
 import mockStores from "@/data/mock-stores.json";
-import type { StoreFields, UpdateStoreFields } from "@/schemas/store";
+import type { StoreFields } from "@/schemas/store";
 import type { StoreListItem } from "@/types/store";
+
+export type StorePatch = Partial<Omit<StoreListItem, "id">>;
 
 type StoresState = {
 	stores: StoreListItem[];
 	addStore: (store: StoreFields) => void;
-	updateStore: (storeId: string, changes: UpdateStoreFields) => void;
-	updateStoreBanner: (storeId: string, bannerUrl: string) => void;
-	updateStoreMap: (storeId: string, storeMapUrl: string) => void;
+	patchStore: (storeId: string, changes: StorePatch) => void;
 	removeStore: (storeId: string) => void;
 };
 
@@ -27,28 +27,19 @@ export const useStoresStore = create<StoresState>()((set) => ({
 				...state.stores,
 			],
 		})),
-	updateStore: (storeId, changes) =>
+	patchStore: (storeId, changes) =>
 		set((state) => ({
 			stores: state.stores.map((store) =>
 				store.id === storeId
 					? {
 							...store,
-							...changes,
-							...(changes.cnpj === undefined ? { cnpj: store.cnpj } : {}),
+							...Object.fromEntries(
+								Object.entries(changes).filter(
+									([, value]) => value !== undefined,
+								),
+							),
 						}
 					: store,
-			),
-		})),
-	updateStoreBanner: (storeId, bannerUrl) =>
-		set((state) => ({
-			stores: state.stores.map((store) =>
-				store.id === storeId ? { ...store, bannerUrl } : store,
-			),
-		})),
-	updateStoreMap: (storeId, storeMapUrl) =>
-		set((state) => ({
-			stores: state.stores.map((store) =>
-				store.id === storeId ? { ...store, storeMapUrl } : store,
 			),
 		})),
 	removeStore: (storeId) =>

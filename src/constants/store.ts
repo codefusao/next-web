@@ -4,6 +4,14 @@ export const defaultStoreImage =
 	"https://cdn.leroymerlin.com.br/contents/rio_barra_c340_880x480.jpg";
 export const defaultStoreMapImage = "/store-map.png";
 
+export const storeValidation = {
+	minimumPhoneDigits: 10,
+	cnpjDigits: 14,
+	maximumDescriptionLength: 500,
+	maximumMapFileSize: 5 * 1024 * 1024,
+	acceptedMapTypes: ["image/jpeg", "image/png", "image/webp"],
+} as const;
+
 export const storeStatusLabels: Record<StoreStatus, string> = {
 	[StoreStatus.Open]: "Aberta",
 	[StoreStatus.Closed]: "Fechada",

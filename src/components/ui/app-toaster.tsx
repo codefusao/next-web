@@ -1,6 +1,7 @@
 "use client";
 
 import { Toaster } from "sonner";
+import { toastDuration } from "@/constants/ui";
 import { useTheme } from "@/hooks/use-theme";
 
 export function AppToaster() {
@@ -11,7 +12,7 @@ export function AppToaster() {
 			<Toaster
 				theme={mode}
 				position="top-right"
-				duration={4000}
+				duration={toastDuration}
 				closeButton
 				toastOptions={{
 					classNames: {

@@ -4,7 +4,7 @@ import type {
 	Path,
 	UseFormRegister,
 } from "react-hook-form";
-import { FormField, inputBorderClass } from "@/components/ui/form-field";
+import { FormField, formControlClass } from "@/components/ui/form-field";
 import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
 import type { StoreFormInputs } from "@/schemas/store";
 import { StoreStatus, StoreType } from "@/types/store";
@@ -20,7 +20,7 @@ type StoreMetadataFormInputs = Pick<
 >;
 
 function inputClass(hasError: boolean) {
-	return `h-[var(--control-height-input)] w-full rounded-[var(--radius-control)] border-[1.5px] bg-background px-3.5 text-[15px] text-foreground outline-none transition-colors placeholder:text-placeholder focus:border-primary ${inputBorderClass(hasError)}`;
+	return formControlClass({ hasError });
 }
 
 function fieldName<T extends FieldValues>(name: keyof StoreMetadataFormInputs) {

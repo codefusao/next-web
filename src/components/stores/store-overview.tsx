@@ -20,6 +20,8 @@ type StoreOverviewProps = {
 
 type StoreSummaryProps = Pick<StoreOverviewProps, "store">;
 
+type StoreQuickActionsProps = Pick<StoreOverviewProps, "store">;
+
 function StoreSummary({ store }: StoreSummaryProps) {
 	const items = [
 		{ label: "Status", value: storeStatusLabels[store.status] },
@@ -60,6 +62,51 @@ function StoreSummary({ store }: StoreSummaryProps) {
 					</div>
 				))}
 			</dl>
+		</section>
+	);
+}
+
+function StoreQuickActions({ store }: StoreQuickActionsProps) {
+	const actions = [
+		{
+			disabled: true,
+			icon: Package,
+			title: "Catálogo da loja",
+			description: "Gerencie os produtos da loja.",
+		},
+		{
+			href: `/stores/${store.id}/inventory`,
+			icon: Boxes,
+			title: "Estoque",
+			description: "Acompanhe o estoque da loja.",
+		},
+		{
+			disabled: true,
+			icon: ShoppingCart,
+			title: "Pedidos",
+			description: "Gerencie os pedidos da loja.",
+		},
+		{
+			disabled: true,
+			icon: ChartNoAxesColumn,
+			title: "Relatórios",
+			description: "Acesse o desempenho da loja.",
+		},
+	] as const;
+
+	return (
+		<section
+			aria-labelledby="quick-actions-title"
+			className="mt-6 rounded-[var(--radius-card)] border border-border bg-card p-5"
+		>
+			<h2 id="quick-actions-title" className="text-lg font-bold">
+				Atalhos rápidos
+			</h2>
+			<div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+				{actions.map((action) => (
+					<StoreActionCard key={action.title} {...action} />
+				))}
+			</div>
 		</section>
 	);
 }
@@ -116,40 +163,7 @@ export function StoreOverview({
 						<StoreSummary store={store} />
 					</div>
 
-					<section
-						aria-labelledby="quick-actions-title"
-						className="mt-6 rounded-[var(--radius-card)] border border-border bg-card p-5"
-					>
-						<h2 id="quick-actions-title" className="text-lg font-bold">
-							Atalhos rápidos
-						</h2>
-						<div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-							<StoreActionCard
-								disabled
-								icon={Package}
-								title="Catálogo da loja"
-								description="Gerencie os produtos da loja."
-							/>
-							<StoreActionCard
-								href={`/stores/${store.id}/inventory`}
-								icon={Boxes}
-								title="Estoque"
-								description="Acompanhe o estoque da loja."
-							/>
-							<StoreActionCard
-								disabled
-								icon={ShoppingCart}
-								title="Pedidos"
-								description="Gerencie os pedidos da loja."
-							/>
-							<StoreActionCard
-								disabled
-								icon={ChartNoAxesColumn}
-								title="Relatórios"
-								description="Acesse o desempenho da loja."
-							/>
-						</div>
-					</section>
+					<StoreQuickActions store={store} />
 				</>
 			)}
 		</section>
