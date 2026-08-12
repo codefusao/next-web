@@ -1,10 +1,10 @@
 import { normalizeSearchText } from "@/lib/normalize-search-text";
-import type { ProductPlaceholder } from "@/store/product-store";
+import type { Product } from "@/types/product";
 
-export function filterProducts(
-	products: readonly ProductPlaceholder[],
+export function filterProducts<T extends Product>(
+	products: readonly T[],
 	query: string,
-) {
+): readonly T[] {
 	const normalizedQuery = normalizeSearchText(query.trim());
 	if (!normalizedQuery) return products;
 

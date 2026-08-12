@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, MapPin } from "lucide-react";
+import { ArrowLeft, Boxes, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -8,9 +8,11 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { DeleteStoreDialog } from "@/components/stores/delete-store-dialog";
 import { EditStoreModal } from "@/components/stores/edit-store-modal";
+import { StoreActionCard } from "@/components/stores/store-action-card";
 import { StoreActionsMenu } from "@/components/stores/store-actions-menu";
 import { StoreLocationMap } from "@/components/stores/store-location-map";
 import { defaultStoreImage } from "@/constants/store";
+import { useInventoryStore } from "@/store/inventory-store";
 import { useStoresStore } from "@/store/stores-store";
 
 type StoreDetailsProps = {
@@ -23,10 +25,14 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 		state.stores.find((item) => item.id === storeId),
 	);
 	const removeStore = useStoresStore((state) => state.removeStore);
+	const removeStoreInventory = useInventoryStore(
+		(state) => state.removeStoreInventory,
+	);
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
 	function deleteStore() {
+		removeStoreInventory(storeId);
 		removeStore(storeId);
 		toast.success("Loja removida da lista local.");
 		router.replace("/stores");
@@ -113,6 +119,19 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 						</div>
 					</div>
 				</div>
+			</div>
+
+			<div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
+				<section aria-label="Ações da loja">
+					<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+						<StoreActionCard
+							href={`/stores/${store.id}/inventory`}
+							icon={Boxes}
+							title="Estoque"
+							description="Consulte produtos e ajuste as quantidades disponíveis."
+						/>
+					</div>
+				</section>
 			</div>
 
 			<EditStoreModal

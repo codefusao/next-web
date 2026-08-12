@@ -1,16 +1,9 @@
 import { create } from "zustand";
 import type { ProductCategory } from "@/constants/product-categories";
 import mockProducts from "@/data/mock-products.json";
+import type { Product } from "@/types/product";
 
-export type ProductPlaceholder = {
-	id: string;
-	codigo: string;
-	nome: string;
-	categoria: ProductCategory;
-	precos_e_condicoes: string[];
-	imagem: string | null;
-	imagem_thumb: string | null;
-};
+export type ProductPlaceholder = Product;
 
 const initialProducts: ProductPlaceholder[] = mockProducts.map((product) => ({
 	...product,
