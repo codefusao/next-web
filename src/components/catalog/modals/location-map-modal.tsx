@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MapPin, Save } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { InteractiveStoreMap } from "@/components/stores/interactive-store-map";
+import { InteractiveStoreMap } from "@/components/catalog/map/interactive-store-map";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import {

@@ -1,8 +1,8 @@
 "use client";
 
 import { MapPin } from "lucide-react";
+import { CatalogProductActions } from "@/components/catalog/products/catalog-product-actions";
 import { ProductThumbnail } from "@/components/products/product-thumbnail";
-import { CatalogProductActions } from "@/components/stores/catalog-product-actions";
 import type { CatalogProductEntry } from "@/types/store-catalog";
 
 type CatalogProductCardProps = {

@@ -2,7 +2,7 @@
 
 import { Store } from "lucide-react";
 import { useState } from "react";
-import { AddStoreForm } from "@/components/stores/add-store-form";
+import { AddStoreForm } from "@/components/stores/forms/add-store-form";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 
@@ -23,7 +23,7 @@ export function AddStoreModal() {
 			{isOpen ? (
 				<Modal
 					title="Adicionar loja"
-					description="Inclua uma unidade na lista local."
+					description="Inclua uma nova unidade."
 					closeLabel="Fechar formulário de loja"
 					onClose={() => setIsOpen(false)}
 					size="lg"

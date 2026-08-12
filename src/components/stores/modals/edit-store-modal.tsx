@@ -1,4 +1,4 @@
-import { EditStoreForm } from "@/components/stores/edit-store-form";
+import { EditStoreForm } from "@/components/stores/forms/edit-store-form";
 import { Modal } from "@/components/ui/modal";
 import type { StoreListItem } from "@/types/store";
 

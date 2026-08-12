@@ -3,8 +3,8 @@
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { StoreMapControls } from "@/components/stores/store-map-controls";
-import { StoreMapMarkerPreview } from "@/components/stores/store-map-marker-preview";
+import { StoreMapControls } from "@/components/catalog/map/map-controls";
+import { StoreMapMarkerPreview } from "@/components/catalog/map/map-marker-preview";
 import { useMapMarkerPreview } from "@/hooks/use-map-marker-preview";
 import { useStoreMapTransform } from "@/hooks/use-store-map-transform";
 import {

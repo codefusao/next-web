@@ -16,7 +16,7 @@ export function DeleteStoreDialog({
 	return (
 		<Modal
 			title="Excluir loja?"
-			description={`A loja ${storeName} será removida da lista local. Esta ação não pode ser desfeita.`}
+			description={`A loja ${storeName} será removida. Esta ação não pode ser desfeita.`}
 			closeLabel="Fechar exclusão de loja"
 			onClose={onCancel}
 		>

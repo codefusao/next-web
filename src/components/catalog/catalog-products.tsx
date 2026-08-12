@@ -1,6 +1,6 @@
 "use client";
 
-import { CatalogProductCard } from "@/components/stores/catalog-product-card";
+import { CatalogProductCard } from "@/components/catalog/products/catalog-product-card";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 import type { CatalogProductEntry } from "@/types/store-catalog";
 
@@ -18,7 +18,7 @@ type StoreCatalogProductsProps = {
 	onNextPage: () => void;
 };
 
-export function StoreCatalogProducts({
+export function CatalogProducts({
 	products,
 	highlightedLocationId,
 	activePage,

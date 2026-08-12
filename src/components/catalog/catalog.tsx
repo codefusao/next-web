@@ -2,12 +2,12 @@
 
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { CatalogLocationMapModal } from "@/components/stores/catalog-location-map-modal";
-import { CatalogProductPickerModal } from "@/components/stores/catalog-product-picker-modal";
-import type { StoreMapMarker } from "@/components/stores/interactive-store-map";
-import { RemoveCatalogLocationDialog } from "@/components/stores/remove-catalog-location-dialog";
-import { StoreCatalogContent } from "@/components/stores/store-catalog-content";
-import { StoreCatalogHeader } from "@/components/stores/store-catalog-header";
+import { CatalogContent } from "@/components/catalog/catalog-content";
+import { CatalogHeader } from "@/components/catalog/catalog-header";
+import type { StoreMapMarker } from "@/components/catalog/map/interactive-store-map";
+import { CatalogLocationMapModal } from "@/components/catalog/modals/location-map-modal";
+import { CatalogProductPickerModal } from "@/components/catalog/modals/product-picker-modal";
+import { RemoveCatalogLocationDialog } from "@/components/catalog/modals/remove-location-dialog";
 import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
 import type { StoreCatalogLocationFields } from "@/schemas/store-catalog";
 import { useProductStore } from "@/store/product-store";
@@ -31,7 +31,7 @@ type LocationSelection = {
 	location: StoreCatalogLocation;
 };
 
-export function StoreCatalog({ storeId }: StoreCatalogProps) {
+export function Catalog({ storeId }: StoreCatalogProps) {
 	const store = useStoresStore((state) =>
 		state.stores.find((item) => item.id === storeId),
 	);
@@ -123,11 +123,11 @@ export function StoreCatalog({ storeId }: StoreCatalogProps) {
 
 	return (
 		<section className="mx-auto flex min-h-dvh w-full max-w-7xl flex-col justify-center px-2 py-3 sm:px-3 sm:py-4 lg:px-4">
-			<StoreCatalogHeader
+			<CatalogHeader
 				store={store}
 				onAddProduct={() => setIsProductPickerOpen(true)}
 			/>
-			<StoreCatalogContent
+			<CatalogContent
 				store={store}
 				products={catalogProducts}
 				markers={markers}

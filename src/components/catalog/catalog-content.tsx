@@ -2,12 +2,12 @@
 
 import { MapPinned } from "lucide-react";
 import { useMemo, useState } from "react";
-import { CatalogProductControls } from "@/components/stores/catalog-product-controls";
+import { CatalogProducts } from "@/components/catalog/catalog-products";
 import {
 	InteractiveStoreMap,
 	type StoreMapMarker,
-} from "@/components/stores/interactive-store-map";
-import { StoreCatalogProducts } from "@/components/stores/store-catalog-products";
+} from "@/components/catalog/map/interactive-store-map";
+import { CatalogProductControls } from "@/components/catalog/products/catalog-product-controls";
 import { EmptyState } from "@/components/ui/empty-state";
 import { useCatalogProductBrowser } from "@/hooks/use-catalog-product-browser";
 import type { StoreListItem } from "@/types/store";
@@ -31,7 +31,7 @@ type StoreCatalogContentProps = {
 	) => void;
 };
 
-export function StoreCatalogContent({
+export function CatalogContent({
 	store,
 	products,
 	markers,
@@ -133,7 +133,7 @@ export function StoreCatalogContent({
 							}
 						/>
 					) : (
-						<StoreCatalogProducts
+						<CatalogProducts
 							products={visibleItems}
 							highlightedLocationId={highlightedLocationId}
 							activePage={activePage}

@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ImageUp, Save } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FormField, formControlClass } from "@/components/ui/form-field";
 import { Modal } from "@/components/ui/modal";
@@ -25,19 +26,20 @@ export function StoreMapUploadModal({
 }: StoreMapUploadModalProps) {
 	const [fileName, setFileName] = useState("");
 	const {
+		control,
 		handleSubmit,
-		register,
-		setValue,
 		formState: { errors, isDirty, isSubmitting },
 	} = useForm<StoreMapUploadFormInputs, undefined, StoreMapUploadFields>({
 		resolver: zodResolver(storeMapUploadSchema),
 		reValidateMode: "onChange",
 	});
-	const { ref, ...storeMapInput } = register("storeMap");
-
 	async function saveMap({ storeMap }: StoreMapUploadFields) {
-		const storeMapUrl = await readFileAsDataUrl(storeMap);
-		onSave(storeMapUrl);
+		try {
+			const storeMapUrl = await readFileAsDataUrl(storeMap);
+			onSave(storeMapUrl);
+		} catch {
+			toast.error("Não foi possível processar a imagem do mapa.");
+		}
 	}
 
 	return (
@@ -54,34 +56,39 @@ export function StoreMapUploadModal({
 					error={errors.storeMap?.message}
 					hint={fileName ? `Selecionado: ${fileName}` : undefined}
 				>
-					<input
-						{...storeMapInput}
-						ref={ref}
-						id="store-map-upload"
-						type="file"
-						accept="image/png,image/jpeg,image/webp"
-						className={formControlClass({
-							kind: "file",
-							hasError: Boolean(errors.storeMap),
-						})}
-						aria-invalid={Boolean(errors.storeMap)}
-						onChange={(event) => {
-							const file = event.target.files?.[0];
-							setFileName(file?.name ?? "");
-							if (file) {
-								setValue("storeMap", file, {
-									shouldDirty: true,
-									shouldValidate: true,
-								});
-							}
-						}}
+					<Controller
+						control={control}
+						name="storeMap"
+						render={({ field }) => (
+							<input
+								name={field.name}
+								ref={field.ref}
+								id="store-map-upload"
+								type="file"
+								accept="image/png,image/jpeg,image/webp"
+								className={formControlClass({
+									kind: "file",
+									hasError: Boolean(errors.storeMap),
+								})}
+								aria-invalid={Boolean(errors.storeMap)}
+								onBlur={field.onBlur}
+								onChange={(event) => {
+									const file = event.target.files?.item(0);
+									setFileName(file?.name ?? "");
+									field.onChange(file);
+								}}
+							/>
+						)}
 					/>
 				</FormField>
 				<div className="mt-6 flex justify-end gap-3 border-t border-border pt-6">
 					<Button type="button" variant="outline" onClick={onClose}>
 						Cancelar
 					</Button>
-					<Button type="submit" disabled={!isDirty || isSubmitting}>
+					<Button
+						type="submit"
+						disabled={!fileName || !isDirty || isSubmitting}
+					>
 						{isSubmitting ? (
 							<ImageUp aria-hidden="true" className="size-5" />
 						) : (

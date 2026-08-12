@@ -1,4 +1,4 @@
-import { StoreCatalog } from "@/components/stores/store-catalog";
+import { Catalog } from "@/components/catalog/catalog";
 
 type StoreCatalogPageProps = {
 	params: Promise<{ storeId: string }>;
@@ -9,5 +9,5 @@ export default async function StoreCatalogPage({
 }: StoreCatalogPageProps) {
 	const { storeId } = await params;
 
-	return <StoreCatalog storeId={storeId} />;
+	return <Catalog storeId={storeId} />;
 }

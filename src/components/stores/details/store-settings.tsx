@@ -113,7 +113,7 @@ export function StoreSettings({
 							Excluir loja
 						</h2>
 						<p className="mt-1 text-sm text-muted">
-							Remova permanentemente esta loja e seu estoque local.
+							Remova permanentemente esta loja e seu estoque associado.
 						</p>
 					</div>
 					<Button

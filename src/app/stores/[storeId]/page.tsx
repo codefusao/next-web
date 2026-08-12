@@ -1,4 +1,4 @@
-import { StoreDetails } from "@/components/stores/store-details";
+import { StoreDetails } from "@/components/stores/details/store-details";
 
 type StoreDetailsPageProps = {
 	params: Promise<{ storeId: string }>;

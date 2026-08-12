@@ -2,9 +2,9 @@
 
 import { Boxes, ChartNoAxesColumn, Package, ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { StoreActionCard } from "@/components/stores/store-action-card";
-import { StoreFloorMap } from "@/components/stores/store-floor-map";
-import { StoreSettings } from "@/components/stores/store-settings";
+import { StoreActionCard } from "@/components/stores/details/store-action-card";
+import { StoreFloorMap } from "@/components/stores/details/store-floor-map";
+import { StoreSettings } from "@/components/stores/details/store-settings";
 import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
 import type { StoreListItem } from "@/types/store";
 

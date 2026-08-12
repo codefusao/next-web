@@ -2,7 +2,7 @@
 
 import { PackagePlus } from "lucide-react";
 import { useState } from "react";
-import { AddProductForm } from "@/components/products/add-product-form";
+import { AddProductForm } from "@/components/products/forms/add-product-form";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 

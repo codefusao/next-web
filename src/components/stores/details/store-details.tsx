@@ -3,14 +3,14 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { DeleteStoreDialog } from "@/components/stores/delete-store-dialog";
-import { ClearStoreCatalogDialog } from "@/components/stores/clear-store-catalog-dialog";
-import { EditStoreModal } from "@/components/stores/edit-store-modal";
-import { StoreBannerModal } from "@/components/stores/store-banner-modal";
-import { StoreDetailsHero } from "@/components/stores/store-details-hero";
-import { StoreMapUploadModal } from "@/components/stores/store-map-upload-modal";
+import { StoreDetailsHero } from "@/components/stores/details/store-details-hero";
+import { StoreOverview } from "@/components/stores/details/store-overview";
+import { ClearStoreCatalogDialog } from "@/components/stores/modals/clear-store-catalog-dialog";
+import { DeleteStoreDialog } from "@/components/stores/modals/delete-store-dialog";
+import { EditStoreModal } from "@/components/stores/modals/edit-store-modal";
+import { StoreBannerModal } from "@/components/stores/modals/store-banner-modal";
+import { StoreMapUploadModal } from "@/components/stores/modals/store-map-upload-modal";
 import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
-import { StoreOverview } from "@/components/stores/store-overview";
 import { useInventoryStore } from "@/store/inventory-store";
 import {
 	emptyStoreCatalogItems,
@@ -50,7 +50,7 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 		removeStoreInventory(storeId);
 		clearStoreCatalog(storeId);
 		removeStore(storeId);
-		toast.success("Loja removida da lista local.");
+		toast.success("Loja removida com sucesso.");
 		router.replace("/stores");
 	}
 

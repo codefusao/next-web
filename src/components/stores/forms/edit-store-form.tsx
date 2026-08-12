@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Save } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { StoreBasicFormFields } from "@/components/stores/store-basic-form-fields";
-import { StoreMetadataFormFields } from "@/components/stores/store-metadata-form-fields";
+import { StoreBasicFormFields } from "@/components/stores/forms/store-basic-form-fields";
+import { StoreMetadataFormFields } from "@/components/stores/forms/store-metadata-form-fields";
 import { Button } from "@/components/ui/button";
 import {
 	type UpdateStoreFields,

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PackagePlus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { ProductFormFields } from "@/components/products/product-form-fields";
+import { ProductFormFields } from "@/components/products/forms/product-form-fields";
 import { Button } from "@/components/ui/button";
 import {
 	type ProductCategory,
@@ -74,7 +74,7 @@ export function AddProductForm({ onSuccess }: AddProductFormProps) {
 			imagem_thumb: fields.thumbnailUrl || null,
 		});
 		reset(defaultValues);
-		toast.success("Produto adicionado à lista local.");
+		toast.success("Produto adicionado com sucesso.");
 		onSuccess();
 	}
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { Store } from "lucide-react";
-import { AddStoreModal } from "@/components/stores/add-store-modal";
+import { AddStoreModal } from "@/components/stores/modals/add-store-modal";
 import { StoreCard } from "@/components/stores/store-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PaginationControls } from "@/components/ui/pagination-controls";

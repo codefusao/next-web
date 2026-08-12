@@ -1,5 +1,5 @@
 import { ImageUp } from "lucide-react";
-import { InteractiveStoreMap } from "@/components/stores/interactive-store-map";
+import { InteractiveStoreMap } from "@/components/catalog/map/interactive-store-map";
 import { Button } from "@/components/ui/button";
 import type { StoreListItem } from "@/types/store";
 

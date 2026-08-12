@@ -13,7 +13,7 @@ export function StoreNotFoundState({ className }: StoreNotFoundStateProps) {
 				className="py-14"
 				titleAs="h1"
 				title="Loja não encontrada"
-				description="A loja solicitada não está disponível na lista local."
+				description="A loja solicitada não está disponível."
 				action={
 					<Link
 						href="/stores"

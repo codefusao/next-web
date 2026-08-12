@@ -10,7 +10,7 @@ type StoreCatalogHeaderProps = {
 	onAddProduct: () => void;
 };
 
-export function StoreCatalogHeader({
+export function CatalogHeader({
 	store,
 	onAddProduct,
 }: StoreCatalogHeaderProps) {
