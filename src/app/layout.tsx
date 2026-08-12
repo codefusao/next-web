@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { QueryProvider } from "@/components/providers/query-provider";
 import { AppToaster } from "@/components/ui/app-toaster";
 import "./globals.css";
 
@@ -15,7 +16,7 @@ export default function RootLayout({
 	return (
 		<html lang="en" className="h-full antialiased">
 			<body className="min-h-full flex flex-col">
-				{children}
+				<QueryProvider>{children}</QueryProvider>
 				<AppToaster />
 			</body>
 		</html>

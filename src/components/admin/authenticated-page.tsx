@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { AdminNavigation } from "@/components/admin/admin-navigation";
+import { Navigation } from "@/components/navigation/navigation";
 import { PageLoadingState } from "@/components/ui/page-loading-state";
 import { useTheme } from "@/hooks/use-theme";
 import { AuthStatus, useAuthStore } from "@/store/auth-store";
@@ -18,6 +18,11 @@ export function AuthenticatedPage({ children }: AuthenticatedPageProps) {
 	const authStatus = useAuthStore((state) => state.authStatus);
 	const logout = useAuthStore((state) => state.logout);
 
+	function handleLogout() {
+		logout();
+		router.replace("/login");
+	}
+
 	useEffect(() => {
 		if (authStatus === AuthStatus.Unauthenticated) router.replace("/login");
 	}, [authStatus, router]);
@@ -31,14 +36,7 @@ export function AuthenticatedPage({ children }: AuthenticatedPageProps) {
 			data-theme={theme}
 			className="min-h-full flex-1 bg-background text-foreground lg:flex"
 		>
-			<AdminNavigation
-				email={user.email}
-				name={user.name}
-				onLogout={() => {
-					logout();
-					router.replace("/login");
-				}}
-			/>
+			<Navigation email={user.email} onLogout={handleLogout} />
 			<div className="min-w-0 flex-1">{children}</div>
 		</main>
 	);

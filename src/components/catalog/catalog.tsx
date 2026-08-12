@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useReducer } from "react";
 import { toast } from "sonner";
 import { CatalogContent } from "@/components/catalog/catalog-content";
 import { CatalogHeader } from "@/components/catalog/catalog-header";
@@ -9,71 +9,127 @@ import { CatalogLocationMapModal } from "@/components/catalog/modals/location-ma
 import { CatalogProductPickerModal } from "@/components/catalog/modals/product-picker-modal";
 import { RemoveCatalogLocationDialog } from "@/components/catalog/modals/remove-location-dialog";
 import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
-import type { StoreCatalogLocationFields } from "@/schemas/store-catalog";
-import { useProductStore } from "@/store/product-store";
+import { useProductsQuery } from "@/hooks/use-products-query";
 import {
-	emptyStoreCatalogItems,
-	useStoreCatalogStore,
-} from "@/store/store-catalog-store";
-import { useStoresStore } from "@/store/stores-store";
+	useCreateStoreCatalogProductMutation,
+	useRemoveStoreCatalogProductMutation,
+	useStoreCatalogQuery,
+	useUpdateStoreCatalogProductMutation,
+} from "@/hooks/use-store-catalog-query";
+import { useStoresQuery } from "@/hooks/use-stores-query";
+import type { StoreCatalogLocationFields } from "@/schemas/store-catalog";
 import type { Product } from "@/types/product";
-import type {
-	CatalogProduct,
-	StoreCatalogLocation,
-} from "@/types/store-catalog";
+import type { CatalogProduct } from "@/types/store-catalog";
 
 type StoreCatalogProps = {
 	storeId: string;
 };
 
-type LocationSelection = {
-	product: CatalogProduct;
-	location: StoreCatalogLocation;
-};
+enum CatalogProductDialogType {
+	Closed = "closed",
+	Picker = "picker",
+	Locating = "locating",
+	Editing = "editing",
+	Removing = "removing",
+}
+
+enum CatalogProductDialogActionType {
+	OpenPicker = "open-picker",
+	SelectProduct = "select-product",
+	EditProduct = "edit-product",
+	RemoveProduct = "remove-product",
+	Idle = "idle",
+}
+
+type CatalogProductDialogState =
+	| { type: CatalogProductDialogType.Closed }
+	| { type: CatalogProductDialogType.Picker }
+	| { type: CatalogProductDialogType.Locating; product: Product }
+	| { type: CatalogProductDialogType.Editing; product: CatalogProduct }
+	| { type: CatalogProductDialogType.Removing; product: CatalogProduct };
+
+type CatalogProductDialogAction =
+	| { type: CatalogProductDialogActionType.OpenPicker }
+	| { type: CatalogProductDialogActionType.SelectProduct; product: Product }
+	| {
+			type: CatalogProductDialogActionType.EditProduct;
+			product: CatalogProduct;
+	  }
+	| {
+			type: CatalogProductDialogActionType.RemoveProduct;
+			product: CatalogProduct;
+	  }
+	| { type: CatalogProductDialogActionType.Idle };
+
+function catalogProductDialogReducer(
+	_state: CatalogProductDialogState,
+	action: CatalogProductDialogAction,
+): CatalogProductDialogState {
+	switch (action.type) {
+		case CatalogProductDialogActionType.OpenPicker:
+			return { type: CatalogProductDialogType.Picker };
+		case CatalogProductDialogActionType.SelectProduct:
+			return {
+				type: CatalogProductDialogType.Locating,
+				product: action.product,
+			};
+		case CatalogProductDialogActionType.EditProduct:
+			return {
+				type: CatalogProductDialogType.Editing,
+				product: action.product,
+			};
+		case CatalogProductDialogActionType.RemoveProduct:
+			return {
+				type: CatalogProductDialogType.Removing,
+				product: action.product,
+			};
+		case CatalogProductDialogActionType.Idle:
+			return { type: CatalogProductDialogType.Closed };
+	}
+}
 
 export function Catalog({ storeId }: StoreCatalogProps) {
-	const store = useStoresStore((state) =>
-		state.stores.find((item) => item.id === storeId),
+	const { data: stores = [] } = useStoresQuery();
+	const { data: catalogItems = [] } = useStoreCatalogQuery(storeId);
+	const createCatalogProduct = useCreateStoreCatalogProductMutation();
+	const updateCatalogProduct = useUpdateStoreCatalogProductMutation();
+	const removeCatalogProduct = useRemoveStoreCatalogProductMutation();
+	const store = stores.find((store) => store.id === storeId);
+	const [catalogProductDialog, catalogProductDialogDispatch] = useReducer(
+		catalogProductDialogReducer,
+		{
+			type: CatalogProductDialogType.Closed,
+		},
 	);
-	const products = useProductStore((state) => state.products);
-	const catalogItems = useStoreCatalogStore(
-		(state) => state.catalogByStoreId[storeId] ?? emptyStoreCatalogItems,
+	const { data: products = [] } = useProductsQuery(
+		catalogProductDialog.type === CatalogProductDialogType.Picker,
 	);
-	const addLocation = useStoreCatalogStore((state) => state.addLocation);
-	const updateLocation = useStoreCatalogStore((state) => state.updateLocation);
-	const removeLocation = useStoreCatalogStore((state) => state.removeLocation);
-	const [isProductPickerOpen, setIsProductPickerOpen] = useState(false);
-	const [productToLocate, setProductToLocate] = useState<Product | null>(null);
-	const [locationToEdit, setLocationToEdit] =
-		useState<LocationSelection | null>(null);
-	const [locationToRemove, setLocationToRemove] =
-		useState<LocationSelection | null>(null);
-
+	const productReferencesById = useMemo<Record<string, Product>>(
+		() => Object.fromEntries(products.map((product) => [product.id, product])),
+		[products],
+	);
 	const catalogProducts = useMemo<CatalogProduct[]>(
 		() =>
-			catalogItems.flatMap((catalogItem) => {
-				const product = products.find(
-					(item) => item.id === catalogItem.productId,
-				);
-				return product
-					? [{ ...product, locations: catalogItem.locations }]
-					: [];
-			}),
-		[catalogItems, products],
+			catalogItems.map((catalogItem) => ({
+				...productReferencesById[catalogItem.referenceProductId],
+				id: catalogItem.id,
+				referenceProductId: catalogItem.referenceProductId,
+				location: catalogItem.location,
+			})),
+		[catalogItems, productReferencesById],
 	);
 	const markers = useMemo<StoreMapMarker[]>(
 		() =>
-			catalogProducts.flatMap((product) =>
-				product.locations.map((location, index) => ({
-					...location,
-					label: `${product.nome}, localização ${index + 1}`,
-					productId: product.id,
-					productName: product.nome,
-					productCategory: product.categoria.label,
-					productImage: product.imagem_thumb ?? product.imagem,
-					locationLabel: location.description,
-				})),
-			),
+			catalogProducts.map((product) => ({
+				...product.location,
+				id: product.id,
+				label: product.nome,
+				referenceProductId: product.referenceProductId,
+				productName: product.nome,
+				productCategory: product.categoria.label,
+				productImage: product.image,
+				locationLabel: product.location.description,
+			})),
 		[catalogProducts],
 	);
 
@@ -83,90 +139,138 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 		);
 	}
 
-	function selectProduct(product: Product) {
-		setIsProductPickerOpen(false);
-		setProductToLocate(product);
+	async function saveNewLocation(position: StoreCatalogLocationFields) {
+		if (catalogProductDialog.type !== CatalogProductDialogType.Locating) return;
+
+		try {
+			await createCatalogProduct.mutateAsync({
+				storeId,
+				referenceProductId: catalogProductDialog.product.id,
+				location: position,
+			});
+			catalogProductDialogDispatch({
+				type: CatalogProductDialogActionType.Idle,
+			});
+			toast.success("Produto localizado no catálogo da loja.");
+		} catch {
+			toast.error("Não foi possível adicionar a localização.");
+		}
 	}
 
-	function saveNewLocation(position: StoreCatalogLocationFields) {
-		if (!productToLocate) return;
+	async function saveCatalogProductLocation(
+		position: StoreCatalogLocationFields,
+	) {
+		if (catalogProductDialog.type !== CatalogProductDialogType.Editing) return;
 
-		addLocation(storeId, productToLocate.id, position);
-		setProductToLocate(null);
-		toast.success("Produto localizado no catálogo da loja.");
+		try {
+			await updateCatalogProduct.mutateAsync({
+				storeId,
+				catalogProductId: catalogProductDialog.product.id,
+				location: position,
+			});
+			catalogProductDialogDispatch({
+				type: CatalogProductDialogActionType.Idle,
+			});
+			toast.success("Localização atualizada com sucesso.");
+		} catch {
+			toast.error("Não foi possível atualizar a localização.");
+		}
 	}
 
-	function saveLocationEdit(position: StoreCatalogLocationFields) {
-		if (!locationToEdit) return;
+	async function confirmCatalogProductRemoval() {
+		if (catalogProductDialog.type !== CatalogProductDialogType.Removing) return;
 
-		updateLocation(
-			storeId,
-			locationToEdit.product.id,
-			locationToEdit.location.id,
-			position,
-		);
-		setLocationToEdit(null);
-		toast.success("Localização atualizada com sucesso.");
-	}
-
-	function confirmLocationRemoval() {
-		if (!locationToRemove) return;
-
-		removeLocation(
-			storeId,
-			locationToRemove.product.id,
-			locationToRemove.location.id,
-		);
-		setLocationToRemove(null);
-		toast.success("Localização removida do catálogo.");
+		try {
+			await removeCatalogProduct.mutateAsync({
+				storeId,
+				catalogProductId: catalogProductDialog.product.id,
+			});
+			catalogProductDialogDispatch({
+				type: CatalogProductDialogActionType.Idle,
+			});
+			toast.success("Produto removido do catálogo.");
+		} catch {
+			toast.error("Não foi possível remover a localização.");
+		}
 	}
 
 	return (
 		<section className="mx-auto flex min-h-dvh w-full max-w-7xl flex-col justify-center px-2 py-3 sm:px-3 sm:py-4 lg:px-4">
 			<CatalogHeader
 				store={store}
-				onAddProduct={() => setIsProductPickerOpen(true)}
+				onAddProduct={() =>
+					catalogProductDialogDispatch({
+						type: CatalogProductDialogActionType.OpenPicker,
+					})
+				}
 			/>
 			<CatalogContent
 				store={store}
 				products={catalogProducts}
 				markers={markers}
-				onEditLocation={(product, location) =>
-					setLocationToEdit({ product, location })
+				onEditLocation={(product) =>
+					catalogProductDialogDispatch({
+						type: CatalogProductDialogActionType.EditProduct,
+						product,
+					})
 				}
-				onRemoveLocation={(product, location) =>
-					setLocationToRemove({ product, location })
+				onRemoveLocation={(product) =>
+					catalogProductDialogDispatch({
+						type: CatalogProductDialogActionType.RemoveProduct,
+						product,
+					})
 				}
 			/>
-			{isProductPickerOpen ? (
+			{catalogProductDialog.type === CatalogProductDialogType.Picker ? (
 				<CatalogProductPickerModal
 					products={products}
-					onClose={() => setIsProductPickerOpen(false)}
-					onSelect={selectProduct}
+					onClose={() =>
+						catalogProductDialogDispatch({
+							type: CatalogProductDialogActionType.Idle,
+						})
+					}
+					onSelect={(product) =>
+						catalogProductDialogDispatch({
+							type: CatalogProductDialogActionType.SelectProduct,
+							product,
+						})
+					}
 				/>
 			) : null}
-			{productToLocate ? (
+			{catalogProductDialog.type === CatalogProductDialogType.Locating ? (
 				<CatalogLocationMapModal
 					store={store}
-					product={productToLocate}
-					onClose={() => setProductToLocate(null)}
+					product={catalogProductDialog.product}
+					onClose={() =>
+						catalogProductDialogDispatch({
+							type: CatalogProductDialogActionType.Idle,
+						})
+					}
 					onSave={saveNewLocation}
 				/>
 			) : null}
-			{locationToEdit ? (
+			{catalogProductDialog.type === CatalogProductDialogType.Editing ? (
 				<CatalogLocationMapModal
 					store={store}
-					product={locationToEdit.product}
-					initialPosition={locationToEdit.location}
-					onClose={() => setLocationToEdit(null)}
-					onSave={saveLocationEdit}
+					product={catalogProductDialog.product}
+					initialPosition={catalogProductDialog.product.location}
+					onClose={() =>
+						catalogProductDialogDispatch({
+							type: CatalogProductDialogActionType.Idle,
+						})
+					}
+					onSave={saveCatalogProductLocation}
 				/>
 			) : null}
-			{locationToRemove ? (
+			{catalogProductDialog.type === CatalogProductDialogType.Removing ? (
 				<RemoveCatalogLocationDialog
-					productName={locationToRemove.product.nome}
-					onCancel={() => setLocationToRemove(null)}
-					onConfirm={confirmLocationRemoval}
+					productName={catalogProductDialog.product.nome}
+					onCancel={() =>
+						catalogProductDialogDispatch({
+							type: CatalogProductDialogActionType.Idle,
+						})
+					}
+					onConfirm={confirmCatalogProductRemoval}
 				/>
 			) : null}
 		</section>

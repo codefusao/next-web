@@ -2,30 +2,30 @@
 
 import { CatalogProductCard } from "@/components/catalog/products/catalog-product-card";
 import { PaginationControls } from "@/components/ui/pagination-controls";
-import type { CatalogProductEntry } from "@/types/store-catalog";
+import type { CatalogProduct } from "@/types/store-catalog";
 
-export type { CatalogProductEntry } from "@/types/store-catalog";
+export type { CatalogProduct } from "@/types/store-catalog";
 
 type StoreCatalogProductsProps = {
-	products: readonly CatalogProductEntry[];
-	highlightedLocationId: string | null;
+	products: readonly CatalogProduct[];
+	highlightedProductLocationId: string | null;
 	activePage: number;
 	totalPages: number;
-	onEditLocation: (product: CatalogProductEntry) => void;
-	onRemoveLocation: (product: CatalogProductEntry) => void;
-	onHoverChange: (locationId: string | null) => void;
+	onEditLocation: (product: CatalogProduct) => void;
+	onRemoveLocation: (product: CatalogProduct) => void;
+	onHighlightedProductLocationChange: (catalogProductId: string | null) => void;
 	onPreviousPage: () => void;
 	onNextPage: () => void;
 };
 
 export function CatalogProducts({
 	products,
-	highlightedLocationId,
+	highlightedProductLocationId,
 	activePage,
 	totalPages,
 	onEditLocation,
 	onRemoveLocation,
-	onHoverChange,
+	onHighlightedProductLocationChange,
 	onPreviousPage,
 	onNextPage,
 }: StoreCatalogProductsProps) {
@@ -34,12 +34,14 @@ export function CatalogProducts({
 			<div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
 				{products.map((product) => (
 					<CatalogProductCard
-						key={product.location.id}
+						key={product.id}
 						product={product}
-						isHighlighted={highlightedLocationId === product.location.id}
+						isHighlighted={highlightedProductLocationId === product.id}
 						onEditLocation={onEditLocation}
 						onRemoveLocation={onRemoveLocation}
-						onHoverChange={onHoverChange}
+						onHighlightedProductLocationChange={
+							onHighlightedProductLocationChange
+						}
 					/>
 				))}
 			</div>

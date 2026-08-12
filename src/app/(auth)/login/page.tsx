@@ -6,17 +6,18 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FormField, inputBorderClass } from "@/components/ui/form-field";
+import { useLoginMutation } from "@/hooks/use-auth-mutations";
 import { useTheme } from "@/hooks/use-theme";
 import { type LoginFields, loginSchema } from "@/schemas/auth";
-import { useAuthStore } from "@/store/auth-store";
 
 export default function Home() {
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const router = useRouter();
 	const { mode: theme, toggle: toggleTheme } = useTheme();
-	const login = useAuthStore((state) => state.login);
+	const login = useLoginMutation();
 	const {
 		register,
 		handleSubmit,
@@ -26,6 +27,15 @@ export default function Home() {
 		defaultValues: { email: "", password: "" },
 		reValidateMode: "onChange",
 	});
+
+	async function submitLogin(fields: LoginFields) {
+		try {
+			await login.mutateAsync(fields);
+			router.replace("/products");
+		} catch {
+			toast.error("Não foi possível entrar. Tente novamente.");
+		}
+	}
 
 	return (
 		<main
@@ -73,10 +83,7 @@ export default function Home() {
 				</div>
 
 				<form
-					onSubmit={handleSubmit((fields) => {
-						login(fields.email.trim().toLowerCase());
-						router.replace("/products");
-					})}
+					onSubmit={handleSubmit(submitLogin)}
 					noValidate
 					className="space-y-4"
 				>
@@ -140,7 +147,11 @@ export default function Home() {
 						</div>
 					</FormField>
 
-					<Button type="submit" className="mt-3 w-full">
+					<Button
+						type="submit"
+						className="mt-3 w-full"
+						disabled={login.isPending}
+					>
 						Entrar
 					</Button>
 				</form>

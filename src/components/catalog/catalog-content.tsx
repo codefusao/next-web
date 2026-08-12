@@ -11,24 +11,14 @@ import { CatalogProductControls } from "@/components/catalog/products/catalog-pr
 import { EmptyState } from "@/components/ui/empty-state";
 import { useCatalogProductBrowser } from "@/hooks/use-catalog-product-browser";
 import type { StoreListItem } from "@/types/store";
-import type {
-	CatalogProduct,
-	CatalogProductEntry,
-	StoreCatalogLocation,
-} from "@/types/store-catalog";
+import type { CatalogProduct } from "@/types/store-catalog";
 
 type StoreCatalogContentProps = {
 	store: StoreListItem;
 	products: readonly CatalogProduct[];
 	markers: readonly StoreMapMarker[];
-	onEditLocation: (
-		product: CatalogProduct,
-		location: StoreCatalogLocation,
-	) => void;
-	onRemoveLocation: (
-		product: CatalogProduct,
-		location: StoreCatalogLocation,
-	) => void;
+	onEditLocation: (product: CatalogProduct) => void;
+	onRemoveLocation: (product: CatalogProduct) => void;
 };
 
 export function CatalogContent({
@@ -38,16 +28,8 @@ export function CatalogContent({
 	onEditLocation,
 	onRemoveLocation,
 }: StoreCatalogContentProps) {
-	const [highlightedLocationId, setHighlightedLocationId] = useState<
-		string | null
-	>(null);
-	const catalogEntries = useMemo<CatalogProductEntry[]>(
-		() =>
-			products.flatMap((product) =>
-				product.locations.map((location) => ({ ...product, location })),
-			),
-		[products],
-	);
+	const [highlightedProductLocationId, setHighlightedProductLocationId] =
+		useState<string | null>(null);
 	const {
 		activePage,
 		categoryId,
@@ -61,43 +43,39 @@ export function CatalogContent({
 		updateOrder,
 		updateQuery,
 		visibleItems,
-	} = useCatalogProductBrowser(catalogEntries);
+	} = useCatalogProductBrowser(products);
 	const isEmptyCatalog = products.length === 0;
-	const filteredMarkerIds = useMemo(
-		() => new Set(filteredProducts.map((product) => product.location.id)),
+	const filteredProductLocationIds = useMemo(
+		() => new Set(filteredProducts.map((product) => product.id)),
 		[filteredProducts],
 	);
 	const filteredMarkers = useMemo(
-		() => markers.filter((marker) => filteredMarkerIds.has(marker.id)),
-		[filteredMarkerIds, markers],
+		() => markers.filter((marker) => filteredProductLocationIds.has(marker.id)),
+		[filteredProductLocationIds, markers],
 	);
 
 	function editMarker(markerId: string) {
 		const marker = filteredMarkers.find((item) => item.id === markerId);
 		if (!marker) return;
 
-		const product = products.find((item) => item.id === marker.productId);
-		const location = product?.locations.find((item) => item.id === marker.id);
-		if (product && location) onEditLocation(product, location);
+		const product = products.find((item) => item.id === marker.id);
+		if (product) onEditLocation(product);
 	}
 
 	function removeMarker(markerId: string) {
 		const marker = filteredMarkers.find((item) => item.id === markerId);
 		if (!marker) return;
 
-		const product = products.find((item) => item.id === marker.productId);
-		const location = product?.locations.find((item) => item.id === marker.id);
-		if (product && location) onRemoveLocation(product, location);
+		const product = products.find((item) => item.id === marker.id);
+		if (product) onRemoveLocation(product);
 	}
 
-	function editCatalogEntry(entry: CatalogProductEntry) {
-		const product = products.find((item) => item.id === entry.id);
-		if (product) onEditLocation(product, entry.location);
+	function editCatalogProduct(product: CatalogProduct) {
+		onEditLocation(product);
 	}
 
-	function removeCatalogEntry(entry: CatalogProductEntry) {
-		const product = products.find((item) => item.id === entry.id);
-		if (product) onRemoveLocation(product, entry.location);
+	function removeCatalogProduct(product: CatalogProduct) {
+		onRemoveLocation(product);
 	}
 
 	return (
@@ -135,12 +113,14 @@ export function CatalogContent({
 					) : (
 						<CatalogProducts
 							products={visibleItems}
-							highlightedLocationId={highlightedLocationId}
+							highlightedProductLocationId={highlightedProductLocationId}
 							activePage={activePage}
 							totalPages={totalPages}
-							onEditLocation={editCatalogEntry}
-							onRemoveLocation={removeCatalogEntry}
-							onHoverChange={setHighlightedLocationId}
+							onEditLocation={editCatalogProduct}
+							onRemoveLocation={removeCatalogProduct}
+							onHighlightedProductLocationChange={
+								setHighlightedProductLocationId
+							}
 							onPreviousPage={goToPreviousPage}
 							onNextPage={goToNextPage}
 						/>
@@ -160,10 +140,10 @@ export function CatalogContent({
 					storeMapUrl={store.storeMapUrl}
 					storeName={store.name}
 					markers={filteredMarkers}
-					highlightedMarkerId={highlightedLocationId}
+					highlightedMarkerId={highlightedProductLocationId}
 					onMarkerClick={editMarker}
 					onMarkerRemove={removeMarker}
-					onMarkerHover={setHighlightedLocationId}
+					onMarkerHover={setHighlightedProductLocationId}
 				/>
 			</section>
 		</div>
