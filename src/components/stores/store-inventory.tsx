@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, Boxes, MapPin } from "lucide-react";
+import { ArrowLeft, Boxes } from "lucide-react";
 import Link from "next/link";
 import { InventoryList } from "@/components/inventory/inventory-list";
 import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
@@ -45,18 +45,6 @@ export function StoreInventory({ storeId }: StoreInventoryProps) {
 							</p>
 						</div>
 					</div>
-				</div>
-				<div className="text-sm sm:text-right">
-					<p className="font-bold text-foreground">{store.name}</p>
-					{store.address ? (
-						<address className="mt-1 flex items-start gap-1.5 not-italic text-muted sm:justify-end">
-							<MapPin
-								aria-hidden="true"
-								className="mt-0.5 size-4 shrink-0 text-primary"
-							/>
-							<span>{store.address}</span>
-						</address>
-					) : null}
 				</div>
 			</div>
 			<InventoryList storeId={store.id} />

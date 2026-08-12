@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PackageCheck } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { FormField, formControlClass } from "@/components/ui/form-field";
@@ -46,9 +45,6 @@ export function InventoryAdjustmentModal({
 			closeLabel="Fechar ajuste de estoque"
 			onClose={onClose}
 		>
-			<div className="mt-5 inline-flex rounded-lg bg-primary/10 p-2 text-primary">
-				<PackageCheck aria-hidden="true" className="size-5" />
-			</div>
 			<form
 				onSubmit={handleSubmit(submitAdjustment)}
 				noValidate

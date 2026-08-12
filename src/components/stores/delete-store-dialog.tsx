@@ -20,9 +20,6 @@ export function DeleteStoreDialog({
 			closeLabel="Fechar exclusão de loja"
 			onClose={onCancel}
 		>
-			<span className="inline-flex rounded-lg bg-destructive/10 p-2 text-destructive">
-				<AlertTriangle aria-hidden="true" className="size-6" />
-			</span>
 			<div className="mt-6 flex justify-end gap-3">
 				<Button variant="outline" onClick={onCancel}>
 					Cancelar
@@ -32,6 +29,10 @@ export function DeleteStoreDialog({
 					onClick={onConfirm}
 					className="border-destructive text-destructive hover:bg-destructive/10 focus-visible:outline-destructive"
 				>
+					<AlertTriangle
+						aria-hidden="true"
+						className="size-4 text-destructive"
+					/>
 					<span className="text-destructive">Excluir loja</span>
 				</Button>
 			</div>
