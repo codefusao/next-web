@@ -13,6 +13,8 @@ type MapSize = {
 };
 
 const defaultMapSize: MapSize = { width: 3, height: 2 };
+const coordinateScale = 100;
+const coordinatePrecision = 100;
 
 function getMapFrame(container: MapSize, image: MapSize): MapFrame {
 	const imageRatio = image.width / image.height;
@@ -38,7 +40,7 @@ function getMapFrame(container: MapSize, image: MapSize): MapFrame {
 }
 
 function roundCoordinate(value: number) {
-	return Math.round(value * 100) / 100;
+	return Math.round(value * coordinatePrecision) / coordinatePrecision;
 }
 
 export function getMapPositionFromPointer(
@@ -64,8 +66,8 @@ export function getMapPositionFromPointer(
 	}
 
 	return {
-		x: roundCoordinate((offsetX / frame.width) * 100),
-		y: roundCoordinate((offsetY / frame.height) * 100),
+		x: roundCoordinate((offsetX / frame.width) * coordinateScale),
+		y: roundCoordinate((offsetY / frame.height) * coordinateScale),
 	};
 }
 
@@ -77,7 +79,7 @@ export function getMapMarkerStyle(
 	const frame = getMapFrame(containerSize, imageSize);
 
 	return {
-		left: `${((frame.left + (position.x / 100) * frame.width) / containerSize.width) * 100}%`,
-		top: `${((frame.top + (position.y / 100) * frame.height) / containerSize.height) * 100}%`,
+		left: `${((frame.left + (position.x / coordinateScale) * frame.width) / containerSize.width) * coordinateScale}%`,
+		top: `${((frame.top + (position.y / coordinateScale) * frame.height) / containerSize.height) * coordinateScale}%`,
 	};
 }

@@ -1,6 +1,7 @@
 import { ImageUp, Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { ContentCard } from "@/components/ui/content-card";
 import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
 import type { StoreListItem } from "@/types/store";
 
@@ -34,9 +35,9 @@ export function StoreSettings({
 
 	return (
 		<div className="mt-6 space-y-5">
-			<section
+			<ContentCard
 				aria-labelledby="store-information-title"
-				className="rounded-[var(--radius-card)] border border-border bg-card p-5 sm:p-6"
+				className="p-5 sm:p-6"
 			>
 				<div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 					<div>
@@ -71,12 +72,9 @@ export function StoreSettings({
 						</div>
 					))}
 				</dl>
-			</section>
+			</ContentCard>
 
-			<section
-				aria-labelledby="store-banner-title"
-				className="rounded-[var(--radius-card)] border border-border bg-card p-5 sm:p-6"
-			>
+			<ContentCard aria-labelledby="store-banner-title" className="p-5 sm:p-6">
 				<h2 id="store-banner-title" className="text-lg font-bold">
 					Banner da loja
 				</h2>
@@ -98,7 +96,7 @@ export function StoreSettings({
 						Alterar banner
 					</Button>
 				</div>
-			</section>
+			</ContentCard>
 
 			<section
 				aria-labelledby="delete-store-title"

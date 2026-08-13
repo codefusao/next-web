@@ -2,7 +2,7 @@
 
 import { MapPin, Pencil, Trash2 } from "lucide-react";
 import type { PointerEvent as ReactPointerEvent } from "react";
-import type { StoreMapMarker } from "@/components/catalog/map/interactive-store-map";
+import type { StoreMapMarker } from "@/components/catalog/map/map-types";
 import { ProductThumbnail } from "@/components/products/product-thumbnail";
 import { Button } from "@/components/ui/button";
 

@@ -3,13 +3,11 @@
 import { MapPinned } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CatalogProducts } from "@/components/catalog/catalog-products";
-import {
-	InteractiveStoreMap,
-	type StoreMapMarker,
-} from "@/components/catalog/map/interactive-store-map";
+import { InteractiveStoreMap } from "@/components/catalog/map/interactive-store-map";
+import type { StoreMapMarker } from "@/components/catalog/map/map-types";
 import { CatalogProductControls } from "@/components/catalog/products/catalog-product-controls";
 import { EmptyState } from "@/components/ui/empty-state";
-import { useCatalogProductBrowser } from "@/hooks/use-catalog-product-browser";
+import { useCatalogProductBrowser } from "@/hooks/catalog/use-catalog-product-browser";
 import type { StoreListItem } from "@/types/store";
 import type { CatalogProduct } from "@/types/store-catalog";
 

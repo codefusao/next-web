@@ -3,27 +3,17 @@
 import Image from "next/image";
 import { useState } from "react";
 import { StoreMapControls } from "@/components/catalog/map/map-controls";
-import { MapLocationPin } from "@/components/catalog/map/map-location-pin";
-import { StoreMapMarkerPreview } from "@/components/catalog/map/map-marker-preview";
+import {
+	defaultMapImageSize,
+	type MapImageSize,
+	type StoreMapMarker,
+} from "@/components/catalog/map/map-types";
+import { StoreMapMarkers } from "@/components/catalog/map/store-map-markers";
 import { useMapMarkerPreview } from "@/hooks/use-map-marker-preview";
 import { useStoreMapTransform } from "@/hooks/use-store-map-transform";
-import {
-	getMapMarkerStyle,
-	getMapPositionFromPointer,
-} from "@/lib/store-map-position";
+import { getMapPositionFromPointer } from "@/lib/store-map-position";
 import type { StoreMapPosition } from "@/types/store-catalog";
 
-export type StoreMapMarker = StoreMapPosition & {
-	id: string;
-	label: string;
-	referenceProductId: string;
-	productName: string;
-	productCategory: string;
-	productImage: string | null;
-	locationLabel: string;
-};
-
-type ImageSize = { width: number; height: number };
 type InteractiveStoreMapProps = {
 	storeMapUrl: string;
 	storeName: string;
@@ -36,12 +26,9 @@ type InteractiveStoreMapProps = {
 	onMarkerHover?: (markerId: string | null) => void;
 };
 
-const defaultImageSize: ImageSize = { width: 3, height: 2 };
 const defaultMarkerSize = 32;
 const minimumMarkerSize = 12;
 const maximumMarkerSize = 48;
-const markerHitArea =
-	"polygon(50% 0%, 73% 8%, 88% 26%, 89% 45%, 80% 62%, 50% 100%, 20% 62%, 11% 45%, 12% 26%, 27% 8%)";
 
 function getMarkerSize(zoom: number) {
 	return Math.min(
@@ -61,12 +48,11 @@ export function InteractiveStoreMap({
 	onMarkerRemove,
 	onMarkerHover,
 }: InteractiveStoreMapProps) {
-	const [imageSize, setImageSize] = useState<ImageSize>(defaultImageSize);
+	const [imageSize, setImageSize] = useState<MapImageSize>(defaultMapImageSize);
 	const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
 	const isSelectable = Boolean(onPositionSelect);
-	const canTransformMap = !isSelectable;
+	const mapTransform = useStoreMapTransform(!isSelectable);
 	const markerPreview = useMapMarkerPreview(onMarkerHover);
-	const mapTransform = useStoreMapTransform(canTransformMap);
 	const markerSize = getMarkerSize(mapTransform.zoom);
 
 	function selectPosition(event: React.MouseEvent<HTMLButtonElement>) {
@@ -89,20 +75,15 @@ export function InteractiveStoreMap({
 		markerPreview.showPreview(markerId);
 	}
 
-	function clearSelectedMarker() {
-		setSelectedMarkerId(null);
-	}
-
 	function previewMarker(markerId: string) {
 		if (selectedMarkerId) return;
-
 		markerPreview.showPreview(markerId);
 	}
 
 	return (
 		<div
 			className="relative aspect-[3/2] w-full overflow-hidden rounded-[var(--radius-control)] bg-background"
-			onPointerDown={clearSelectedMarker}
+			onPointerDown={() => setSelectedMarkerId(null)}
 		>
 			<div
 				className="absolute inset-0"
@@ -135,71 +116,25 @@ export function InteractiveStoreMap({
 						aria-label="Selecione a posição do produto no mapa"
 					/>
 				) : null}
-				{markers.map((marker) => {
-					const isPreviewOpen =
-						selectedMarkerId === marker.id ||
-						markerPreview.hoveredMarkerId === marker.id;
-
-					return (
-						<div
-							key={marker.id}
-							style={getMapMarkerStyle(marker, defaultImageSize, imageSize)}
-							className={`absolute ${isPreviewOpen ? "z-40" : "z-20"}`}
-						>
-							<MapLocationPin
-								size={markerSize}
-								className={`pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 text-primary drop-shadow-md transition-[width,height,transform] duration-200 ${
-									highlightedMarkerId === marker.id ||
-									markerPreview.hoveredMarkerId === marker.id
-										? "scale-125"
-										: ""
-								}`}
-							/>
-							<button
-								type="button"
-								title={marker.label}
-								aria-label={marker.label}
-								onClick={(event) => selectMarker(event, marker.id)}
-								onPointerDown={(event) => event.stopPropagation()}
-								onPointerEnter={() => previewMarker(marker.id)}
-								onPointerLeave={markerPreview.schedulePreviewClose}
-								onFocus={() => previewMarker(marker.id)}
-								onBlur={markerPreview.schedulePreviewClose}
-								style={{
-									clipPath: markerHitArea,
-									height: markerSize,
-									width: markerSize,
-								}}
-								className="absolute z-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-							/>
-							{isPreviewOpen ? (
-								<StoreMapMarkerPreview
-									marker={marker}
-									zoom={mapTransform.zoom}
-									onEdit={onMarkerClick ?? (() => undefined)}
-									onRemove={onMarkerRemove ?? (() => undefined)}
-									onPointerEnter={markerPreview.cancelClose}
-									onPointerLeave={markerPreview.schedulePreviewClose}
-									onPointerDown={(event) => event.stopPropagation()}
-								/>
-							) : null}
-						</div>
-					);
-				})}
-				{selectedPosition ? (
-					<MapLocationPin
-						label="Posição selecionada"
-						size={28}
-						style={getMapMarkerStyle(
-							selectedPosition,
-							defaultImageSize,
-							imageSize,
-						)}
-						className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
-					/>
-				) : null}
+				<StoreMapMarkers
+					markers={markers}
+					selectedPosition={selectedPosition}
+					selectedMarkerId={selectedMarkerId}
+					highlightedMarkerId={highlightedMarkerId}
+					hoveredMarkerId={markerPreview.hoveredMarkerId}
+					imageSize={imageSize}
+					markerSize={markerSize}
+					zoom={mapTransform.zoom}
+					onSelectMarker={selectMarker}
+					onPreviewMarker={previewMarker}
+					onSchedulePreviewClose={markerPreview.schedulePreviewClose}
+					onCancelPreviewClose={markerPreview.cancelClose}
+					onMarkerClick={onMarkerClick ?? (() => undefined)}
+					onMarkerRemove={onMarkerRemove ?? (() => undefined)}
+					onStopPointerDown={(event) => event.stopPropagation()}
+				/>
 			</div>
-			{canTransformMap && mapTransform.isPanning ? (
+			{mapTransform.isPanning ? (
 				<button
 					type="button"
 					className="absolute inset-0 z-30 cursor-grab touch-none active:cursor-grabbing"
@@ -210,7 +145,7 @@ export function InteractiveStoreMap({
 					aria-label="Arraste para mover o mapa"
 				/>
 			) : null}
-			{canTransformMap ? (
+			{!isSelectable ? (
 				<StoreMapControls
 					zoom={mapTransform.zoom}
 					minimumZoom={mapTransform.minimumZoom}

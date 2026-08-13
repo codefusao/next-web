@@ -1,6 +1,7 @@
 import { ImageUp } from "lucide-react";
 import { InteractiveStoreMap } from "@/components/catalog/map/interactive-store-map";
 import { Button } from "@/components/ui/button";
+import { ContentCard } from "@/components/ui/content-card";
 import type { StoreListItem } from "@/types/store";
 
 type StoreFloorMapProps = {
@@ -10,10 +11,7 @@ type StoreFloorMapProps = {
 
 export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
 	return (
-		<section
-			aria-labelledby="store-map-title"
-			className="mt-6 rounded-[var(--radius-card)] border border-border bg-card p-5 sm:p-6"
-		>
+		<ContentCard aria-labelledby="store-map-title" className="mt-6 p-5 sm:p-6">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 				<div>
 					<h2 id="store-map-title" className="text-lg font-bold">
@@ -34,6 +32,6 @@ export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
 					storeName={store.name}
 				/>
 			</div>
-		</section>
+		</ContentCard>
 	);
 }

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { StoreActionCard } from "@/components/stores/details/store-action-card";
 import { StoreFloorMap } from "@/components/stores/details/store-floor-map";
 import { StoreSettings } from "@/components/stores/details/store-settings";
+import { ContentCard } from "@/components/ui/content-card";
 import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
 import type { StoreListItem } from "@/types/store";
 
@@ -36,10 +37,7 @@ function StoreSummary({ store }: StoreSummaryProps) {
 	];
 
 	return (
-		<section
-			aria-labelledby="store-summary-title"
-			className="rounded-[var(--radius-card)] border border-border bg-card p-5"
-		>
+		<ContentCard aria-labelledby="store-summary-title" className="p-5">
 			<h2 id="store-summary-title" className="text-lg font-bold">
 				Resumo da loja
 			</h2>
@@ -62,7 +60,7 @@ function StoreSummary({ store }: StoreSummaryProps) {
 					</div>
 				))}
 			</dl>
-		</section>
+		</ContentCard>
 	);
 }
 
@@ -95,10 +93,7 @@ function StoreQuickActions({ store }: StoreQuickActionsProps) {
 	] as const;
 
 	return (
-		<section
-			aria-labelledby="quick-actions-title"
-			className="mt-6 rounded-[var(--radius-card)] border border-border bg-card p-5"
-		>
+		<ContentCard aria-labelledby="quick-actions-title" className="mt-6 p-5">
 			<h2 id="quick-actions-title" className="text-lg font-bold">
 				Atalhos rápidos
 			</h2>
@@ -107,7 +102,7 @@ function StoreQuickActions({ store }: StoreQuickActionsProps) {
 					<StoreActionCard key={action.title} {...action} />
 				))}
 			</div>
-		</section>
+		</ContentCard>
 	);
 }
 
