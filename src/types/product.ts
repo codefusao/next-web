@@ -6,6 +6,5 @@ export type Product = {
 	nome: string;
 	categoria: ProductCategory;
 	precos_e_condicoes: string[];
-	imagem: string | null;
-	imagem_thumb: string | null;
+	image: string | null;
 };

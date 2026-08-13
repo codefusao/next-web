@@ -1,5 +1,7 @@
 import type { Product } from "@/types/product";
 
+type SortableCatalogProduct = Pick<Product, "codigo" | "nome" | "categoria">;
+
 export const catalogProductOrder = {
 	name: "name",
 	category: "category",
@@ -9,7 +11,7 @@ export const catalogProductOrder = {
 export type CatalogProductOrder =
 	(typeof catalogProductOrder)[keyof typeof catalogProductOrder];
 
-export function filterCatalogProducts<T extends Product>(
+export function filterCatalogProducts<T extends SortableCatalogProduct>(
 	products: readonly T[],
 	categoryId: string,
 ): readonly T[] {
@@ -18,7 +20,7 @@ export function filterCatalogProducts<T extends Product>(
 	return products.filter((product) => product.categoria.id === categoryId);
 }
 
-export function sortCatalogProducts<T extends Product>(
+export function sortCatalogProducts<T extends SortableCatalogProduct>(
 	products: readonly T[],
 	order: CatalogProductOrder,
 ): readonly T[] {

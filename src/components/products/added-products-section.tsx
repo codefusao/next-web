@@ -7,12 +7,12 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 import { SearchInput } from "@/components/ui/search-input";
 import { paginationPageSize } from "@/constants/pagination";
+import { useProductsQuery } from "@/hooks/use-products-query";
 import { useSearchPagination } from "@/hooks/use-search-pagination";
 import { filterProducts } from "@/lib/filter-products";
-import { useProductStore } from "@/store/product-store";
 
 export function AddedProductsSection() {
-	const products = useProductStore((state) => state.products);
+	const { data: products = [] } = useProductsQuery();
 	const {
 		activePage,
 		goToNextPage,

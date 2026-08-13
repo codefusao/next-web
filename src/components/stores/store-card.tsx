@@ -1,7 +1,7 @@
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { defaultStoreImage } from "@/constants/store";
+import { defaultStoreMetadata } from "@/api/mock-data";
 import type { StoreListItem } from "@/types/store";
 
 type StoreCardProps = {
@@ -16,7 +16,7 @@ export function StoreCard({ store }: StoreCardProps) {
 		>
 			<div className="relative overflow-hidden">
 				<Image
-					src={defaultStoreImage}
+					src={defaultStoreMetadata.bannerUrl}
 					alt="Imagem padrão de loja Leroy Merlin"
 					width={880}
 					height={480}

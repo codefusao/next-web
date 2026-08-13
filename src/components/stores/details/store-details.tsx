@@ -5,73 +5,62 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { StoreDetailsHero } from "@/components/stores/details/store-details-hero";
 import { StoreOverview } from "@/components/stores/details/store-overview";
-import { ClearStoreCatalogDialog } from "@/components/stores/modals/clear-store-catalog-dialog";
 import { DeleteStoreDialog } from "@/components/stores/modals/delete-store-dialog";
 import { EditStoreModal } from "@/components/stores/modals/edit-store-modal";
 import { StoreBannerModal } from "@/components/stores/modals/store-banner-modal";
 import { StoreMapUploadModal } from "@/components/stores/modals/store-map-upload-modal";
 import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
-import { useInventoryStore } from "@/store/inventory-store";
 import {
-	emptyStoreCatalogItems,
-	useStoreCatalogStore,
-} from "@/store/store-catalog-store";
-import { useStoresStore } from "@/store/stores-store";
+	useDeleteStoreMutation,
+	useStoresQuery,
+	useUpdateStoreMutation,
+} from "@/hooks/use-stores-query";
 
 type StoreDetailsProps = {
 	storeId: string;
 };
 
+enum StoreDetailsMutationDialogType {
+	Idle = "idle",
+	Edit = "edit",
+	Banner = "banner",
+	Map = "map",
+	Delete = "delete",
+}
+
 export function StoreDetails({ storeId }: StoreDetailsProps) {
 	const router = useRouter();
-	const store = useStoresStore((state) =>
-		state.stores.find((item) => item.id === storeId),
-	);
-	const removeStore = useStoresStore((state) => state.removeStore);
-	const patchStore = useStoresStore((state) => state.patchStore);
-	const removeStoreInventory = useInventoryStore(
-		(state) => state.removeStoreInventory,
-	);
-	const catalogItems = useStoreCatalogStore(
-		(state) => state.catalogByStoreId[storeId] ?? emptyStoreCatalogItems,
-	);
-	const clearStoreCatalog = useStoreCatalogStore(
-		(state) => state.clearStoreCatalog,
-	);
-	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-	const [isBannerModalOpen, setIsBannerModalOpen] = useState(false);
-	const [isMapUploadModalOpen, setIsMapUploadModalOpen] = useState(false);
-	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-	const [pendingStoreMapUrl, setPendingStoreMapUrl] = useState<string | null>(
-		null,
+	const { data: stores = [] } = useStoresQuery();
+	const deleteStoreMutation = useDeleteStoreMutation();
+	const updateStoreMutation = useUpdateStoreMutation();
+	const store = stores.find((item) => item.id === storeId);
+	const [mutationDialog, setMutationDialog] = useState(
+		StoreDetailsMutationDialogType.Idle,
 	);
 
-	function deleteStore() {
-		removeStoreInventory(storeId);
-		clearStoreCatalog(storeId);
-		removeStore(storeId);
-		toast.success("Loja removida com sucesso.");
-		router.replace("/stores");
-	}
-
-	function saveStoreMap(storeMapUrl: string) {
-		setIsMapUploadModalOpen(false);
-		if (catalogItems.length > 0) {
-			setPendingStoreMapUrl(storeMapUrl);
-			return;
+	async function deleteStore() {
+		try {
+			await deleteStoreMutation.mutateAsync(storeId);
+			toast.success("Loja removida com sucesso.");
+			router.replace("/stores");
+		} catch {
+			toast.error("Não foi possível remover a loja.");
 		}
-
-		patchStore(storeId, { storeMapUrl });
-		toast.success("Mapa da loja atualizado.");
 	}
 
-	function confirmStoreMapChange() {
-		if (!pendingStoreMapUrl) return;
+	async function saveStoreMap(storeMapUrl: string) {
+		if (!store) return;
 
-		clearStoreCatalog(storeId);
-		patchStore(storeId, { storeMapUrl: pendingStoreMapUrl });
-		setPendingStoreMapUrl(null);
-		toast.success("Mapa atualizado e localizações do catálogo removidas.");
+		setMutationDialog(StoreDetailsMutationDialogType.Idle);
+		try {
+			await updateStoreMutation.mutateAsync({
+				store,
+				changes: { storeMapUrl },
+			});
+			toast.success("Mapa da loja atualizado.");
+		} catch {
+			toast.error("Não foi possível atualizar o mapa da loja.");
+		}
 	}
 
 	if (!store) {
@@ -86,50 +75,58 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 				<StoreDetailsHero store={store} />
 				<StoreOverview
 					store={store}
-					onEdit={() => setIsEditModalOpen(true)}
-					onChangeBanner={() => setIsBannerModalOpen(true)}
-					onChangeMap={() => setIsMapUploadModalOpen(true)}
-					onDelete={() => setIsDeleteDialogOpen(true)}
+					onEdit={() => setMutationDialog(StoreDetailsMutationDialogType.Edit)}
+					onChangeBanner={() =>
+						setMutationDialog(StoreDetailsMutationDialogType.Banner)
+					}
+					onChangeMap={() =>
+						setMutationDialog(StoreDetailsMutationDialogType.Map)
+					}
+					onDelete={() =>
+						setMutationDialog(StoreDetailsMutationDialogType.Delete)
+					}
 				/>
 			</section>
 
 			<EditStoreModal
-				isOpen={isEditModalOpen}
-				onClose={() => setIsEditModalOpen(false)}
+				isOpen={mutationDialog === StoreDetailsMutationDialogType.Edit}
+				onClose={() => setMutationDialog(StoreDetailsMutationDialogType.Idle)}
 				store={store}
 			/>
 
-			{isBannerModalOpen ? (
+			{mutationDialog === StoreDetailsMutationDialogType.Banner ? (
 				<StoreBannerModal
 					bannerUrl={store.bannerUrl}
-					onClose={() => setIsBannerModalOpen(false)}
-					onSave={(bannerUrl) => {
-						patchStore(store.id, { bannerUrl });
-						toast.success("Banner da loja atualizado.");
-						setIsBannerModalOpen(false);
+					onClose={() => setMutationDialog(StoreDetailsMutationDialogType.Idle)}
+					onSave={async (bannerUrl) => {
+						try {
+							await updateStoreMutation.mutateAsync({
+								store,
+								changes: { bannerUrl },
+							});
+							toast.success("Banner da loja atualizado.");
+							setMutationDialog(StoreDetailsMutationDialogType.Idle);
+						} catch {
+							toast.error("Não foi possível atualizar o banner da loja.");
+						}
 					}}
 				/>
 			) : null}
 
-			{isMapUploadModalOpen ? (
+			{mutationDialog === StoreDetailsMutationDialogType.Map ? (
 				<StoreMapUploadModal
-					onClose={() => setIsMapUploadModalOpen(false)}
+					onClose={() => setMutationDialog(StoreDetailsMutationDialogType.Idle)}
 					onSave={saveStoreMap}
 				/>
 			) : null}
 
-			{isDeleteDialogOpen ? (
+			{mutationDialog === StoreDetailsMutationDialogType.Delete ? (
 				<DeleteStoreDialog
 					storeName={store.name}
-					onCancel={() => setIsDeleteDialogOpen(false)}
+					onCancel={() =>
+						setMutationDialog(StoreDetailsMutationDialogType.Idle)
+					}
 					onConfirm={deleteStore}
-				/>
-			) : null}
-
-			{pendingStoreMapUrl ? (
-				<ClearStoreCatalogDialog
-					onCancel={() => setPendingStoreMapUrl(null)}
-					onConfirm={confirmStoreMapChange}
 				/>
 			) : null}
 		</>

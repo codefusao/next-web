@@ -4,16 +4,15 @@ import { ArrowLeft, Boxes } from "lucide-react";
 import Link from "next/link";
 import { InventoryList } from "@/components/inventory/inventory-list";
 import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
-import { useStoresStore } from "@/store/stores-store";
+import { useStoresQuery } from "@/hooks/use-stores-query";
 
 type StoreInventoryProps = {
 	storeId: string;
 };
 
 export function StoreInventory({ storeId }: StoreInventoryProps) {
-	const store = useStoresStore((state) =>
-		state.stores.find((item) => item.id === storeId),
-	);
+	const { data: stores = [] } = useStoresQuery();
+	const store = stores.find((item) => item.id === storeId);
 
 	if (!store) {
 		return (

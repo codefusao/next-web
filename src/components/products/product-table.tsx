@@ -45,7 +45,7 @@ export function ProductTable(props: ProductTableProps) {
 						>
 							<td className="px-4 py-3">
 								<ProductThumbnail
-									source={product.imagem_thumb ?? product.imagem}
+									source={product.image}
 									productName={product.nome}
 								/>
 							</td>

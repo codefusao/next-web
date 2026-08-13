@@ -14,4 +14,6 @@ Common functions to parse, order, communicate externaly, should be in `lib` fold
 
 Any design change should follow the `src/styleguide.css`
 
+Do not create multiple useStates to handle the same data, use a useReducer when you have actions like: remove, update
+
 Check `docs` folder for more informations.

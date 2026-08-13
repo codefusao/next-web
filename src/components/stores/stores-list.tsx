@@ -8,11 +8,11 @@ import { PaginationControls } from "@/components/ui/pagination-controls";
 import { SearchInput } from "@/components/ui/search-input";
 import { paginationPageSize } from "@/constants/pagination";
 import { useSearchPagination } from "@/hooks/use-search-pagination";
+import { useStoresQuery } from "@/hooks/use-stores-query";
 import { filterStores } from "@/lib/filter-stores";
-import { useStoresStore } from "@/store/stores-store";
 
 export function StoresList() {
-	const stores = useStoresStore((state) => state.stores);
+	const { data: stores = [] } = useStoresQuery();
 	const {
 		activePage,
 		goToNextPage,

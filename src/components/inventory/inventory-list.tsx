@@ -9,10 +9,13 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 import { SearchInput } from "@/components/ui/search-input";
 import { paginationPageSize } from "@/constants/pagination";
+import {
+	useInventoryQuery,
+	useUpdateInventoryMutation,
+} from "@/hooks/use-inventory-query";
+import { useProductsQuery } from "@/hooks/use-products-query";
 import { useSearchPagination } from "@/hooks/use-search-pagination";
 import { filterProducts } from "@/lib/filter-products";
-import { useInventoryStore } from "@/store/inventory-store";
-import { useProductStore } from "@/store/product-store";
 import type { InventoryItem } from "@/types/inventory";
 
 type InventoryListProps = {
@@ -20,11 +23,9 @@ type InventoryListProps = {
 };
 
 export function InventoryList({ storeId }: InventoryListProps) {
-	const products = useProductStore((state) => state.products);
-	const stockByProductId = useInventoryStore(
-		(state) => state.stockByStoreId[storeId],
-	);
-	const updateStock = useInventoryStore((state) => state.updateStock);
+	const { data: products = [] } = useProductsQuery();
+	const { data: stockByProductId = {} } = useInventoryQuery(storeId);
+	const updateInventory = useUpdateInventoryMutation();
 	const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
 	const inventoryItems = products.map((product) => ({
 		...product,
@@ -45,12 +46,20 @@ export function InventoryList({ storeId }: InventoryListProps) {
 		filter: filterProducts,
 	});
 
-	function saveAdjustment(quantity: number) {
+	async function saveAdjustment(quantity: number) {
 		if (!selectedItem) return;
 
-		updateStock(storeId, selectedItem.id, quantity);
-		toast.success("Estoque atualizado com sucesso.");
-		setSelectedItem(null);
+		try {
+			await updateInventory.mutateAsync({
+				storeId,
+				productId: selectedItem.id,
+				quantity,
+			});
+			toast.success("Estoque atualizado com sucesso.");
+			setSelectedItem(null);
+		} catch {
+			toast.error("Não foi possível atualizar o estoque.");
+		}
 	}
 
 	return (

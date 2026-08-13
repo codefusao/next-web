@@ -1,7 +1,9 @@
 import { normalizeSearchText } from "@/lib/normalize-search-text";
 import type { Product } from "@/types/product";
 
-export function filterProducts<T extends Product>(
+type SearchableProduct = Pick<Product, "codigo" | "nome" | "categoria">;
+
+export function filterProducts<T extends SearchableProduct>(
 	products: readonly T[],
 	query: string,
 ): readonly T[] {

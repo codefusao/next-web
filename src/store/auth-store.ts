@@ -3,7 +3,6 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 export type AdminUser = {
 	email: string;
-	name: string;
 };
 
 export enum AuthStatus {
@@ -25,10 +24,8 @@ export const useAuthStore = create<AuthState>()(
 		(set) => ({
 			user: null,
 			authStatus: AuthStatus.Loading,
-			login: (email) => {
-				const name = email.split("@")[0];
-				set({ user: { email, name }, authStatus: AuthStatus.Authenticated });
-			},
+			login: (email) =>
+				set({ user: { email }, authStatus: AuthStatus.Authenticated }),
 			logout: () => set({ user: null, authStatus: AuthStatus.Unauthenticated }),
 			setAuthStatus: (authStatus) => set({ authStatus }),
 		}),

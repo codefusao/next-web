@@ -3,14 +3,14 @@
 import { MapPin } from "lucide-react";
 import { CatalogProductActions } from "@/components/catalog/products/catalog-product-actions";
 import { ProductThumbnail } from "@/components/products/product-thumbnail";
-import type { CatalogProductEntry } from "@/types/store-catalog";
+import type { CatalogProduct } from "@/types/store-catalog";
 
 type CatalogProductCardProps = {
-	product: CatalogProductEntry;
+	product: CatalogProduct;
 	isHighlighted: boolean;
-	onEditLocation: (product: CatalogProductEntry) => void;
-	onRemoveLocation: (product: CatalogProductEntry) => void;
-	onHoverChange: (locationId: string | null) => void;
+	onEditLocation: (product: CatalogProduct) => void;
+	onRemoveLocation: (product: CatalogProduct) => void;
+	onHighlightedProductLocationChange: (catalogProductId: string | null) => void;
 };
 
 export function CatalogProductCard({
@@ -18,7 +18,7 @@ export function CatalogProductCard({
 	isHighlighted,
 	onEditLocation,
 	onRemoveLocation,
-	onHoverChange,
+	onHighlightedProductLocationChange,
 }: CatalogProductCardProps) {
 	return (
 		<article
@@ -27,16 +27,13 @@ export function CatalogProductCard({
 					? "border-primary ring-2 ring-primary/15"
 					: "border-border hover:border-primary/40"
 			}`}
-			onMouseEnter={() => onHoverChange(product.location.id)}
-			onMouseLeave={() => onHoverChange(null)}
-			onFocus={() => onHoverChange(product.location.id)}
-			onBlur={() => onHoverChange(null)}
+			onMouseEnter={() => onHighlightedProductLocationChange(product.id)}
+			onMouseLeave={() => onHighlightedProductLocationChange(null)}
+			onFocus={() => onHighlightedProductLocationChange(product.id)}
+			onBlur={() => onHighlightedProductLocationChange(null)}
 		>
 			<div className="flex items-start justify-center">
-				<ProductThumbnail
-					source={product.imagem_thumb ?? product.imagem}
-					productName={product.nome}
-				/>
+				<ProductThumbnail source={product.image} productName={product.nome} />
 			</div>
 			<div className="mt-3">
 				<h3 className="line-clamp-2 text-sm font-bold leading-4 text-foreground">
@@ -44,6 +41,9 @@ export function CatalogProductCard({
 				</h3>
 				<p className="mt-1 truncate text-xs text-muted">
 					{product.categoria.label}
+				</p>
+				<p className="mt-1 truncate text-[10px] text-muted" title={product.id}>
+					ID do catálogo: {product.id}
 				</p>
 			</div>
 			<div className="pt-2">

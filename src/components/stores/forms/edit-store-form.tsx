@@ -7,12 +7,12 @@ import { toast } from "sonner";
 import { StoreBasicFormFields } from "@/components/stores/forms/store-basic-form-fields";
 import { StoreMetadataFormFields } from "@/components/stores/forms/store-metadata-form-fields";
 import { Button } from "@/components/ui/button";
+import { useUpdateStoreMutation } from "@/hooks/use-stores-query";
 import {
 	type UpdateStoreFields,
 	type UpdateStoreFormInputs,
 	updateStoreSchema,
 } from "@/schemas/store";
-import { useStoresStore } from "@/store/stores-store";
 import type { StoreListItem } from "@/types/store";
 
 type EditStoreFormProps = {
@@ -22,7 +22,7 @@ type EditStoreFormProps = {
 };
 
 export function EditStoreForm({ store, onCancel, onSave }: EditStoreFormProps) {
-	const patchStore = useStoresStore((state) => state.patchStore);
+	const updateStore = useUpdateStoreMutation();
 	const {
 		register,
 		handleSubmit,
@@ -46,10 +46,14 @@ export function EditStoreForm({ store, onCancel, onSave }: EditStoreFormProps) {
 		reValidateMode: "onChange",
 	});
 
-	function submitStore(fields: UpdateStoreFields) {
-		patchStore(store.id, fields);
-		toast.success("Informações da loja atualizadas.");
-		onSave();
+	async function submitStore(fields: UpdateStoreFields) {
+		try {
+			await updateStore.mutateAsync({ store, changes: fields });
+			toast.success("Informações da loja atualizadas.");
+			onSave();
+		} catch {
+			toast.error("Não foi possível atualizar a loja.");
+		}
 	}
 
 	return (
@@ -65,7 +69,7 @@ export function EditStoreForm({ store, onCancel, onSave }: EditStoreFormProps) {
 				<Button type="button" variant="outline" onClick={onCancel}>
 					Cancelar
 				</Button>
-				<Button type="submit" disabled={!isDirty}>
+				<Button type="submit" disabled={!isDirty || updateStore.isPending}>
 					<Save aria-hidden="true" className="size-5" />
 					Salvar alterações
 				</Button>

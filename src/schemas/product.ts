@@ -28,14 +28,7 @@ export const productPlaceholderSchema = z
 				"Informe um número inteiro",
 			),
 		installmentValue: optionalMoney,
-		imageUrl: z
-			.string()
-			.trim()
-			.refine(
-				(value) => !value || z.url().safeParse(value).success,
-				"Informe uma URL válida",
-			),
-		thumbnailUrl: z
+		image: z
 			.string()
 			.trim()
 			.refine(

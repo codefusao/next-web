@@ -16,7 +16,7 @@ import type { StoreMapPosition } from "@/types/store-catalog";
 export type StoreMapMarker = StoreMapPosition & {
 	id: string;
 	label: string;
-	productId: string;
+	referenceProductId: string;
 	productName: string;
 	productCategory: string;
 	productImage: string | null;

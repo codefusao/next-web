@@ -10,12 +10,12 @@ import {
 	type ProductCategory,
 	productCategories,
 } from "@/constants/product-categories";
+import { useCreateProductMutation } from "@/hooks/use-products-query";
 import { toBrl } from "@/lib/currency";
 import {
 	type ProductPlaceholderFields,
 	productPlaceholderSchema,
 } from "@/schemas/product";
-import { useProductStore } from "@/store/product-store";
 
 const defaultValues: ProductPlaceholderFields = {
 	code: "",
@@ -25,8 +25,7 @@ const defaultValues: ProductPlaceholderFields = {
 	pixPrice: "",
 	installmentCount: "",
 	installmentValue: "",
-	imageUrl: "",
-	thumbnailUrl: "",
+	image: "",
 };
 
 function productPriceConditions(fields: ProductPlaceholderFields) {
@@ -46,7 +45,7 @@ type AddProductFormProps = {
 };
 
 export function AddProductForm({ onSuccess }: AddProductFormProps) {
-	const addProduct = useProductStore((state) => state.addProduct);
+	const createProduct = useCreateProductMutation();
 	const {
 		register,
 		handleSubmit,
@@ -58,31 +57,33 @@ export function AddProductForm({ onSuccess }: AddProductFormProps) {
 		reValidateMode: "onChange",
 	});
 
-	function submitProduct(fields: ProductPlaceholderFields) {
+	async function submitProduct(fields: ProductPlaceholderFields) {
 		const category = productCategories.find(
 			(item) => item.id === fields.categoryId,
 		) as ProductCategory | undefined;
 		if (!category) return;
 
-		addProduct({
-			id: crypto.randomUUID(),
-			codigo: fields.code.trim(),
-			nome: fields.name.trim(),
-			categoria: category,
-			precos_e_condicoes: productPriceConditions(fields),
-			imagem: fields.imageUrl || null,
-			imagem_thumb: fields.thumbnailUrl || null,
-		});
-		reset(defaultValues);
-		toast.success("Produto adicionado com sucesso.");
-		onSuccess();
+		try {
+			await createProduct.mutateAsync({
+				codigo: fields.code.trim(),
+				nome: fields.name.trim(),
+				categoria: category,
+				precos_e_condicoes: productPriceConditions(fields),
+				image: fields.image || null,
+			});
+			reset(defaultValues);
+			toast.success("Produto adicionado com sucesso.");
+			onSuccess();
+		} catch {
+			toast.error("Não foi possível adicionar o produto.");
+		}
 	}
 
 	return (
 		<form onSubmit={handleSubmit(submitProduct)} noValidate className="mt-6">
 			<ProductFormFields register={register} errors={errors} />
 			<div className="mt-7 flex justify-end border-t border-border pt-6">
-				<Button type="submit">
+				<Button type="submit" disabled={createProduct.isPending}>
 					<PackagePlus aria-hidden="true" className="size-5" />
 					Adicionar produto
 				</Button>

@@ -5,22 +5,18 @@ export type StoreMapPosition = {
 	y: number;
 };
 
-export type StoreCatalogLocation = StoreMapPosition & {
-	id: string;
+export type StoreCatalogProductLocation = StoreMapPosition & {
 	description: string;
 };
 
-export type StoreCatalogItem = {
-	productId: string;
-	locations: StoreCatalogLocation[];
+export type StoreCatalogProduct = {
+	id: string;
+	referenceProductId: string;
+	location: StoreCatalogProductLocation;
 };
 
-export type StoreCatalogByStoreId = Record<string, StoreCatalogItem[]>;
-
-export type CatalogProduct = Product & {
-	locations: readonly StoreCatalogLocation[];
-};
-
-export type CatalogProductEntry = Product & {
-	location: StoreCatalogLocation;
+export type CatalogProduct = Omit<Product, "id"> & {
+	id: string;
+	referenceProductId: string;
+	location: StoreCatalogProductLocation;
 };

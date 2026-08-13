@@ -146,37 +146,23 @@ export function ProductFormFields({
 				<div>
 					<h3 className="font-bold">Imagens</h3>
 					<p className="text-sm text-muted">
-						Opcional. Use URLs públicas para a imagem principal e miniatura.
+						Opcional. Use uma URL pública para a imagem do produto.
 					</p>
 				</div>
 			</div>
-			<div className="grid gap-5 md:grid-cols-2">
+			<div>
 				<FormField
-					label="URL da imagem principal"
+					label="URL da imagem"
 					inputId="product-image-url"
-					error={errors.imageUrl?.message}
+					error={errors.image?.message}
 				>
 					<input
-						{...register("imageUrl")}
+						{...register("image")}
 						id="product-image-url"
 						type="url"
 						placeholder="https://..."
-						className={inputClass(Boolean(errors.imageUrl))}
-						aria-invalid={Boolean(errors.imageUrl)}
-					/>
-				</FormField>
-				<FormField
-					label="URL da miniatura"
-					inputId="product-thumbnail-url"
-					error={errors.thumbnailUrl?.message}
-				>
-					<input
-						{...register("thumbnailUrl")}
-						id="product-thumbnail-url"
-						type="url"
-						placeholder="https://..."
-						className={inputClass(Boolean(errors.thumbnailUrl))}
-						aria-invalid={Boolean(errors.thumbnailUrl)}
+						className={inputClass(Boolean(errors.image))}
+						aria-invalid={Boolean(errors.image)}
 					/>
 				</FormField>
 			</div>

@@ -69,7 +69,7 @@ export function CatalogProductPickerModal({
 									className="flex items-center gap-3 p-3 sm:p-4"
 								>
 									<ProductThumbnail
-										source={product.imagem_thumb ?? product.imagem}
+										source={product.image}
 										productName={product.nome}
 									/>
 									<div className="min-w-0 flex-1">

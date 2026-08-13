@@ -17,9 +17,9 @@ export function RemoveCatalogLocationDialog({
 }: RemoveCatalogLocationDialogProps) {
 	return (
 		<Modal
-			title="Remover localização?"
-			description={`A localização de ${productName} será removida deste catálogo.`}
-			closeLabel="Fechar remoção de localização"
+			title="Remover produto do catálogo?"
+			description={`${productName} será removido desta localização no catálogo.`}
+			closeLabel="Fechar remoção de produto"
 			onClose={onCancel}
 		>
 			<div className="mt-6 flex justify-end gap-3">
@@ -28,7 +28,7 @@ export function RemoveCatalogLocationDialog({
 				</Button>
 				<Button variant="destructive" onClick={onConfirm}>
 					<AlertTriangle aria-hidden="true" className="size-4" />
-					Remover localização
+					Remover produto
 				</Button>
 			</div>
 		</Modal>

@@ -27,7 +27,7 @@ type StoreCatalogProps = {
 
 enum CatalogProductDialogType {
 	Closed = "closed",
-	Picker = "picker",
+	ProductPicker = "product-picker",
 	Locating = "locating",
 	Editing = "editing",
 	Removing = "removing",
@@ -43,7 +43,7 @@ enum CatalogProductDialogActionType {
 
 type CatalogProductDialogState =
 	| { type: CatalogProductDialogType.Closed }
-	| { type: CatalogProductDialogType.Picker }
+	| { type: CatalogProductDialogType.ProductPicker }
 	| { type: CatalogProductDialogType.Locating; product: Product }
 	| { type: CatalogProductDialogType.Editing; product: CatalogProduct }
 	| { type: CatalogProductDialogType.Removing; product: CatalogProduct };
@@ -67,7 +67,7 @@ function catalogProductDialogReducer(
 ): CatalogProductDialogState {
 	switch (action.type) {
 		case CatalogProductDialogActionType.OpenPicker:
-			return { type: CatalogProductDialogType.Picker };
+			return { type: CatalogProductDialogType.ProductPicker };
 		case CatalogProductDialogActionType.SelectProduct:
 			return {
 				type: CatalogProductDialogType.Locating,
@@ -102,7 +102,7 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 		},
 	);
 	const { data: products = [] } = useProductsQuery(
-		catalogProductDialog.type === CatalogProductDialogType.Picker,
+		catalogProductDialog.type === CatalogProductDialogType.ProductPicker,
 	);
 	const productReferencesById = useMemo<Record<string, Product>>(
 		() => Object.fromEntries(products.map((product) => [product.id, product])),
@@ -221,7 +221,7 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 					})
 				}
 			/>
-			{catalogProductDialog.type === CatalogProductDialogType.Picker ? (
+			{catalogProductDialog.type === CatalogProductDialogType.ProductPicker ? (
 				<CatalogProductPickerModal
 					products={products}
 					onClose={() =>

@@ -10,7 +10,9 @@ import {
 import { filterProducts } from "@/lib/filter-products";
 import type { Product } from "@/types/product";
 
-export function useCatalogProductBrowser<T extends Product>(
+type BrowsableCatalogProduct = Pick<Product, "codigo" | "nome" | "categoria">;
+
+export function useCatalogProductBrowser<T extends BrowsableCatalogProduct>(
 	products: readonly T[],
 ) {
 	const [query, setQuery] = useState("");
