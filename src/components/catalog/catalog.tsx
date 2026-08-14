@@ -16,8 +16,8 @@ import {
 	useStoreCatalogQuery,
 	useUpdateStoreCatalogProductMutation,
 } from "@/hooks/catalog/use-store-catalog-query";
+import { useCompanyQuery } from "@/hooks/use-companies-query";
 import { useProductsQuery } from "@/hooks/use-products-query";
-import { useStoresQuery } from "@/hooks/use-stores-query";
 import type { StoreCatalogLocationFields } from "@/schemas/store-catalog";
 import type { Product } from "@/types/product";
 import type { CatalogProduct } from "@/types/store-catalog";
@@ -42,12 +42,11 @@ type CatalogProductDialogState =
 	| { type: CatalogProductDialogType.Removing; product: CatalogProduct };
 
 export function Catalog({ storeId }: StoreCatalogProps) {
-	const { data: stores = [] } = useStoresQuery();
+	const { data: store } = useCompanyQuery(storeId);
 	const { data: catalogItems = [] } = useStoreCatalogQuery(storeId);
 	const createCatalogProduct = useCreateStoreCatalogProductMutation();
 	const updateCatalogProduct = useUpdateStoreCatalogProductMutation();
 	const removeCatalogProduct = useRemoveStoreCatalogProductMutation();
-	const store = stores.find((store) => store.id === storeId);
 	const [dialog, setDialog] = useState<CatalogProductDialogState>({
 		type: CatalogProductDialogType.Closed,
 	});

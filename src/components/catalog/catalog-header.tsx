@@ -3,10 +3,10 @@
 import { ArrowLeft, MapPinned, PackagePlus } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import type { StoreListItem } from "@/types/store";
+import type { CompanyListItem } from "@/types/company";
 
 type StoreCatalogHeaderProps = {
-	store: StoreListItem;
+	store: CompanyListItem;
 	onAddProduct: () => void;
 };
 

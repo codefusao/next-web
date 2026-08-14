@@ -8,11 +8,11 @@ import type { StoreMapMarker } from "@/components/catalog/map/map-types";
 import { CatalogProductControls } from "@/components/catalog/products/catalog-product-controls";
 import { EmptyState } from "@/components/ui/empty-state";
 import { useCatalogProductBrowser } from "@/hooks/catalog/use-catalog-product-browser";
-import type { StoreListItem } from "@/types/store";
+import type { CompanyListItem } from "@/types/company";
 import type { CatalogProduct } from "@/types/store-catalog";
 
 type StoreCatalogContentProps = {
-	store: StoreListItem;
+	store: CompanyListItem;
 	products: readonly CatalogProduct[];
 	markers: readonly StoreMapMarker[];
 	onEditLocation: (product: CatalogProduct) => void;

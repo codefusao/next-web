@@ -1,32 +1,33 @@
 "use client";
 
 import { Store } from "lucide-react";
+import { useState } from "react";
 import { AddStoreModal } from "@/components/stores/modals/add-store-modal";
 import { StoreCard } from "@/components/stores/store-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 import { SearchInput } from "@/components/ui/search-input";
-import { paginationPageSize } from "@/constants/pagination";
-import { useSearchPagination } from "@/hooks/use-search-pagination";
-import { useStoresQuery } from "@/hooks/use-stores-query";
-import { filterStores } from "@/lib/filter-stores";
+import { useCompaniesQuery } from "@/hooks/use-companies-query";
 
 export function StoresList() {
-	const { data: stores = [] } = useStoresQuery();
-	const {
-		activePage,
-		goToNextPage,
-		goToPreviousPage,
-		filteredItems,
-		query,
-		setSearchQuery,
-		totalPages,
-		visibleItems: visibleStores,
-	} = useSearchPagination({
-		items: stores,
-		itemsPerPage: paginationPageSize.stores,
-		filter: filterStores,
-	});
+	const [activePage, setActivePage] = useState(1);
+	const [query, setQuery] = useState("");
+	const { data } = useCompaniesQuery(activePage, query);
+	const companies = data?.companies ?? [];
+	const totalPages = data?.meta.totalPages ?? 1;
+
+	function setSearchQuery(nextQuery: string) {
+		setQuery(nextQuery);
+		setActivePage(1);
+	}
+
+	function goToPreviousPage() {
+		setActivePage((page) => Math.max(1, page - 1));
+	}
+
+	function goToNextPage() {
+		setActivePage((page) => Math.min(totalPages, page + 1));
+	}
 
 	return (
 		<section aria-label="Lista de lojas">
@@ -40,7 +41,7 @@ export function StoresList() {
 				/>
 				<AddStoreModal />
 			</div>
-			{filteredItems.length === 0 ? (
+			{companies.length === 0 ? (
 				<EmptyState
 					icon={Store}
 					title="Nenhuma loja encontrada"
@@ -49,7 +50,7 @@ export function StoresList() {
 			) : (
 				<>
 					<ul className="grid auto-rows-fr gap-5 sm:grid-cols-2 xl:grid-cols-3">
-						{visibleStores.map((store) => (
+						{companies.map((store) => (
 							<li key={store.id} className="h-full">
 								<StoreCard store={store} />
 							</li>

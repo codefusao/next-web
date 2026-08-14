@@ -10,12 +10,12 @@ import {
 	type StoreCatalogLocationFields,
 	storeCatalogLocationSchema,
 } from "@/schemas/store-catalog";
+import type { CompanyListItem } from "@/types/company";
 import type { Product } from "@/types/product";
-import type { StoreListItem } from "@/types/store";
 import type { StoreMapPosition } from "@/types/store-catalog";
 
 type CatalogLocationMapModalProps = {
-	store: StoreListItem;
+	store: CompanyListItem;
 	product: Product;
 	initialPosition?: StoreCatalogLocationFields;
 	onClose: () => void;
