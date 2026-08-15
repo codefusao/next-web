@@ -1,27 +1,27 @@
 "use client";
 
-import { ListFilter } from "lucide-react";
+import { ArrowDownUp, ListFilter } from "lucide-react";
 import { useState } from "react";
+import type { ReactNode } from "react";
 import { SearchInput } from "@/components/ui/search-input";
-import { productCategories } from "@/constants/product-categories";
-import {
-	type CatalogProductOrder,
-	catalogProductOrder,
-} from "@/lib/catalog-products";
+import { useCategoriesQuery } from "@/hooks/use-categories-query";
+import { productOrder, type ProductOrder } from "@/types/product";
 
 type CatalogProductControlsProps = {
 	query: string;
 	categoryId: string;
-	order: CatalogProductOrder;
+	order: ProductOrder;
 	onQueryChange: (query: string) => void;
 	onCategoryChange: (categoryId: string) => void;
-	onOrderChange: (order: CatalogProductOrder) => void;
+	onOrderChange: (order: ProductOrder) => void;
+	searchLabel?: string;
+	searchPlaceholder?: string;
+	action?: ReactNode;
 };
 
-const orderOptions: { value: CatalogProductOrder; label: string }[] = [
-	{ value: catalogProductOrder.name, label: "Nome (A–Z)" },
-	{ value: catalogProductOrder.category, label: "Categoria" },
-	{ value: catalogProductOrder.code, label: "Código" },
+const orderOptions: { value: ProductOrder; label: string }[] = [
+	{ value: productOrder.name, label: "Nome (A–Z)" },
+	{ value: productOrder.category, label: "Categoria" },
 ];
 
 export function CatalogProductControls({
@@ -31,11 +31,14 @@ export function CatalogProductControls({
 	onQueryChange,
 	onCategoryChange,
 	onOrderChange,
+	searchLabel = "Buscar no catálogo da loja",
+	searchPlaceholder = "Buscar por produto ou categoria",
+	action,
 }: CatalogProductControlsProps) {
 	const [isFilterOpen, setIsFilterOpen] = useState(false);
-	const activeFilterLabel = productCategories.find(
-		(category) => category.id === categoryId,
-	)?.label;
+	const [isOrderOpen, setIsOrderOpen] = useState(false);
+	const { data: categories = [] } = useCategoriesQuery();
+	const activeFilterLabel = categories.find((category) => category.id === categoryId)?.name;
 
 	return (
 		<div className="border-b border-border p-4 sm:p-5">
@@ -43,8 +46,8 @@ export function CatalogProductControls({
 				<SearchInput
 					query={query}
 					onQueryChange={onQueryChange}
-					placeholder="Buscar por produto, código ou categoria"
-					label="Buscar no catálogo da loja"
+					placeholder={searchPlaceholder}
+					label={searchLabel}
 					className="mb-0 flex-1"
 					inputClassName="bg-transparent"
 				/>
@@ -56,7 +59,10 @@ export function CatalogProductControls({
 								? "border-primary bg-primary/10 text-primary"
 								: "border-border bg-transparent text-foreground hover:border-primary/40"
 						}`}
-						onClick={() => setIsFilterOpen((isOpen) => !isOpen)}
+									onClick={() => {
+										setIsFilterOpen((isOpen) => !isOpen);
+										setIsOrderOpen(false);
+									}}
 						aria-expanded={isFilterOpen}
 						aria-controls="catalog-category-filter"
 					>
@@ -84,27 +90,60 @@ export function CatalogProductControls({
 								Todas as categorias
 							</button>
 							<div className="max-h-56 overflow-y-auto">
-								{productCategories.map((category) => (
+								{categories.map((category) => (
 									<button
 										key={category.id}
 										type="button"
-										className={`w-full rounded-[var(--radius-sm)] px-2 py-2 text-left text-sm transition-colors hover:bg-background ${
-											category.id === categoryId
-												? "bg-primary/10 font-bold text-primary"
-												: ""
-										}`}
+										className={`w-full rounded-[var(--radius-sm)] px-2 py-2 text-left text-sm transition-colors hover:bg-background ${category.id === categoryId ? "bg-primary/10 font-bold text-primary" : ""}`}
 										onClick={() => {
 											onCategoryChange(category.id);
 											setIsFilterOpen(false);
 										}}
 									>
-										{category.label}
+										{category.name}
 									</button>
 								))}
 							</div>
 						</div>
 					) : null}
-				</div>
+					</div>
+					<div className="relative shrink-0">
+						<button
+							type="button"
+							className={`inline-flex h-[var(--control-height-input)] items-center gap-2 rounded-[var(--radius-control)] border px-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+								isOrderOpen
+									? "border-primary bg-primary/10 text-primary"
+									: "border-border bg-transparent text-foreground hover:border-primary/40"
+							}`}
+							onClick={() => {
+								setIsOrderOpen((isOpen) => !isOpen);
+								setIsFilterOpen(false);
+							}}
+							aria-expanded={isOrderOpen}
+							aria-controls="catalog-order-options"
+						>
+							<ArrowDownUp aria-hidden="true" className="size-4" />
+							<span className="hidden sm:inline">Ordenar</span>
+						</button>
+						{isOrderOpen ? (
+							<div id="catalog-order-options" className="absolute right-0 z-30 mt-2 w-56 rounded-[var(--radius-control)] border border-border bg-card p-2 shadow-lg">
+								{orderOptions.map((option) => (
+									<button
+										key={option.value}
+										type="button"
+										className={`w-full rounded-[var(--radius-sm)] px-2 py-2 text-left text-sm transition-colors hover:bg-background ${order === option.value ? "bg-primary/10 font-bold text-primary" : ""}`}
+										onClick={() => {
+											onOrderChange(option.value);
+											setIsOrderOpen(false);
+										}}
+									>
+										{option.label}
+									</button>
+								))}
+							</div>
+						) : null}
+					</div>
+				{action}
 			</div>
 			<div className="mt-4 flex flex-wrap items-center justify-between gap-3">
 				<p className="text-sm text-muted">
@@ -112,20 +151,6 @@ export function CatalogProductControls({
 						? `Filtro: ${activeFilterLabel}`
 						: "Todos os produtos"}
 				</p>
-				<select
-					value={order}
-					onChange={(event) =>
-						onOrderChange(event.target.value as CatalogProductOrder)
-					}
-					className="h-9 rounded-[var(--radius-sm)] border border-border bg-transparent px-2 text-sm font-medium text-foreground outline-none focus:border-primary"
-					aria-label="Ordenar produtos do catálogo"
-				>
-					{orderOptions.map((option) => (
-						<option key={option.value} value={option.value}>
-							{option.label}
-						</option>
-					))}
-				</select>
 			</div>
 		</div>
 	);

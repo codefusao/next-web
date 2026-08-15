@@ -42,9 +42,6 @@ export function CatalogProductCard({
 				<p className="mt-1 truncate text-xs text-muted">
 					{product.categoria.label}
 				</p>
-				<p className="mt-1 truncate text-[10px] text-muted" title={product.id}>
-					ID do catálogo: {product.id}
-				</p>
 			</div>
 			<div className="pt-2">
 				<p className="flex items-start gap-1.5 text-[10px] leading-4 text-muted">

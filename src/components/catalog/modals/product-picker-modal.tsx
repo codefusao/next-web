@@ -5,15 +5,14 @@ import { ProductThumbnail } from "@/components/products/product-thumbnail";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Modal } from "@/components/ui/modal";
-import { PaginationControls } from "@/components/ui/pagination-controls";
-import { SearchInput } from "@/components/ui/search-input";
-import { paginationPageSize } from "@/constants/pagination";
-import { useSearchPagination } from "@/hooks/use-search-pagination";
-import { filterProducts } from "@/lib/filter-products";
 import type { Product } from "@/types/product";
 
+export type CatalogProductPickerItem = Product & {
+	availableQuantity?: number;
+};
+
 type CatalogProductPickerModalProps = {
-	products: readonly Product[];
+	products: readonly CatalogProductPickerItem[];
 	onClose: () => void;
 	onSelect: (product: Product) => void;
 };
@@ -23,21 +22,6 @@ export function CatalogProductPickerModal({
 	onClose,
 	onSelect,
 }: CatalogProductPickerModalProps) {
-	const {
-		activePage,
-		filteredItems,
-		goToNextPage,
-		goToPreviousPage,
-		query,
-		setSearchQuery,
-		totalPages,
-		visibleItems,
-	} = useSearchPagination({
-		items: products,
-		itemsPerPage: paginationPageSize.products,
-		filter: filterProducts,
-	});
-
 	return (
 		<Modal
 			title="Adicionar produto ao catálogo"
@@ -48,22 +32,16 @@ export function CatalogProductPickerModal({
 			layout="scrollable"
 		>
 			<div className="mt-6">
-				<SearchInput
-					query={query}
-					onQueryChange={setSearchQuery}
-					placeholder="Buscar por produto, código ou categoria"
-					label="Buscar produtos para o catálogo"
-				/>
-				{filteredItems.length === 0 ? (
+				{products.length === 0 ? (
 					<EmptyState
 						icon={PackageSearch}
 						title="Nenhum produto encontrado"
-						description="Tente buscar por outro produto, código ou categoria."
+						description="Adicione produtos ao inventário para localizá-los na loja."
 					/>
 				) : (
 					<>
 						<ul className="divide-y divide-border overflow-hidden rounded-[var(--radius-card)] border border-border bg-background">
-							{visibleItems.map((product) => (
+							{products.map((product) => (
 								<li
 									key={product.id}
 									className="flex items-center gap-3 p-3 sm:p-4"
@@ -75,23 +53,25 @@ export function CatalogProductPickerModal({
 									<div className="min-w-0 flex-1">
 										<p className="truncate font-bold">{product.nome}</p>
 										<p className="mt-1 text-sm text-muted">
-											{product.codigo} · {product.categoria.label}
+											{product.categoria.label}
 										</p>
+										{product.availableQuantity !== undefined ? (
+											<p className="mt-1 text-xs font-medium text-muted">
+												Disponível no estoque: {product.availableQuantity}
+											</p>
+										) : null}
 									</div>
-									<Button size="compact" onClick={() => onSelect(product)}>
+									<Button
+										size="compact"
+										disabled={product.availableQuantity === 0}
+										onClick={() => onSelect(product)}
+									>
 										<Check aria-hidden="true" className="size-4" />
 										Selecionar
 									</Button>
 								</li>
 							))}
 						</ul>
-						<PaginationControls
-							activePage={activePage}
-							totalPages={totalPages}
-							onPrevious={goToPreviousPage}
-							onNext={goToNextPage}
-							label="Paginação de produtos do catálogo"
-						/>
 					</>
 				)}
 			</div>

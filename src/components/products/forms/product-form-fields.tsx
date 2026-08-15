@@ -1,12 +1,15 @@
 import { ImageIcon, PackagePlus } from "lucide-react";
+import type { ReactNode } from "react";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import { FormField, formControlClass } from "@/components/ui/form-field";
-import { productCategories } from "@/constants/product-categories";
+import type { Category } from "@/api/categories";
 import type { ProductPlaceholderFields } from "@/schemas/product";
 
 type ProductFormFieldsProps = {
 	register: UseFormRegister<ProductPlaceholderFields>;
 	errors: FieldErrors<ProductPlaceholderFields>;
+	categories: readonly Category[];
+	categoryAction?: ReactNode;
 };
 
 function inputClass(hasError: boolean) {
@@ -16,23 +19,12 @@ function inputClass(hasError: boolean) {
 export function ProductFormFields({
 	register,
 	errors,
+	categories,
+	categoryAction,
 }: ProductFormFieldsProps) {
 	return (
 		<>
 			<div className="grid gap-5 md:grid-cols-2">
-				<FormField
-					label="Código do produto"
-					inputId="product-code"
-					error={errors.code?.message}
-				>
-					<input
-						{...register("code")}
-						id="product-code"
-						placeholder="Ex.: 1571698172"
-						className={inputClass(Boolean(errors.code))}
-						aria-invalid={Boolean(errors.code)}
-					/>
-				</FormField>
 				<FormField
 					label="Nome do produto"
 					inputId="product-name"
@@ -51,19 +43,35 @@ export function ProductFormFields({
 					inputId="product-category"
 					error={errors.categoryId?.message}
 				>
-					<select
-						{...register("categoryId")}
-						id="product-category"
-						className={inputClass(Boolean(errors.categoryId))}
-						aria-invalid={Boolean(errors.categoryId)}
-					>
-						<option value="">Selecione uma categoria</option>
-						{productCategories.map((category) => (
-							<option key={category.id} value={category.id}>
-								{category.label}
-							</option>
-						))}
-					</select>
+					<div className="flex gap-2">
+						<select
+							{...register("categoryId")}
+							id="product-category"
+							className={`${inputClass(Boolean(errors.categoryId))} min-w-0 flex-1`}
+							aria-invalid={Boolean(errors.categoryId)}
+						>
+							<option value="">Selecione uma categoria</option>
+							{categories.map((category) => (
+								<option key={category.id} value={category.id}>
+									{category.name}
+								</option>
+							))}
+						</select>
+						{categoryAction}
+					</div>
+				</FormField>
+				<FormField
+					label="Unidade de medida"
+					inputId="product-unit"
+					error={errors.unit?.message}
+				>
+					<input
+						{...register("unit")}
+						id="product-unit"
+						placeholder="Ex.: UN, M, KG"
+						className={inputClass(Boolean(errors.unit))}
+						aria-invalid={Boolean(errors.unit)}
+					/>
 				</FormField>
 				<FormField
 					label="Preço regular"

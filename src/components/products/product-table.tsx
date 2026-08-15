@@ -24,7 +24,6 @@ export function ProductTable(props: ProductTableProps) {
 				<thead className="border-b border-border bg-background text-xs uppercase tracking-wide text-muted">
 					<tr>
 						<th className="px-4 py-3 font-semibold">Imagem</th>
-						<th className="px-4 py-3 font-semibold">Código</th>
 						<th className="px-4 py-3 font-semibold">Produto</th>
 						<th className="px-4 py-3 font-semibold">Categoria</th>
 						<th className="px-4 py-3 font-semibold">
@@ -48,9 +47,6 @@ export function ProductTable(props: ProductTableProps) {
 									source={product.image}
 									productName={product.nome}
 								/>
-							</td>
-							<td className="whitespace-nowrap px-4 py-4 font-semibold">
-								{product.codigo}
 							</td>
 							<td className="min-w-56 px-4 py-4 font-medium">{product.nome}</td>
 							<td className="whitespace-nowrap px-4 py-4 text-muted">

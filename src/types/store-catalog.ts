@@ -7,6 +7,11 @@ export type StoreMapPosition = {
 
 export type StoreCatalogProductLocation = StoreMapPosition & {
 	description: string;
+	departmentId?: string;
+	aisle?: string;
+	shelf?: string;
+	module?: string;
+	level?: string;
 };
 
 export type StoreCatalogProduct = {

@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { initialStoreCatalog } from "@/api/mock-data";
 import { queryKeys } from "@/api/query-keys";
 import {
 	type CreateStoreCatalogProductInput,
@@ -12,15 +11,17 @@ import {
 	type UpdateStoreCatalogProductInput,
 	type UpdateStoreCatalogProductResult,
 	updateStoreCatalogProduct,
+	type StoreCatalogQuery,
 } from "@/api/store-catalog";
-import type { StoreCatalogProduct } from "@/types/store-catalog";
 
-export function useStoreCatalogQuery(storeId: string) {
+export function useStoreCatalogQuery(
+	storeId: string,
+	{ query = "", categoryId = "", order = "name", page = 1, limit = 10 }: StoreCatalogQuery = {},
+) {
 	return useQuery({
-		queryKey: queryKeys.companies.catalog(storeId),
-		queryFn: () => getStoreCatalog(storeId),
-		initialData: initialStoreCatalog,
-		staleTime: Infinity,
+		queryKey: queryKeys.companies.catalog(storeId, query, categoryId, order, page),
+		queryFn: () => getStoreCatalog(storeId, { query, categoryId, order, page, limit }),
+		staleTime: 30_000,
 	});
 }
 
@@ -29,14 +30,13 @@ export function useCreateStoreCatalogProductMutation() {
 
 	return useMutation({
 		mutationFn: createStoreCatalogProduct,
-		onSuccess: (
-			catalogProduct,
-			{ storeId }: CreateStoreCatalogProductInput,
-		) => {
-			queryClient.setQueryData<StoreCatalogProduct[]>(
-				queryKeys.companies.catalog(storeId),
-				(catalogProducts) => [...(catalogProducts ?? []), catalogProduct],
-			);
+		onSuccess: (_, { storeId }: CreateStoreCatalogProductInput) => {
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.companies.catalog(storeId),
+			});
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.companies.inventory(storeId),
+			});
 		},
 	});
 }
@@ -46,19 +46,10 @@ export function useUpdateStoreCatalogProductMutation() {
 
 	return useMutation({
 		mutationFn: updateStoreCatalogProduct,
-		onSuccess: (
-			catalogProductUpdate: UpdateStoreCatalogProductResult,
-			{ storeId }: UpdateStoreCatalogProductInput,
-		) => {
-			queryClient.setQueryData<StoreCatalogProduct[]>(
-				queryKeys.companies.catalog(storeId),
-				(catalogProducts) =>
-					(catalogProducts ?? []).map((item) =>
-						item.id === catalogProductUpdate.id
-							? { ...item, ...catalogProductUpdate }
-							: item,
-					),
-			);
+		onSuccess: (_, { storeId }: UpdateStoreCatalogProductInput) => {
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.companies.catalog(storeId),
+			});
 		},
 	});
 }
@@ -68,17 +59,10 @@ export function useRemoveStoreCatalogProductMutation() {
 
 	return useMutation({
 		mutationFn: removeStoreCatalogProduct,
-		onSuccess: ({
-			storeId,
-			catalogProductId,
-		}: RemoveStoreCatalogProductInput) => {
-			queryClient.setQueryData<StoreCatalogProduct[]>(
-				queryKeys.companies.catalog(storeId),
-				(catalogProducts) =>
-					(catalogProducts ?? []).filter(
-						(catalogProduct) => catalogProduct.id !== catalogProductId,
-					),
-			);
+		onSuccess: ({ storeId }: RemoveStoreCatalogProductInput) => {
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.companies.catalog(storeId),
+			});
 		},
 	});
 }

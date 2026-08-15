@@ -5,11 +5,9 @@ import { PackagePlus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { ProductFormFields } from "@/components/products/forms/product-form-fields";
+import { CategoryManagerModal } from "@/components/products/category-manager-modal";
 import { Button } from "@/components/ui/button";
-import {
-	type ProductCategory,
-	productCategories,
-} from "@/constants/product-categories";
+import { useCategoriesQuery } from "@/hooks/use-categories-query";
 import { useCreateProductMutation } from "@/hooks/use-products-query";
 import { toBrl } from "@/lib/currency";
 import {
@@ -18,9 +16,9 @@ import {
 } from "@/schemas/product";
 
 const defaultValues: ProductPlaceholderFields = {
-	code: "",
 	name: "",
 	categoryId: "",
+	unit: "UN",
 	regularPrice: "",
 	pixPrice: "",
 	installmentCount: "",
@@ -46,6 +44,7 @@ type AddProductFormProps = {
 
 export function AddProductForm({ onSuccess }: AddProductFormProps) {
 	const createProduct = useCreateProductMutation();
+	const { data: categories = [] } = useCategoriesQuery();
 	const {
 		register,
 		handleSubmit,
@@ -58,18 +57,13 @@ export function AddProductForm({ onSuccess }: AddProductFormProps) {
 	});
 
 	async function submitProduct(fields: ProductPlaceholderFields) {
-		const category = productCategories.find(
-			(item) => item.id === fields.categoryId,
-		) as ProductCategory | undefined;
-		if (!category) return;
-
 		try {
 			await createProduct.mutateAsync({
-				codigo: fields.code.trim(),
-				nome: fields.name.trim(),
-				categoria: category,
-				precos_e_condicoes: productPriceConditions(fields),
-				image: fields.image || null,
+				name: fields.name.trim(),
+				categoryId: fields.categoryId,
+				unit: fields.unit.trim(),
+				priceConditions: productPriceConditions(fields),
+				imageUrl: fields.image || null,
 			});
 			reset(defaultValues);
 			toast.success("Produto adicionado com sucesso.");
@@ -81,7 +75,12 @@ export function AddProductForm({ onSuccess }: AddProductFormProps) {
 
 	return (
 		<form onSubmit={handleSubmit(submitProduct)} noValidate className="mt-6">
-			<ProductFormFields register={register} errors={errors} />
+			<ProductFormFields
+				register={register}
+				errors={errors}
+				categories={categories}
+				categoryAction={<CategoryManagerModal triggerLabel="Criar categoria" />}
+			/>
 			<div className="mt-7 flex justify-end border-t border-border pt-6">
 				<Button type="submit" disabled={createProduct.isPending}>
 					<PackagePlus aria-hidden="true" className="size-5" />

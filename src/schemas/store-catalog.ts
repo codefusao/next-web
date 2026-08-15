@@ -8,7 +8,11 @@ const mapCoordinateSchema = z
 export const storeCatalogLocationSchema = z.object({
 	x: mapCoordinateSchema,
 	y: mapCoordinateSchema,
-	description: z.string().trim().min(3, "Informe a descrição da localização"),
+	departmentId: z.string().uuid("Selecione um departamento"),
+	aisle: z.string().trim().min(1, "Informe o corredor"),
+	shelf: z.string().trim().min(1, "Informe a prateleira"),
+	module: z.string().trim().min(1, "Informe o módulo"),
+	level: z.string().trim().min(1, "Informe o nível"),
 });
 
 export type StoreCatalogLocationFields = z.infer<

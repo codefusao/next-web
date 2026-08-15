@@ -26,7 +26,7 @@ const sizeClasses: Record<ModalSize, string> = {
 
 const layoutClasses: Record<ModalLayout, string> = {
 	centered: "flex items-center justify-center p-4",
-	scrollable: "overflow-y-auto p-4 sm:p-8",
+	scrollable: "flex items-center justify-center overflow-y-auto p-4 sm:p-8",
 };
 
 export function Modal({
@@ -55,7 +55,7 @@ export function Modal({
 				onClick={onClose}
 			/>
 			<section
-				className={`relative z-10 mx-auto w-full rounded-[var(--radius-card)] border border-border bg-card p-5 text-foreground shadow-xl sm:p-7 ${sizeClasses[size]}`}
+				className={`relative z-10 mx-auto w-full rounded-[var(--radius-card)] border border-border bg-card p-5 text-foreground shadow-xl sm:p-7 ${sizeClasses[size]} ${layout === "scrollable" ? "max-h-[calc(100dvh-2rem)] overflow-y-auto" : ""}`}
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby={titleId}

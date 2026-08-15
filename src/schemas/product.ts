@@ -11,9 +11,9 @@ const optionalMoney = z
 
 export const productPlaceholderSchema = z
 	.object({
-		code: z.string().trim().min(1, "Código é obrigatório"),
 		name: z.string().trim().min(1, "Nome do produto é obrigatório"),
 		categoryId: z.string().min(1, "Selecione uma categoria"),
+		unit: z.string().trim().min(1, "Informe a unidade de medida"),
 		regularPrice: z
 			.string()
 			.trim()

@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { initialProducts } from "@/api/mock-data";
 import {
 	type CreateProductInput,
 	createProduct,
@@ -9,14 +8,16 @@ import {
 	getProducts,
 } from "@/api/products";
 import { queryKeys } from "@/api/query-keys";
-import type { Product } from "@/types/product";
+import type { ProductListQuery } from "@/types/product";
 
-export function useProductsQuery(enabled = true) {
+export function useProductsQuery(
+	{ query = "", categoryId = "", order = "name", page = 1, limit = 10, notInCompanyId }: ProductListQuery = {},
+	enabled = true,
+) {
 	return useQuery({
-		queryKey: queryKeys.products.all,
-		queryFn: getProducts,
-		initialData: initialProducts,
-		staleTime: Infinity,
+		queryKey: queryKeys.products.list(query, categoryId, order, page, notInCompanyId),
+		queryFn: () => getProducts({ query, categoryId, order, page, limit, notInCompanyId }),
+		staleTime: 30_000,
 		enabled,
 	});
 }
@@ -25,7 +26,7 @@ export function useProductQuery(productId: string) {
 	return useQuery({
 		queryKey: queryKeys.products.byId(productId),
 		queryFn: () => getProduct(productId),
-		staleTime: Infinity,
+		staleTime: 30_000,
 	});
 }
 
@@ -34,11 +35,8 @@ export function useCreateProductMutation() {
 
 	return useMutation({
 		mutationFn: (input: CreateProductInput) => createProduct(input),
-		onSuccess: (product) => {
-			queryClient.setQueryData<Product[]>(
-				queryKeys.products.all,
-				(products) => [product, ...(products ?? [])],
-			);
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: queryKeys.products.all });
 		},
 	});
 }

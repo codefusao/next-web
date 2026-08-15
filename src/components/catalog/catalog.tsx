@@ -17,10 +17,13 @@ import {
 	useUpdateStoreCatalogProductMutation,
 } from "@/hooks/catalog/use-store-catalog-query";
 import { useCompanyQuery } from "@/hooks/use-companies-query";
-import { useProductsQuery } from "@/hooks/use-products-query";
+import { useDepartmentsQuery } from "@/hooks/use-departments-query";
+import { useCreateDepartmentMutation } from "@/hooks/use-departments-query";
+import { useInventoryQuery } from "@/hooks/use-inventory-query";
 import { useStoreMapQuery } from "@/hooks/use-store-map-query";
 import type { StoreCatalogLocationFields } from "@/schemas/store-catalog";
 import type { Product } from "@/types/product";
+import { productOrder, type ProductOrder } from "@/types/product";
 import type { CatalogProduct } from "@/types/store-catalog";
 
 type StoreCatalogProps = {
@@ -45,17 +48,29 @@ type CatalogProductDialogState =
 export function Catalog({ storeId }: StoreCatalogProps) {
 	const { data: store } = useCompanyQuery(storeId);
 	const { data: storeMap = null } = useStoreMapQuery(storeId);
-	const { data: catalogItems = [] } = useStoreCatalogQuery(storeId);
+	const { data: departments = [] } = useDepartmentsQuery(storeId);
+	const createDepartment = useCreateDepartmentMutation();
+	const [catalogQuery, setCatalogQuery] = useState("");
+	const [categoryId, setCategoryId] = useState("");
+	const [order, setOrder] = useState<ProductOrder>(productOrder.name);
+	const [page, setPage] = useState(1);
+	const { data: catalogResult } = useStoreCatalogQuery(storeId, {
+		query: catalogQuery,
+		categoryId,
+		order,
+		page,
+	});
+	const catalogItems = catalogResult?.products ?? [];
 	const createCatalogProduct = useCreateStoreCatalogProductMutation();
 	const updateCatalogProduct = useUpdateStoreCatalogProductMutation();
 	const removeCatalogProduct = useRemoveStoreCatalogProductMutation();
 	const [dialog, setDialog] = useState<CatalogProductDialogState>({
 		type: CatalogProductDialogType.Closed,
 	});
-	const { data: products = [] } = useProductsQuery(
-		dialog.type === CatalogProductDialogType.ProductPicker,
-	);
+	const { data: inventoryResult } = useInventoryQuery(storeId);
+	const products = inventoryResult?.products ?? [];
 	const catalogProducts = useCatalogProductReferences(catalogItems);
+	const catalogProductsToPlace = products;
 	const markers = useMemo<StoreMapMarker[]>(
 		() =>
 			catalogProducts.map((product) => ({
@@ -75,18 +90,40 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 		setDialog({ type: CatalogProductDialogType.Closed });
 	}
 
+	function updateCatalogQuery(query: string) {
+		setCatalogQuery(query);
+		setPage(1);
+	}
+
+	function updateCategory(nextCategoryId: string) {
+		setCategoryId(nextCategoryId);
+		setPage(1);
+	}
+
+	function updateOrder(nextOrder: ProductOrder) {
+		setOrder(nextOrder);
+		setPage(1);
+	}
+
+	async function createCatalogDepartment(name: string) {
+		const department = await createDepartment.mutateAsync({ companyId: storeId, name });
+		return department.id;
+	}
+
 	async function saveNewLocation(position: StoreCatalogLocationFields) {
 		if (dialog.type !== CatalogProductDialogType.Locating) return;
 
 		try {
 			await createCatalogProduct.mutateAsync({
 				storeId,
+				storeMapId: storeMap?.id ?? "",
 				referenceProductId: dialog.product.id,
 				location: position,
 			});
 			closeDialog();
 			toast.success("Produto localizado no catálogo da loja.");
-		} catch {
+		} catch (error) {
+			console.error(error);
 			toast.error("Não foi possível adicionar a localização.");
 		}
 	}
@@ -104,7 +141,8 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 			});
 			closeDialog();
 			toast.success("Localização atualizada com sucesso.");
-		} catch {
+		} catch (error) {
+			console.error(error);
 			toast.error("Não foi possível atualizar a localização.");
 		}
 	}
@@ -119,7 +157,8 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 			});
 			closeDialog();
 			toast.success("Produto removido do catálogo.");
-		} catch {
+		} catch (error) {
+			console.error(error);
 			toast.error("Não foi possível remover a localização.");
 		}
 	}
@@ -149,10 +188,21 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 				onRemoveLocation={(product) =>
 					setDialog({ type: CatalogProductDialogType.Removing, product })
 				}
+				query={catalogQuery}
+				onQueryChange={updateCatalogQuery}
+				categoryId={categoryId}
+				order={order}
+				meta={catalogResult?.meta}
+				onCategoryChange={updateCategory}
+				onOrderChange={updateOrder}
+				onPreviousPage={() => setPage((currentPage) => Math.max(1, currentPage - 1))}
+				onNextPage={() =>
+					setPage((currentPage) => Math.min(catalogResult?.meta.totalPages ?? 1, currentPage + 1))
+				}
 			/>
 			{dialog.type === CatalogProductDialogType.ProductPicker ? (
 				<CatalogProductPickerModal
-					products={products}
+					products={catalogProductsToPlace}
 					onClose={closeDialog}
 					onSelect={(product) =>
 						setDialog({ type: CatalogProductDialogType.Locating, product })
@@ -164,6 +214,8 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 					store={store}
 					storeMapUrl={storeMap?.imageUrl ?? null}
 					product={dialog.product}
+					departments={departments}
+					onCreateDepartment={createCatalogDepartment}
 					onClose={closeDialog}
 					onSave={saveNewLocation}
 				/>
@@ -173,6 +225,8 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 					store={store}
 					storeMapUrl={storeMap?.imageUrl ?? null}
 					product={dialog.product}
+					departments={departments}
+					onCreateDepartment={createCatalogDepartment}
 					initialPosition={dialog.product.location}
 					onClose={closeDialog}
 					onSave={saveCatalogProductLocation}

@@ -3,19 +3,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	getInventory,
-	type InventoryByProductId,
+	type CreateInventoryInput,
 	type UpdateInventoryInput,
+	createInventory,
 	updateInventory,
 } from "@/api/inventory";
-import { initialStockByStoreId } from "@/api/mock-data";
 import { queryKeys } from "@/api/query-keys";
+import type { InventoryQuery } from "@/api/inventory";
 
-export function useInventoryQuery(storeId: string) {
+export function useInventoryQuery(
+	storeId: string,
+	{ query = "", page = 1, limit = 10 }: InventoryQuery = {},
+) {
 	return useQuery({
-		queryKey: queryKeys.companies.inventory(storeId),
-		queryFn: () => getInventory(storeId),
-		initialData: initialStockByStoreId[storeId] ?? {},
-		staleTime: Infinity,
+		queryKey: queryKeys.companies.inventory(storeId, query, page),
+		queryFn: () => getInventory(storeId, { query, page, limit }),
+		staleTime: 30_000,
 	});
 }
 
@@ -24,14 +27,19 @@ export function useUpdateInventoryMutation() {
 
 	return useMutation({
 		mutationFn: updateInventory,
-		onSuccess: ({ storeId, productId, quantity }: UpdateInventoryInput) => {
-			queryClient.setQueryData<InventoryByProductId>(
-				queryKeys.companies.inventory(storeId),
-				(stockByProductId) => ({
-					...(stockByProductId ?? {}),
-					[productId]: quantity,
-				}),
-			);
+		onSuccess: (_, { storeId }: UpdateInventoryInput) => {
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.companies.inventory(storeId),
+			});
 		},
+	});
+}
+
+export function useCreateInventoryMutation() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: (input: CreateInventoryInput) => createInventory(input),
+		onSuccess: (_, { storeId }) =>
+			queryClient.invalidateQueries({ queryKey: queryKeys.companies.inventory(storeId) }),
 	});
 }
