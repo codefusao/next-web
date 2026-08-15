@@ -1,6 +1,6 @@
 "use client";
 
-import { Boxes, ChartNoAxesColumn, Package, ShoppingCart } from "lucide-react";
+import { BellRing, Boxes, ChartNoAxesColumn, Package } from "lucide-react";
 import { useState } from "react";
 import { StoreActionCard } from "@/components/stores/details/store-action-card";
 import { StoreFloorMap } from "@/components/stores/details/store-floor-map";
@@ -83,10 +83,10 @@ function StoreQuickActions({ store }: StoreQuickActionsProps) {
 			description: "Acompanhe o estoque da loja.",
 		},
 		{
-			disabled: true,
-			icon: ShoppingCart,
-			title: "Pedidos",
-			description: "Gerencie os pedidos da loja.",
+			href: `/stores/${store.id}/notifications`,
+			icon: BellRing,
+			title: "Avisos de localização",
+			description: "Confira quando um cliente não encontra um item no local indicado.",
 		},
 		{
 			disabled: true,

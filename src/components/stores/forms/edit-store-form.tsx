@@ -33,7 +33,7 @@ export function EditStoreForm({ store, onCancel, onSave }: EditStoreFormProps) {
 		defaultValues: {
 			parentId: store.parentId ?? "",
 			name: store.name,
-			address: store.address,
+			address: store.address ?? "",
 			cnpj: store.cnpj,
 			description: store.description ?? "",
 			bannerUrl: store.bannerUrl ?? "",

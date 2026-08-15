@@ -16,7 +16,7 @@ import {
 
 export function useStoreCatalogQuery(
 	storeId: string,
-	{ query = "", categoryId = "", order = "name", page = 1, limit = 10 }: StoreCatalogQuery = {},
+	{ query = "", categoryId = "", order = "name", page = 1, limit = 6 }: StoreCatalogQuery = {},
 ) {
 	return useQuery({
 		queryKey: queryKeys.companies.catalog(storeId, query, categoryId, order, page),

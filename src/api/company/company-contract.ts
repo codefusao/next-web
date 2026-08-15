@@ -7,7 +7,7 @@ export const companySchema = z.object({
 	name: z.string(),
 	cnpj: z.string().length(14),
 	description: z.string().nullable(),
-	address: z.string(),
+	address: z.string().nullable(),
 	bannerUrl: z.url().nullable(),
 	status: z.enum(CompanyStatus).nullable(),
 	manager: z.string().nullable(),
@@ -43,11 +43,13 @@ export type CreateCompanyInput = Omit<
 	| "updatedAt"
 	| "parentId"
 	| "description"
+	| "address"
 	| keyof CompanyProfileInput
 > &
 	CompanyProfileInput & {
 		parentId?: string | null;
 		description?: string | null;
+		address: string;
 	};
 
 export type UpdateCompanyInput = Partial<CreateCompanyInput>;

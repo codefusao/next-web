@@ -81,7 +81,7 @@ function toCatalogProduct(item: z.infer<typeof catalogItemSchema>): StoreCatalog
 
 export async function getStoreCatalog(
 	storeId: string,
-	{ page = 1, limit = 10, query = "", categoryId, order = "name" }: StoreCatalogQuery = {},
+  { page = 1, limit = 6, query = "", categoryId, order = "name" }: StoreCatalogQuery = {},
 ): Promise<StoreCatalogResult> {
 	const search = new URLSearchParams({ page: String(page), limit: String(limit), companyId: storeId, order });
 	if (query.trim()) search.set("query", query.trim());

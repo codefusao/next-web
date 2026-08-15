@@ -8,7 +8,9 @@ import type { StoreMapMarker } from "@/components/catalog/map/map-types";
 import { CatalogLocationMapModal } from "@/components/catalog/modals/location-map-modal";
 import { CatalogProductPickerModal } from "@/components/catalog/modals/product-picker-modal";
 import { RemoveCatalogLocationDialog } from "@/components/catalog/modals/remove-location-dialog";
+import { CatalogProductControls } from "@/components/catalog/products/catalog-product-controls";
 import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
+import { PaginationControls } from "@/components/ui/pagination-controls";
 import { useCatalogProductReferences } from "@/hooks/catalog/use-catalog-product-references";
 import {
 	useCreateStoreCatalogProductMutation,
@@ -54,11 +56,16 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 	const [categoryId, setCategoryId] = useState("");
 	const [order, setOrder] = useState<ProductOrder>(productOrder.name);
 	const [page, setPage] = useState(1);
+	const [pickerQuery, setPickerQuery] = useState("");
+	const [pickerCategoryId, setPickerCategoryId] = useState("");
+	const [pickerOrder, setPickerOrder] = useState<ProductOrder>(productOrder.name);
+	const [pickerPage, setPickerPage] = useState(1);
 	const { data: catalogResult } = useStoreCatalogQuery(storeId, {
 		query: catalogQuery,
 		categoryId,
 		order,
 		page,
+		limit: 6,
 	});
 	const catalogItems = catalogResult?.products ?? [];
 	const createCatalogProduct = useCreateStoreCatalogProductMutation();
@@ -67,7 +74,15 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 	const [dialog, setDialog] = useState<CatalogProductDialogState>({
 		type: CatalogProductDialogType.Closed,
 	});
-	const { data: inventoryResult } = useInventoryQuery(storeId);
+	const { data: inventoryResult, isPending: isInventoryPending } = useInventoryQuery(
+		storeId,
+	{
+			query: pickerQuery,
+			categoryId: pickerCategoryId,
+			order: pickerOrder,
+			page: pickerPage,
+		},
+	);
 	const products = inventoryResult?.products ?? [];
 	const catalogProducts = useCatalogProductReferences(catalogItems);
 	const catalogProductsToPlace = products;
@@ -103,6 +118,21 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 	function updateOrder(nextOrder: ProductOrder) {
 		setOrder(nextOrder);
 		setPage(1);
+	}
+
+	function updatePickerQuery(query: string) {
+		setPickerQuery(query);
+		setPickerPage(1);
+	}
+
+	function updatePickerCategory(nextCategoryId: string) {
+		setPickerCategoryId(nextCategoryId);
+		setPickerPage(1);
+	}
+
+	function updatePickerOrder(nextOrder: ProductOrder) {
+		setPickerOrder(nextOrder);
+		setPickerPage(1);
 	}
 
 	async function createCatalogDepartment(name: string) {
@@ -203,6 +233,35 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 			{dialog.type === CatalogProductDialogType.ProductPicker ? (
 				<CatalogProductPickerModal
 					products={catalogProductsToPlace}
+					isPending={isInventoryPending}
+					controls={
+						<CatalogProductControls
+							query={pickerQuery}
+							categoryId={pickerCategoryId}
+							order={pickerOrder}
+							onQueryChange={updatePickerQuery}
+							onCategoryChange={updatePickerCategory}
+							onOrderChange={updatePickerOrder}
+							searchLabel="Buscar produtos do estoque"
+							searchPlaceholder="Buscar por produto"
+							idPrefix="catalog-picker"
+						/>
+					}
+					pagination={
+						<PaginationControls
+							activePage={inventoryResult?.meta.currentPage ?? 1}
+							totalPages={inventoryResult?.meta.totalPages ?? 1}
+							onPrevious={() =>
+								setPickerPage((currentPage) => Math.max(1, currentPage - 1))
+							}
+							onNext={() =>
+								setPickerPage((currentPage) =>
+									Math.min(inventoryResult?.meta.totalPages ?? 1, currentPage + 1),
+								)
+							}
+							label="Paginação dos produtos disponíveis no estoque"
+						/>
+					}
 					onClose={closeDialog}
 					onSelect={(product) =>
 						setDialog({ type: CatalogProductDialogType.Locating, product })

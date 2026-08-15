@@ -1,7 +1,9 @@
-import { ImageUp } from "lucide-react";
+import { ImageUp, MapPinned } from "lucide-react";
+import { useState } from "react";
 import { InteractiveStoreMap } from "@/components/catalog/map/interactive-store-map";
 import { Button } from "@/components/ui/button";
 import { ContentCard } from "@/components/ui/content-card";
+import { StoreMapReferencePointsModal } from "@/components/stores/modals/store-map-reference-points-modal";
 import { useStoreMapQuery } from "@/hooks/use-store-map-query";
 import type { CompanyListItem } from "@/types/company";
 
@@ -12,6 +14,7 @@ type StoreFloorMapProps = {
 
 export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
 	const { data: storeMap = null, isLoading } = useStoreMapQuery(store.id);
+	const [isReferencePointsOpen, setIsReferencePointsOpen] = useState(false);
 
 	return (
 		<ContentCard aria-labelledby="store-map-title" className="mt-6 p-5 sm:p-6">
@@ -24,10 +27,16 @@ export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
 						Consulte a disposição dos setores dentro da loja.
 					</p>
 				</div>
-				<Button variant="outline" size="compact" onClick={onChangeMap}>
-					<ImageUp aria-hidden="true" className="size-4" />
-					Alterar mapa
-				</Button>
+				<div className="flex flex-wrap gap-2">
+					<Button variant="outline" size="compact" onClick={() => setIsReferencePointsOpen(true)} disabled={!storeMap}>
+						<MapPinned aria-hidden="true" className="size-4" />
+						Pontos de referência
+					</Button>
+					<Button variant="outline" size="compact" onClick={onChangeMap}>
+						<ImageUp aria-hidden="true" className="size-4" />
+						Alterar mapa
+					</Button>
+				</div>
 			</div>
 			<div className="mt-5">
 				{isLoading ? (
@@ -41,6 +50,9 @@ export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
 					/>
 				)}
 			</div>
+			{isReferencePointsOpen && storeMap ? (
+				<StoreMapReferencePointsModal store={store} storeMap={storeMap} onClose={() => setIsReferencePointsOpen(false)} />
+			) : null}
 		</ContentCard>
 	);
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, PackageSearch } from "lucide-react";
+import type { ReactNode } from "react";
 import { ProductThumbnail } from "@/components/products/product-thumbnail";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -15,24 +16,39 @@ type CatalogProductPickerModalProps = {
 	products: readonly CatalogProductPickerItem[];
 	onClose: () => void;
 	onSelect: (product: Product) => void;
+	title?: string;
+	description?: string;
+	controls?: ReactNode;
+	pagination?: ReactNode;
+	isPending?: boolean;
 };
 
 export function CatalogProductPickerModal({
 	products,
 	onClose,
 	onSelect,
+	title = "Adicionar produto ao catálogo",
+	description = "Selecione o produto que será localizado nesta loja.",
+	controls,
+	pagination,
+	isPending = false,
 }: CatalogProductPickerModalProps) {
 	return (
 		<Modal
-			title="Adicionar produto ao catálogo"
-			description="Selecione o produto que será localizado nesta loja."
+			title={title}
+			description={description}
 			closeLabel="Fechar seleção de produto"
 			onClose={onClose}
 			size="lg"
 			layout="scrollable"
-		>
+	>
 			<div className="mt-6">
-				{products.length === 0 ? (
+				{controls}
+				{isPending ? (
+					<p className="px-4 py-10 text-center text-sm text-muted">
+						Carregando produtos do estoque…
+					</p>
+				) : products.length === 0 ? (
 					<EmptyState
 						icon={PackageSearch}
 						title="Nenhum produto encontrado"
@@ -72,6 +88,7 @@ export function CatalogProductPickerModal({
 								</li>
 							))}
 						</ul>
+						{pagination}
 					</>
 				)}
 			</div>

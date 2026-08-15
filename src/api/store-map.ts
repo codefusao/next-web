@@ -1,12 +1,20 @@
 import { z } from "zod";
 import { apiRequest } from "@/api/client";
-import type { StoreMap } from "@/types/store-map";
+import type { StoreMap, StoreMapReferencePoint } from "@/types/store-map";
+
+const referencePointSchema = z.object({
+	x: z.number(),
+	y: z.number(),
+	latitude: z.number(),
+	longitude: z.number(),
+});
 
 const storeMapSchema = z.object({
 	id: z.uuid(),
 	companyId: z.uuid(),
 	name: z.string(),
 	imageUrl: z.url(),
+	referencePoints: z.array(referencePointSchema).nullable(),
 	createdAt: z.string(),
 	updatedAt: z.string(),
 });
@@ -14,6 +22,11 @@ const storeMapSchema = z.object({
 type SaveStoreMapInput = {
 	companyId: string;
 	imageUrl: string;
+};
+
+export type UpdateStoreMapInput = {
+	imageUrl?: string;
+	referencePoints?: StoreMapReferencePoint[];
 };
 
 export function getStoreMapByCompany(
@@ -34,10 +47,10 @@ export function createStoreMap(input: SaveStoreMapInput): Promise<StoreMap> {
 
 export function updateStoreMap(
 	storeMapId: string,
-	imageUrl: string,
+	input: UpdateStoreMapInput,
 ): Promise<StoreMap> {
 	return apiRequest(`/store-map/${storeMapId}`, storeMapSchema, {
 		method: "PUT",
-		body: { imageUrl },
+		body: input,
 	});
 }

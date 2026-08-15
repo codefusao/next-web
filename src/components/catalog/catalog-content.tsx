@@ -75,7 +75,7 @@ export function CatalogContent({
 	}
 
 	return (
-		<div className="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)]">
+		<div className="mt-4 grid items-start gap-3 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)]">
 			<section className="flex min-h-0 flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-background">
 				<CatalogProductControls
 					query={query}
@@ -123,7 +123,7 @@ export function CatalogContent({
 					)}
 				</div>
 			</section>
-			<section className="overflow-hidden rounded-[var(--radius-card)] border border-border bg-background p-2 sm:p-3">
+			<section className="self-start overflow-hidden rounded-[var(--radius-card)] border border-border bg-background p-2 sm:p-3">
 				<div className="mb-2 flex items-center justify-between gap-3 px-1">
 					<div>
 						<h2 className="font-bold">Mapa da loja</h2>

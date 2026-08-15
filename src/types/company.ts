@@ -9,7 +9,7 @@ export type Company = {
 	name: string;
 	cnpj: string;
 	description: string | null;
-	address: string;
+	address: string | null;
 	bannerUrl: string | null;
 	status: CompanyStatus | null;
 	manager: string | null;
