@@ -1,11 +1,11 @@
 import { EditStoreForm } from "@/components/stores/forms/edit-store-form";
 import { Modal } from "@/components/ui/modal";
-import type { StoreListItem } from "@/types/store";
+import type { CompanyListItem } from "@/types/company";
 
 type EditStoreModalProps = {
 	isOpen: boolean;
 	onClose: () => void;
-	store: StoreListItem;
+	store: CompanyListItem;
 };
 
 export function EditStoreModal({

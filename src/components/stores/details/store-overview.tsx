@@ -7,12 +7,12 @@ import { StoreFloorMap } from "@/components/stores/details/store-floor-map";
 import { StoreSettings } from "@/components/stores/details/store-settings";
 import { ContentCard } from "@/components/ui/content-card";
 import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
-import type { StoreListItem } from "@/types/store";
+import type { CompanyListItem } from "@/types/company";
 
 const overviewTabs = ["Visão geral", "Mapa da Loja", "Configurações"] as const;
 
 type StoreOverviewProps = {
-	store: StoreListItem;
+	store: CompanyListItem;
 	onEdit: () => void;
 	onChangeBanner: () => void;
 	onChangeMap: () => void;

@@ -17,7 +17,7 @@ import type { StoreCatalogProduct } from "@/types/store-catalog";
 
 export function useStoreCatalogQuery(storeId: string) {
 	return useQuery({
-		queryKey: queryKeys.stores.catalog(storeId),
+		queryKey: queryKeys.companies.catalog(storeId),
 		queryFn: () => getStoreCatalog(storeId),
 		initialData: initialStoreCatalog,
 		staleTime: Infinity,
@@ -34,7 +34,7 @@ export function useCreateStoreCatalogProductMutation() {
 			{ storeId }: CreateStoreCatalogProductInput,
 		) => {
 			queryClient.setQueryData<StoreCatalogProduct[]>(
-				queryKeys.stores.catalog(storeId),
+				queryKeys.companies.catalog(storeId),
 				(catalogProducts) => [...(catalogProducts ?? []), catalogProduct],
 			);
 		},
@@ -51,7 +51,7 @@ export function useUpdateStoreCatalogProductMutation() {
 			{ storeId }: UpdateStoreCatalogProductInput,
 		) => {
 			queryClient.setQueryData<StoreCatalogProduct[]>(
-				queryKeys.stores.catalog(storeId),
+				queryKeys.companies.catalog(storeId),
 				(catalogProducts) =>
 					(catalogProducts ?? []).map((item) =>
 						item.id === catalogProductUpdate.id
@@ -73,7 +73,7 @@ export function useRemoveStoreCatalogProductMutation() {
 			catalogProductId,
 		}: RemoveStoreCatalogProductInput) => {
 			queryClient.setQueryData<StoreCatalogProduct[]>(
-				queryKeys.stores.catalog(storeId),
+				queryKeys.companies.catalog(storeId),
 				(catalogProducts) =>
 					(catalogProducts ?? []).filter(
 						(catalogProduct) => catalogProduct.id !== catalogProductId,

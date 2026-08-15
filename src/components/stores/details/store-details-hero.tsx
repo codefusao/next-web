@@ -1,10 +1,10 @@
 import { ArrowLeft, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { StoreListItem } from "@/types/store";
+import type { CompanyListItem } from "@/types/company";
 
 type StoreDetailsHeroProps = {
-	store: StoreListItem;
+	store: CompanyListItem;
 };
 
 export function StoreDetailsHero({ store }: StoreDetailsHeroProps) {

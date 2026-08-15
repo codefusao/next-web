@@ -2,10 +2,10 @@ import { ImageUp } from "lucide-react";
 import { InteractiveStoreMap } from "@/components/catalog/map/interactive-store-map";
 import { Button } from "@/components/ui/button";
 import { ContentCard } from "@/components/ui/content-card";
-import type { StoreListItem } from "@/types/store";
+import type { CompanyListItem } from "@/types/company";
 
 type StoreFloorMapProps = {
-	store: StoreListItem;
+	store: CompanyListItem;
 	onChangeMap: () => void;
 };
 

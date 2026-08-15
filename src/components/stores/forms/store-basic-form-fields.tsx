@@ -4,22 +4,22 @@ import type {
 	Path,
 	UseFormRegister,
 } from "react-hook-form";
+import { CompanyParentSearch } from "@/components/stores/forms/company-parent-search";
 import { FormField, formControlClass } from "@/components/ui/form-field";
-import type { StoreFormInputs } from "@/schemas/store";
+import type { CompanyFormInputs } from "@/schemas/company";
 
-type StoreBasicFormInputs = Pick<
-	StoreFormInputs,
-	"parentId" | "name" | "address" | "cnpj" | "description"
->;
+type CompanyFormFieldInputs = CompanyFormInputs;
 
 type StoreBasicFormFieldsProps<T extends FieldValues> = {
 	register: UseFormRegister<T>;
 	errors: FieldErrors<T>;
 	mode: "create" | "edit";
 	idPrefix: string;
+	companyId?: string;
+	onParentCompanyIdChange: (companyId: string) => void;
 };
 
-function fieldName<T extends FieldValues>(name: keyof StoreBasicFormInputs) {
+function fieldName<T extends FieldValues>(name: keyof CompanyFormFieldInputs) {
 	return name as Path<T>;
 }
 
@@ -28,34 +28,16 @@ export function StoreBasicFormFields<T extends FieldValues>({
 	errors,
 	mode,
 	idPrefix,
+	companyId,
+	onParentCompanyIdChange,
 }: StoreBasicFormFieldsProps<T>) {
-	const fieldErrors = errors as FieldErrors<StoreBasicFormInputs>;
+	const fieldErrors = errors as FieldErrors<CompanyFormFieldInputs>;
 	const isEdit = mode === "edit";
-	const id = (name: keyof StoreBasicFormInputs) => `${idPrefix}-${name}`;
+	const id = (name: keyof CompanyFormFieldInputs) => `${idPrefix}-${name}`;
 
 	return (
 		<>
 			<div className="grid gap-5 md:grid-cols-2">
-				<FormField
-					label="ID da empresa matriz"
-					inputId={id("parentId")}
-					error={fieldErrors.parentId?.message}
-					hint={
-						isEdit
-							? "Opcional. Deixe vazio para remover o vínculo."
-							: "Opcional. Informe o UUID da empresa matriz."
-					}
-				>
-					<input
-						{...register(fieldName<T>("parentId"))}
-						id={id("parentId")}
-						placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-						className={formControlClass({
-							hasError: Boolean(fieldErrors.parentId),
-						})}
-						aria-invalid={Boolean(fieldErrors.parentId)}
-					/>
-				</FormField>
 				<FormField
 					label="Nome da loja"
 					inputId={id("name")}
@@ -71,21 +53,12 @@ export function StoreBasicFormFields<T extends FieldValues>({
 						aria-invalid={Boolean(fieldErrors.name)}
 					/>
 				</FormField>
-				<FormField
-					label="Endereço"
-					inputId={id("address")}
-					error={fieldErrors.address?.message}
-				>
-					<input
-						{...register(fieldName<T>("address"))}
-						id={id("address")}
-						placeholder="Ex.: Av. Exemplo, 1000 - Centro"
-						className={formControlClass({
-							hasError: Boolean(fieldErrors.address),
-						})}
-						aria-invalid={Boolean(fieldErrors.address)}
-					/>
-				</FormField>
+				<CompanyParentSearch
+					companyId={companyId}
+					error={fieldErrors.parentId?.message}
+					inputId={id("parentId")}
+					onSelectedCompanyIdChange={onParentCompanyIdChange}
+				/>
 				<FormField
 					label="CNPJ"
 					inputId={id("cnpj")}

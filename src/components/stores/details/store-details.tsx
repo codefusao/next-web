@@ -11,10 +11,10 @@ import { StoreBannerModal } from "@/components/stores/modals/store-banner-modal"
 import { StoreMapUploadModal } from "@/components/stores/modals/store-map-upload-modal";
 import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
 import {
-	useDeleteStoreMutation,
-	useStoresQuery,
-	useUpdateStoreMutation,
-} from "@/hooks/use-stores-query";
+	useCompanyQuery,
+	useDeleteCompanyMutation,
+	useUpdateCompanyMutation,
+} from "@/hooks/use-companies-query";
 
 type StoreDetailsProps = {
 	storeId: string;
@@ -30,17 +30,16 @@ enum StoreDetailsMutationDialogType {
 
 export function StoreDetails({ storeId }: StoreDetailsProps) {
 	const router = useRouter();
-	const { data: stores = [] } = useStoresQuery();
-	const deleteStoreMutation = useDeleteStoreMutation();
-	const updateStoreMutation = useUpdateStoreMutation();
-	const store = stores.find((item) => item.id === storeId);
+	const { data: store } = useCompanyQuery(storeId);
+	const deleteCompanyMutation = useDeleteCompanyMutation();
+	const updateCompany = useUpdateCompanyMutation();
 	const [mutationDialog, setMutationDialog] = useState(
 		StoreDetailsMutationDialogType.Idle,
 	);
 
 	async function deleteStore() {
 		try {
-			await deleteStoreMutation.mutateAsync(storeId);
+			await deleteCompanyMutation.mutateAsync(storeId);
 			toast.success("Loja removida com sucesso.");
 			router.replace("/stores");
 		} catch {
@@ -53,11 +52,10 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 
 		setMutationDialog(StoreDetailsMutationDialogType.Idle);
 		try {
-			await updateStoreMutation.mutateAsync({
-				store,
+			await updateCompany.mutateAsync({
+				company: store,
 				changes: { storeMapUrl },
 			});
-			toast.success("Mapa da loja atualizado.");
 		} catch {
 			toast.error("Não foi possível atualizar o mapa da loja.");
 		}
@@ -100,11 +98,10 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 					onClose={() => setMutationDialog(StoreDetailsMutationDialogType.Idle)}
 					onSave={async (bannerUrl) => {
 						try {
-							await updateStoreMutation.mutateAsync({
-								store,
+							await updateCompany.mutateAsync({
+								company: store,
 								changes: { bannerUrl },
 							});
-							toast.success("Banner da loja atualizado.");
 							setMutationDialog(StoreDetailsMutationDialogType.Idle);
 						} catch {
 							toast.error("Não foi possível atualizar o banner da loja.");

@@ -3,10 +3,10 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ContentCard } from "@/components/ui/content-card";
 import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
-import type { StoreListItem } from "@/types/store";
+import type { CompanyListItem } from "@/types/company";
 
 type StoreSettingsProps = {
-	store: StoreListItem;
+	store: CompanyListItem;
 	onEdit: () => void;
 	onChangeBanner: () => void;
 	onDelete: () => void;

@@ -1,4 +1,4 @@
-import { StoreStatus, StoreType } from "@/types/store";
+import { CompanyStatus, CompanyType } from "@/types/company";
 
 export const storeValidation = {
 	minimumPhoneDigits: 10,
@@ -8,13 +8,13 @@ export const storeValidation = {
 	acceptedMapTypes: ["image/jpeg", "image/png", "image/webp"],
 } as const;
 
-export const storeStatusLabels: Record<StoreStatus, string> = {
-	[StoreStatus.Open]: "Aberta",
-	[StoreStatus.Closed]: "Fechada",
+export const storeStatusLabels: Record<CompanyStatus, string> = {
+	[CompanyStatus.Open]: "Aberta",
+	[CompanyStatus.Closed]: "Fechada",
 };
 
-export const storeTypeLabels: Record<StoreType, string> = {
-	[StoreType.Physical]: "Física",
-	[StoreType.Online]: "Online",
-	[StoreType.Hybrid]: "Híbrida",
+export const storeTypeLabels: Record<CompanyType, string> = {
+	[CompanyType.Physical]: "Física",
+	[CompanyType.Online]: "Online",
+	[CompanyType.Hybrid]: "Híbrida",
 };

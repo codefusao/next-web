@@ -12,7 +12,7 @@ import { queryKeys } from "@/api/query-keys";
 
 export function useInventoryQuery(storeId: string) {
 	return useQuery({
-		queryKey: queryKeys.stores.inventory(storeId),
+		queryKey: queryKeys.companies.inventory(storeId),
 		queryFn: () => getInventory(storeId),
 		initialData: initialStockByStoreId[storeId] ?? {},
 		staleTime: Infinity,
@@ -26,7 +26,7 @@ export function useUpdateInventoryMutation() {
 		mutationFn: updateInventory,
 		onSuccess: ({ storeId, productId, quantity }: UpdateInventoryInput) => {
 			queryClient.setQueryData<InventoryByProductId>(
-				queryKeys.stores.inventory(storeId),
+				queryKeys.companies.inventory(storeId),
 				(stockByProductId) => ({
 					...(stockByProductId ?? {}),
 					[productId]: quantity,

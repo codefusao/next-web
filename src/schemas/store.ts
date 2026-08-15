@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { storeValidation } from "@/constants/store";
-import { StoreStatus, StoreType } from "@/types/store";
+import { CompanyStatus, CompanyType } from "@/types/company";
 
 const addressSchema = z.string().trim().min(5, "Informe o endereço da loja");
 const phoneSchema = z
@@ -40,8 +40,8 @@ export type StoreMapUploadFields = z.output<typeof storeMapUploadSchema>;
 export type StoreMapUploadFormInputs = z.input<typeof storeMapUploadSchema>;
 
 const storeMetadataSchema = {
-	status: z.enum(StoreStatus),
-	type: z.enum(StoreType),
+	status: z.enum(CompanyStatus),
+	type: z.enum(CompanyType),
 	manager: z.string().trim().min(3, "Informe o gerente da loja"),
 	phone: phoneSchema,
 	email: z.email("Informe um e-mail válido").trim(),
