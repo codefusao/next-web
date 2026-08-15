@@ -10,7 +10,7 @@ import {
 	type StoreBannerFields,
 	type StoreBannerFormInputs,
 	storeBannerSchema,
-} from "@/schemas/store";
+} from "@/schemas/company";
 
 type StoreBannerModalProps = {
 	bannerUrl: string;

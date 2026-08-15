@@ -63,7 +63,7 @@ export function useUpdateCompanyMutation() {
 			updateCompany(company, changes),
 		onSuccess: (updatedCompany) => {
 			queryClient.setQueriesData<Companies>(
-				{ queryKey: queryKeys.companies.all },
+				{ queryKey: queryKeys.companies.lists },
 				(page) =>
 					page
 						? {
@@ -97,6 +97,9 @@ export function useDeleteCompanyMutation() {
 			});
 			queryClient.removeQueries({
 				queryKey: queryKeys.companies.catalog(companyId),
+			});
+			queryClient.removeQueries({
+				queryKey: queryKeys.companies.storeMap(companyId),
 			});
 		},
 	});

@@ -1,5 +1,5 @@
 import axios, { type AxiosRequestConfig } from "axios";
-import type { z } from "zod";
+import { z } from "zod";
 
 type ApiRequestOptions = Pick<
 	AxiosRequestConfig,
@@ -40,8 +40,13 @@ export async function apiRequest<T>(
 		return schema.parse(response.data);
 	} catch (error) {
 		if (axios.isAxiosError(error) && error.response) {
+			const message = z
+				.object({ message: z.string() })
+				.safeParse(error.response.data);
 			throw new Error(
-				`The API request failed with status ${error.response.status}.`,
+				message.success
+					? message.data.message
+					: `The API request failed with status ${error.response.status}.`,
 			);
 		}
 

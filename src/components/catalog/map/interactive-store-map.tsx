@@ -15,7 +15,7 @@ import { getMapPositionFromPointer } from "@/lib/store-map-position";
 import type { StoreMapPosition } from "@/types/store-catalog";
 
 type InteractiveStoreMapProps = {
-	storeMapUrl: string;
+	storeMapUrl: string | null;
 	storeName: string;
 	markers?: readonly StoreMapMarker[];
 	selectedPosition?: StoreMapPosition | null;
@@ -78,6 +78,14 @@ export function InteractiveStoreMap({
 	function previewMarker(markerId: string) {
 		if (selectedMarkerId) return;
 		markerPreview.showPreview(markerId);
+	}
+
+	if (!storeMapUrl) {
+		return (
+			<div className="flex aspect-[3/2] w-full items-center justify-center rounded-[var(--radius-control)] bg-muted px-6 text-center text-sm text-muted">
+				Nenhum mapa interno foi configurado para {storeName}.
+			</div>
+		);
 	}
 
 	return (

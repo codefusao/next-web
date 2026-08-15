@@ -2,7 +2,7 @@ import { ImageUp, Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ContentCard } from "@/components/ui/content-card";
-import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
+import { storeStatusLabels } from "@/constants/store";
 import type { CompanyListItem } from "@/types/company";
 
 type StoreSettingsProps = {
@@ -21,16 +21,20 @@ export function StoreSettings({
 	const storeInformation = [
 		{ label: "Nome da loja", value: store.name },
 		{ label: "CNPJ", value: store.cnpj },
-		{ label: "Telefone", value: store.phone },
-		{ label: "E-mail", value: store.email },
+		{ label: "Telefone", value: store.phone ?? "Não informado" },
+		{ label: "E-mail", value: store.email ?? "Não informado" },
 		{ label: "Endereço", value: store.address },
 		{
 			label: "Área da loja",
-			value: `${store.area.toLocaleString("pt-BR")} m²`,
+			value: store.area
+				? `${store.area.toLocaleString("pt-BR")} m²`
+				: "Não informada",
 		},
-		{ label: "Gerente responsável", value: store.manager },
-		{ label: "Tipo de loja", value: storeTypeLabels[store.type] },
-		{ label: "Status da loja", value: storeStatusLabels[store.status] },
+		{ label: "Gerente responsável", value: store.manager ?? "Não informado" },
+		{
+			label: "Status da loja",
+			value: store.status ? storeStatusLabels[store.status] : "Não informado",
+		},
 	];
 
 	return (
@@ -82,14 +86,16 @@ export function StoreSettings({
 					Esta imagem é exibida no cabeçalho da loja.
 				</p>
 				<div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-					<div className="relative h-28 w-full overflow-hidden rounded-[var(--radius-control)] sm:w-56">
-						<Image
-							src={store.bannerUrl}
-							alt={`Banner da loja ${store.name}`}
-							fill
-							sizes="224px"
-							className="object-cover"
-						/>
+					<div className="relative h-28 w-full overflow-hidden rounded-[var(--radius-control)] bg-muted sm:w-56">
+						{store.bannerUrl ? (
+							<Image
+								src={store.bannerUrl}
+								alt={`Banner da loja ${store.name}`}
+								fill
+								sizes="224px"
+								className="object-cover"
+							/>
+						) : null}
 					</div>
 					<Button variant="outline" size="compact" onClick={onChangeBanner}>
 						<ImageUp aria-hidden="true" className="size-4" />

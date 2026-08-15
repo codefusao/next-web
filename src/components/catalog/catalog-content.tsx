@@ -13,6 +13,7 @@ import type { CatalogProduct } from "@/types/store-catalog";
 
 type StoreCatalogContentProps = {
 	store: CompanyListItem;
+	storeMapUrl: string | null;
 	products: readonly CatalogProduct[];
 	markers: readonly StoreMapMarker[];
 	onEditLocation: (product: CatalogProduct) => void;
@@ -21,6 +22,7 @@ type StoreCatalogContentProps = {
 
 export function CatalogContent({
 	store,
+	storeMapUrl,
 	products,
 	markers,
 	onEditLocation,
@@ -135,7 +137,7 @@ export function CatalogContent({
 					</div>
 				</div>
 				<InteractiveStoreMap
-					storeMapUrl={store.storeMapUrl}
+					storeMapUrl={storeMapUrl}
 					storeName={store.name}
 					markers={filteredMarkers}
 					highlightedMarkerId={highlightedProductLocationId}

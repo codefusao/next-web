@@ -30,6 +30,7 @@ export function AddStoreForm({ onSuccess }: AddStoreFormProps) {
 		defaultValues: {
 			parentId: "",
 			name: "",
+			address: "",
 			cnpj: "",
 			description: "",
 		},

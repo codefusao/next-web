@@ -3,20 +3,18 @@ import mockProducts from "@/data/mock-products.json";
 import mockStoreMetadata from "@/data/mock-store-metadata.json";
 import mockStores from "@/data/mock-stores.json";
 import { createDemoStockByStoreId, type StockByStoreId } from "@/lib/inventory";
-import type {
-	CompanyListItem,
-	CompanyStatus,
-	CompanyType,
-} from "@/types/company";
+import type { CompanyListItem, CompanyStatus } from "@/types/company";
 import type { Product } from "@/types/product";
 import type { StoreCatalogProduct } from "@/types/store-catalog";
 
-// Temporary local-only presentation defaults. The backend Company resource does
-// not provide these fields, so they must never be included in API payloads.
-export const defaultCompanyInformation = {
-	...mockStoreMetadata,
+// Product inventory remains local-only until its backend integration is built.
+const demoCompanyInformation = {
+	bannerUrl: mockStoreMetadata.bannerUrl,
 	status: mockStoreMetadata.status as CompanyStatus,
-	type: mockStoreMetadata.type as CompanyType,
+	manager: mockStoreMetadata.manager,
+	phone: mockStoreMetadata.phone,
+	email: mockStoreMetadata.email,
+	area: mockStoreMetadata.area,
 } satisfies Omit<
 	CompanyListItem,
 	| "id"
@@ -29,9 +27,9 @@ export const defaultCompanyInformation = {
 	| "updatedAt"
 >;
 
-export const initialCompanies: CompanyListItem[] = mockStores.map((store) => ({
+const initialDemoCompanies: CompanyListItem[] = mockStores.map((store) => ({
 	...store,
-	...defaultCompanyInformation,
+	...demoCompanyInformation,
 	parentId: null,
 	description: null,
 	createdAt: "1970-01-01T00:00:00.000Z",
@@ -44,7 +42,7 @@ export const initialProducts: Product[] = mockProducts.map((product) => ({
 }));
 
 export const initialStockByStoreId: StockByStoreId = createDemoStockByStoreId(
-	initialCompanies,
+	initialDemoCompanies,
 	initialProducts,
 );
 

@@ -20,14 +20,16 @@ export function StoreDetailsHero({ store }: StoreDetailsHeroProps) {
 				</Link>
 			</div>
 			<section className="relative h-72 overflow-hidden rounded-[var(--radius-card)] border border-border bg-foreground sm:h-80">
-				<Image
-					src={store.bannerUrl}
-					alt={`Fachada da loja ${store.name}`}
-					fill
-					priority
-					sizes="(min-width: 1024px) calc(100vw - 20rem), 100vw"
-					className="object-cover"
-				/>
+				{store.bannerUrl ? (
+					<Image
+						src={store.bannerUrl}
+						alt={`Fachada da loja ${store.name}`}
+						fill
+						priority
+						sizes="(min-width: 1024px) calc(100vw - 20rem), 100vw"
+						className="object-cover"
+					/>
+				) : null}
 				<div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/15" />
 				<div className="relative flex h-full max-w-2xl flex-col justify-end p-6 text-white sm:p-8">
 					<h1 className="text-3xl font-bold tracking-tight sm:text-4xl">

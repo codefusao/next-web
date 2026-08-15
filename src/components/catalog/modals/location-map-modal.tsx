@@ -16,6 +16,7 @@ import type { StoreMapPosition } from "@/types/store-catalog";
 
 type CatalogLocationMapModalProps = {
 	store: CompanyListItem;
+	storeMapUrl: string | null;
 	product: Product;
 	initialPosition?: StoreCatalogLocationFields;
 	onClose: () => void;
@@ -24,6 +25,7 @@ type CatalogLocationMapModalProps = {
 
 export function CatalogLocationMapModal({
 	store,
+	storeMapUrl,
 	product,
 	initialPosition,
 	onClose,
@@ -69,7 +71,7 @@ export function CatalogLocationMapModal({
 		>
 			<form onSubmit={handleSubmit(onSave)} noValidate className="mt-6">
 				<InteractiveStoreMap
-					storeMapUrl={store.storeMapUrl}
+					storeMapUrl={storeMapUrl}
 					storeName={store.name}
 					selectedPosition={selectedPosition}
 					onPositionSelect={selectPosition}

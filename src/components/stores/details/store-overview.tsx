@@ -6,7 +6,7 @@ import { StoreActionCard } from "@/components/stores/details/store-action-card";
 import { StoreFloorMap } from "@/components/stores/details/store-floor-map";
 import { StoreSettings } from "@/components/stores/details/store-settings";
 import { ContentCard } from "@/components/ui/content-card";
-import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
+import { storeStatusLabels } from "@/constants/store";
 import type { CompanyListItem } from "@/types/company";
 
 const overviewTabs = ["Visão geral", "Mapa da Loja", "Configurações"] as const;
@@ -25,14 +25,18 @@ type StoreQuickActionsProps = Pick<StoreOverviewProps, "store">;
 
 function StoreSummary({ store }: StoreSummaryProps) {
 	const items = [
-		{ label: "Status", value: storeStatusLabels[store.status] },
-		{ label: "Tipo de loja", value: storeTypeLabels[store.type] },
-		{ label: "Gerente", value: store.manager },
-		{ label: "Telefone", value: store.phone },
-		{ label: "E-mail", value: store.email },
+		{
+			label: "Status",
+			value: store.status ? storeStatusLabels[store.status] : "Não informado",
+		},
+		{ label: "Gerente", value: store.manager ?? "Não informado" },
+		{ label: "Telefone", value: store.phone ?? "Não informado" },
+		{ label: "E-mail", value: store.email ?? "Não informado" },
 		{
 			label: "Área da loja",
-			value: `${store.area.toLocaleString("pt-BR")} m²`,
+			value: store.area
+				? `${store.area.toLocaleString("pt-BR")} m²`
+				: "Não informada",
 		},
 	];
 

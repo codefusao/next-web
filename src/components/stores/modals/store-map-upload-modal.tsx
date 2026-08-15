@@ -2,97 +2,84 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ImageUp, Save } from "lucide-react";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FormField, formControlClass } from "@/components/ui/form-field";
 import { Modal } from "@/components/ui/modal";
-import { readFileAsDataUrl } from "@/lib/read-file-as-data-url";
 import {
-	type StoreMapUploadFields,
-	type StoreMapUploadFormInputs,
-	storeMapUploadSchema,
-} from "@/schemas/store";
+	useSaveStoreMapMutation,
+	useStoreMapQuery,
+} from "@/hooks/use-store-map-query";
+import {
+	type StoreMapUrlFields,
+	type StoreMapUrlFormInputs,
+	storeMapUrlSchema,
+} from "@/schemas/store-map";
 
 type StoreMapUploadModalProps = {
+	companyId: string;
 	onClose: () => void;
-	onSave: (storeMapUrl: string) => void;
 };
 
 export function StoreMapUploadModal({
+	companyId,
 	onClose,
-	onSave,
 }: StoreMapUploadModalProps) {
-	const [fileName, setFileName] = useState("");
+	const { data: storeMap = null } = useStoreMapQuery(companyId);
+	const saveStoreMap = useSaveStoreMapMutation();
 	const {
-		control,
+		register,
 		handleSubmit,
-		formState: { errors, isDirty, isSubmitting },
-	} = useForm<StoreMapUploadFormInputs, undefined, StoreMapUploadFields>({
-		resolver: zodResolver(storeMapUploadSchema),
+		formState: { errors, isDirty },
+	} = useForm<StoreMapUrlFormInputs, undefined, StoreMapUrlFields>({
+		resolver: zodResolver(storeMapUrlSchema),
+		values: { imageUrl: storeMap?.imageUrl ?? "" },
 		reValidateMode: "onChange",
 	});
-	async function saveMap({ storeMap }: StoreMapUploadFields) {
+
+	async function saveMap({ imageUrl }: StoreMapUrlFields) {
 		try {
-			const storeMapUrl = await readFileAsDataUrl(storeMap);
-			onSave(storeMapUrl);
+			await saveStoreMap.mutateAsync({ companyId, storeMap, imageUrl });
+			onClose();
 		} catch {
-			toast.error("Não foi possível processar a imagem do mapa.");
+			toast.error("Não foi possível atualizar o mapa da loja.");
 		}
 	}
 
 	return (
 		<Modal
 			title="Alterar mapa da loja"
-			description="Envie uma imagem PNG, JPEG ou WebP de até 5 MB."
+			description="Informe a URL pública HTTPS da imagem do mapa interno."
 			closeLabel="Fechar alteração de mapa"
 			onClose={onClose}
 		>
 			<form onSubmit={handleSubmit(saveMap)} noValidate className="mt-7">
 				<FormField
-					label="Imagem do mapa interno"
-					inputId="store-map-upload"
-					error={errors.storeMap?.message}
-					hint={fileName ? `Selecionado: ${fileName}` : undefined}
+					label="URL do mapa interno"
+					inputId="store-map-url-modal"
+					error={errors.imageUrl?.message}
 				>
-					<Controller
-						control={control}
-						name="storeMap"
-						render={({ field }) => (
-							<input
-								name={field.name}
-								ref={field.ref}
-								id="store-map-upload"
-								type="file"
-								accept="image/png,image/jpeg,image/webp"
-								className={formControlClass({
-									kind: "file",
-									hasError: Boolean(errors.storeMap),
-								})}
-								aria-invalid={Boolean(errors.storeMap)}
-								onBlur={field.onBlur}
-								onChange={(event) => {
-									const file = event.target.files?.item(0);
-									setFileName(file?.name ?? "");
-									field.onChange(file);
-								}}
-							/>
-						)}
+					<input
+						{...register("imageUrl")}
+						id="store-map-url-modal"
+						type="url"
+						placeholder="https://..."
+						className={formControlClass({
+							hasError: Boolean(errors.imageUrl),
+						})}
+						aria-invalid={Boolean(errors.imageUrl)}
 					/>
 				</FormField>
 				<div className="mt-6 flex justify-end gap-3 border-t border-border pt-6">
 					<Button type="button" variant="outline" onClick={onClose}>
 						Cancelar
 					</Button>
-					<Button
-						type="submit"
-						disabled={!fileName || !isDirty || isSubmitting}
-					>
-						{isSubmitting ? (
-							<ImageUp aria-hidden="true" className="size-5" />
-						) : (
+					<Button type="submit" disabled={!isDirty || saveStoreMap.isPending}>
+						{isDirty ? (
 							<Save aria-hidden="true" className="size-5" />
+						) : (
+							<ImageUp aria-hidden="true" className="size-5" />
 						)}
 						Salvar mapa
 					</Button>

@@ -60,14 +60,24 @@ export function StoreBasicFormFields<T extends FieldValues>({
 					onSelectedCompanyIdChange={onParentCompanyIdChange}
 				/>
 				<FormField
+					label="Endereço"
+					inputId={id("address")}
+					error={fieldErrors.address?.message}
+				>
+					<input
+						{...register(fieldName<T>("address"))}
+						id={id("address")}
+						placeholder="Ex.: Av. Paulista, 1000 - São Paulo, SP"
+						className={formControlClass({
+							hasError: Boolean(fieldErrors.address),
+						})}
+						aria-invalid={Boolean(fieldErrors.address)}
+					/>
+				</FormField>
+				<FormField
 					label="CNPJ"
 					inputId={id("cnpj")}
 					error={fieldErrors.cnpj?.message}
-					hint={
-						isEdit
-							? "Opcional. Deixe vazio para manter o valor atual."
-							: undefined
-					}
 				>
 					<input
 						{...register(fieldName<T>("cnpj"))}

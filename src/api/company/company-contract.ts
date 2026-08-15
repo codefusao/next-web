@@ -1,12 +1,19 @@
 import { z } from "zod";
-import type { Company, CompanyListItem } from "@/types/company";
+import { type Company, CompanyStatus } from "@/types/company";
 
 export const companySchema = z.object({
 	id: z.uuid(),
 	parentId: z.uuid().nullable(),
 	name: z.string(),
-	cnpj: z.string(),
+	cnpj: z.string().length(14),
 	description: z.string().nullable(),
+	address: z.string(),
+	bannerUrl: z.url().nullable(),
+	status: z.enum(CompanyStatus).nullable(),
+	manager: z.string().nullable(),
+	phone: z.string().nullable(),
+	email: z.email().nullable(),
+	area: z.number().positive().nullable(),
 	createdAt: z.string(),
 	updatedAt: z.string(),
 });
@@ -20,13 +27,27 @@ export const companiesResponseSchema = z.object({
 	}),
 });
 
-export type CreateCompanyInput = {
-	parentId?: Company["parentId"];
-	name: Company["name"];
-	cnpj: Company["cnpj"];
-	description?: Company["description"];
+type CompanyProfileInput = {
+	bannerUrl?: string;
+	status?: CompanyStatus;
+	manager?: string;
+	phone?: string;
+	email?: string;
+	area?: number;
 };
 
-export type UpdateCompanyInput = Partial<
-	Omit<CompanyListItem, "id" | "createdAt" | "updatedAt">
->;
+export type CreateCompanyInput = Omit<
+	Company,
+	| "id"
+	| "createdAt"
+	| "updatedAt"
+	| "parentId"
+	| "description"
+	| keyof CompanyProfileInput
+> &
+	CompanyProfileInput & {
+		parentId?: string | null;
+		description?: string | null;
+	};
+
+export type UpdateCompanyInput = Partial<CreateCompanyInput>;

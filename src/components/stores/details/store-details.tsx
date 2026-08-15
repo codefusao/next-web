@@ -47,20 +47,6 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 		}
 	}
 
-	async function saveStoreMap(storeMapUrl: string) {
-		if (!store) return;
-
-		setMutationDialog(StoreDetailsMutationDialogType.Idle);
-		try {
-			await updateCompany.mutateAsync({
-				company: store,
-				changes: { storeMapUrl },
-			});
-		} catch {
-			toast.error("Não foi possível atualizar o mapa da loja.");
-		}
-	}
-
 	if (!store) {
 		return (
 			<StoreNotFoundState className="mx-auto w-full max-w-7xl px-4 py-8 text-center sm:px-6 lg:px-8" />
@@ -94,7 +80,7 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 
 			{mutationDialog === StoreDetailsMutationDialogType.Banner ? (
 				<StoreBannerModal
-					bannerUrl={store.bannerUrl}
+					bannerUrl={store.bannerUrl ?? ""}
 					onClose={() => setMutationDialog(StoreDetailsMutationDialogType.Idle)}
 					onSave={async (bannerUrl) => {
 						try {
@@ -112,8 +98,8 @@ export function StoreDetails({ storeId }: StoreDetailsProps) {
 
 			{mutationDialog === StoreDetailsMutationDialogType.Map ? (
 				<StoreMapUploadModal
+					companyId={store.id}
 					onClose={() => setMutationDialog(StoreDetailsMutationDialogType.Idle)}
-					onSave={saveStoreMap}
 				/>
 			) : null}
 

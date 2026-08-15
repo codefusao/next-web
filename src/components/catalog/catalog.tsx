@@ -18,6 +18,7 @@ import {
 } from "@/hooks/catalog/use-store-catalog-query";
 import { useCompanyQuery } from "@/hooks/use-companies-query";
 import { useProductsQuery } from "@/hooks/use-products-query";
+import { useStoreMapQuery } from "@/hooks/use-store-map-query";
 import type { StoreCatalogLocationFields } from "@/schemas/store-catalog";
 import type { Product } from "@/types/product";
 import type { CatalogProduct } from "@/types/store-catalog";
@@ -43,6 +44,7 @@ type CatalogProductDialogState =
 
 export function Catalog({ storeId }: StoreCatalogProps) {
 	const { data: store } = useCompanyQuery(storeId);
+	const { data: storeMap = null } = useStoreMapQuery(storeId);
 	const { data: catalogItems = [] } = useStoreCatalogQuery(storeId);
 	const createCatalogProduct = useCreateStoreCatalogProductMutation();
 	const updateCatalogProduct = useUpdateStoreCatalogProductMutation();
@@ -138,6 +140,7 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 			/>
 			<CatalogContent
 				store={store}
+				storeMapUrl={storeMap?.imageUrl ?? null}
 				products={catalogProducts}
 				markers={markers}
 				onEditLocation={(product) =>
@@ -159,6 +162,7 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 			{dialog.type === CatalogProductDialogType.Locating ? (
 				<CatalogLocationMapModal
 					store={store}
+					storeMapUrl={storeMap?.imageUrl ?? null}
 					product={dialog.product}
 					onClose={closeDialog}
 					onSave={saveNewLocation}
@@ -167,6 +171,7 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 			{dialog.type === CatalogProductDialogType.Editing ? (
 				<CatalogLocationMapModal
 					store={store}
+					storeMapUrl={storeMap?.imageUrl ?? null}
 					product={dialog.product}
 					initialPosition={dialog.product.location}
 					onClose={closeDialog}

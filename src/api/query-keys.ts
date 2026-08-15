@@ -4,6 +4,7 @@ export const queryKeys = {
 	},
 	companies: {
 		all: ["companies"] as const,
+		lists: ["companies", "list"] as const,
 		list: (page: number, limit: number, query: string) =>
 			["companies", "list", page, limit, query] as const,
 		byId: (companyId: string) => ["companies", companyId] as const,
@@ -11,6 +12,8 @@ export const queryKeys = {
 			["companies", companyId, "inventory"] as const,
 		catalog: (companyId: string) =>
 			["companies", companyId, "catalog"] as const,
+		storeMap: (companyId: string) =>
+			["companies", companyId, "store-map"] as const,
 	},
 	products: {
 		all: ["products"] as const,

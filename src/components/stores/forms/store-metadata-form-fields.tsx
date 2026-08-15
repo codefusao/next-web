@@ -5,8 +5,8 @@ import type {
 	UseFormRegister,
 } from "react-hook-form";
 import { FormField, formControlClass } from "@/components/ui/form-field";
-import { storeStatusLabels, storeTypeLabels } from "@/constants/store";
-import { CompanyStatus, CompanyType } from "@/types/company";
+import { storeStatusLabels } from "@/constants/store";
+import { CompanyStatus } from "@/types/company";
 
 type StoreMetadataFormFieldsProps<T extends FieldValues> = {
 	register: UseFormRegister<T>;
@@ -14,12 +14,11 @@ type StoreMetadataFormFieldsProps<T extends FieldValues> = {
 };
 
 type StoreMetadataFormInputs = {
-	status: CompanyStatus;
-	type: CompanyType;
+	status: CompanyStatus | "";
 	manager: string;
 	phone: string;
 	email: string;
-	area: number;
+	area: number | "";
 	bannerUrl: string;
 };
 
@@ -58,27 +57,10 @@ export function StoreMetadataFormFields<T extends FieldValues>({
 						className={inputClass(Boolean(metadataErrors.status))}
 						aria-invalid={Boolean(metadataErrors.status)}
 					>
+						<option value="">Não informado</option>
 						{Object.values(CompanyStatus).map((status) => (
 							<option key={status} value={status}>
 								{storeStatusLabels[status]}
-							</option>
-						))}
-					</select>
-				</FormField>
-				<FormField
-					label="Tipo de loja"
-					inputId="store-type"
-					error={metadataErrors.type?.message}
-				>
-					<select
-						{...register(fieldName<T>("type"))}
-						id="store-type"
-						className={inputClass(Boolean(metadataErrors.type))}
-						aria-invalid={Boolean(metadataErrors.type)}
-					>
-						{Object.values(CompanyType).map((type) => (
-							<option key={type} value={type}>
-								{storeTypeLabels[type]}
 							</option>
 						))}
 					</select>

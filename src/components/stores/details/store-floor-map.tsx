@@ -2,6 +2,7 @@ import { ImageUp } from "lucide-react";
 import { InteractiveStoreMap } from "@/components/catalog/map/interactive-store-map";
 import { Button } from "@/components/ui/button";
 import { ContentCard } from "@/components/ui/content-card";
+import { useStoreMapQuery } from "@/hooks/use-store-map-query";
 import type { CompanyListItem } from "@/types/company";
 
 type StoreFloorMapProps = {
@@ -10,6 +11,8 @@ type StoreFloorMapProps = {
 };
 
 export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
+	const { data: storeMap = null, isLoading } = useStoreMapQuery(store.id);
+
 	return (
 		<ContentCard aria-labelledby="store-map-title" className="mt-6 p-5 sm:p-6">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -27,10 +30,16 @@ export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
 				</Button>
 			</div>
 			<div className="mt-5">
-				<InteractiveStoreMap
-					storeMapUrl={store.storeMapUrl}
-					storeName={store.name}
-				/>
+				{isLoading ? (
+					<div className="flex aspect-[3/2] items-center justify-center rounded-[var(--radius-control)] bg-muted text-sm text-muted">
+						Carregando mapa interno...
+					</div>
+				) : (
+					<InteractiveStoreMap
+						storeMapUrl={storeMap?.imageUrl ?? null}
+						storeName={store.name}
+					/>
+				)}
 			</div>
 		</ContentCard>
 	);

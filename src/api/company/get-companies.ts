@@ -1,29 +1,32 @@
 import type { z } from "zod";
 import { apiRequest } from "@/api/client";
 import { companiesResponseSchema } from "@/api/company/company-contract";
-import { toCompanyListItem } from "@/api/company/to-company-list-item";
-import type { CompanyListItem } from "@/types/company";
+import type { Company } from "@/types/company";
 
 export const companyPageLimit = 10;
 
 export type Companies = {
-	companies: CompanyListItem[];
+	companies: Company[];
 	meta: z.infer<typeof companiesResponseSchema>["meta"];
 };
 
 export async function getCompanies(
 	page: number,
-	_query: string,
+	search: string,
 	limit = companyPageLimit,
 ): Promise<Companies> {
-	// TODO(backend): send query once GET /company supports server-side search.
+	const searchParams = new URLSearchParams({
+		page: String(page),
+		limit: String(limit),
+	});
+	if (search.trim()) searchParams.set("search", search.trim());
 	const response = await apiRequest(
-		`/company?page=${page}&limit=${limit}`,
+		`/company?${searchParams.toString()}`,
 		companiesResponseSchema,
 	);
 
 	return {
-		companies: response.companies.map(toCompanyListItem),
+		companies: response.companies,
 		meta: response.meta,
 	};
 }

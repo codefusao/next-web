@@ -2,7 +2,11 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 export type AdminUser = {
+	id: string;
+	companyId: string | null;
+	name: string;
 	email: string;
+	role: "ADMIN" | "MANAGER" | "EMPLOYEE" | "CUSTOMER";
 };
 
 export enum AuthStatus {
@@ -14,7 +18,7 @@ export enum AuthStatus {
 interface AuthState {
 	user: AdminUser | null;
 	authStatus: AuthStatus;
-	login: (email: string) => void;
+	login: (user: AdminUser) => void;
 	logout: () => void;
 	setAuthStatus: (authStatus: AuthStatus) => void;
 }
@@ -24,8 +28,7 @@ export const useAuthStore = create<AuthState>()(
 		(set) => ({
 			user: null,
 			authStatus: AuthStatus.Loading,
-			login: (email) =>
-				set({ user: { email }, authStatus: AuthStatus.Authenticated }),
+			login: (user) => set({ user, authStatus: AuthStatus.Authenticated }),
 			logout: () => set({ user: null, authStatus: AuthStatus.Unauthenticated }),
 			setAuthStatus: (authStatus) => set({ authStatus }),
 		}),

@@ -1,12 +1,6 @@
 export enum CompanyStatus {
-	Open = "open",
-	Closed = "closed",
-}
-
-export enum CompanyType {
-	Physical = "physical",
-	Online = "online",
-	Hybrid = "hybrid",
+	Open = "OPEN",
+	Closed = "CLOSED",
 }
 
 export type Company = {
@@ -15,21 +9,15 @@ export type Company = {
 	name: string;
 	cnpj: string;
 	description: string | null;
+	address: string;
+	bannerUrl: string | null;
+	status: CompanyStatus | null;
+	manager: string | null;
+	phone: string | null;
+	email: string | null;
+	area: number | null;
 	createdAt: string;
 	updatedAt: string;
 };
 
-export type CompanyListItem = Company & {
-	// Local-only temporary information. These fields do not exist in the backend
-	// Company contract and must never be sent to or persisted by the API.
-	// TODO(backend): add Company support for these fields.
-	address: string;
-	bannerUrl: string;
-	storeMapUrl: string;
-	status: CompanyStatus;
-	type: CompanyType;
-	manager: string;
-	phone: string;
-	email: string;
-	area: number;
-};
+export type CompanyListItem = Company;

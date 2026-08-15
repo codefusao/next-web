@@ -32,8 +32,12 @@ export default function Home() {
 		try {
 			await login.mutateAsync(fields);
 			router.replace("/products");
-		} catch {
-			toast.error("Não foi possível entrar. Tente novamente.");
+		} catch (error) {
+			toast.error(
+				error instanceof Error
+					? error.message
+					: "Não foi possível entrar. Tente novamente.",
+			);
 		}
 	}
 
