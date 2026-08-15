@@ -10,10 +10,12 @@ import { EmptyState } from "@/components/ui/empty-state";
 import type { CompanyListItem } from "@/types/company";
 import type { PaginationMeta, ProductOrder } from "@/types/product";
 import type { CatalogProduct } from "@/types/store-catalog";
+import type { StoreMapReferencePoint } from "@/types/store-map";
 
 type StoreCatalogContentProps = {
 	store: CompanyListItem;
 	storeMapUrl: string | null;
+	referencePoints: readonly StoreMapReferencePoint[] | null;
 	products: readonly CatalogProduct[];
 	markers: readonly StoreMapMarker[];
 	onEditLocation: (product: CatalogProduct) => void;
@@ -32,6 +34,7 @@ type StoreCatalogContentProps = {
 export function CatalogContent({
 	store,
 	storeMapUrl,
+	referencePoints,
 	products,
 	markers,
 	onEditLocation,
@@ -135,6 +138,7 @@ export function CatalogContent({
 				<InteractiveStoreMap
 					storeMapUrl={storeMapUrl}
 					storeName={store.name}
+					referencePoints={referencePoints ?? []}
 					markers={markers}
 					highlightedMarkerId={highlightedProductLocationId}
 					onMarkerClick={editMarker}

@@ -47,6 +47,7 @@ export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
 					<InteractiveStoreMap
 						storeMapUrl={storeMap?.imageUrl ?? null}
 						storeName={store.name}
+						referencePoints={storeMap?.referencePoints ?? []}
 					/>
 				)}
 			</div>

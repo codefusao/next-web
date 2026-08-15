@@ -210,6 +210,7 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 			<CatalogContent
 				store={store}
 				storeMapUrl={storeMap?.imageUrl ?? null}
+				referencePoints={storeMap?.referencePoints ?? null}
 				products={catalogProducts}
 				markers={markers}
 				onEditLocation={(product) =>
