@@ -9,13 +9,14 @@ import { Modal } from "@/components/ui/modal";
 import type { Product } from "@/types/product";
 
 export type CatalogProductPickerItem = Product & {
+	stockId?: string;
 	availableQuantity?: number;
 };
 
 type CatalogProductPickerModalProps = {
 	products: readonly CatalogProductPickerItem[];
 	onClose: () => void;
-	onSelect: (product: Product) => void;
+	onSelect: (product: CatalogProductPickerItem) => void;
 	title?: string;
 	description?: string;
 	controls?: ReactNode;
@@ -41,7 +42,7 @@ export function CatalogProductPickerModal({
 			onClose={onClose}
 			size="lg"
 			layout="scrollable"
-	>
+		>
 			<div className="mt-6">
 				{controls}
 				{isPending ? (

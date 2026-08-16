@@ -13,6 +13,7 @@ type StoreCatalogProductsProps = {
 	totalPages: number;
 	onEditLocation: (product: CatalogProduct) => void;
 	onRemoveLocation: (product: CatalogProduct) => void;
+	onEditQuantity: (product: CatalogProduct) => void;
 	onHighlightedProductLocationChange: (catalogProductId: string | null) => void;
 	onPreviousPage: () => void;
 	onNextPage: () => void;
@@ -25,6 +26,7 @@ export function CatalogProducts({
 	totalPages,
 	onEditLocation,
 	onRemoveLocation,
+	onEditQuantity,
 	onHighlightedProductLocationChange,
 	onPreviousPage,
 	onNextPage,
@@ -39,6 +41,7 @@ export function CatalogProducts({
 						isHighlighted={highlightedProductLocationId === product.id}
 						onEditLocation={onEditLocation}
 						onRemoveLocation={onRemoveLocation}
+						onEditQuantity={onEditQuantity}
 						onHighlightedProductLocationChange={
 							onHighlightedProductLocationChange
 						}

@@ -1,6 +1,6 @@
 "use client";
 
-import { EllipsisVertical, Pencil, Trash2 } from "lucide-react";
+import { EllipsisVertical, Map, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
@@ -14,12 +14,14 @@ type MenuPosition = {
 type CatalogProductActionsProps = {
 	productName: string;
 	onEdit: () => void;
+	onEditQuantity: () => void;
 	onDelete: () => void;
 };
 
 export function CatalogProductActions({
 	productName,
 	onEdit,
+	onEditQuantity,
 	onDelete,
 }: CatalogProductActionsProps) {
 	const { mode } = useTheme();
@@ -76,8 +78,19 @@ export function CatalogProductActions({
 										onEdit();
 									}}
 								>
+									<Map aria-hidden="true" className="size-4 text-primary" />
+									Editar localização
+								</button>
+								<button
+									type="button"
+									className="flex w-full cursor-pointer items-center gap-2 rounded-[var(--radius-sm)] px-2 py-2 text-left text-xs font-medium hover:bg-background"
+									onClick={() => {
+										setMenuPosition(null);
+										onEditQuantity();
+									}}
+								>
 									<Pencil aria-hidden="true" className="size-4 text-primary" />
-									Editar no mapa
+									Alterar quantidade
 								</button>
 								<button
 									type="button"

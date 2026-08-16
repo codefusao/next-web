@@ -20,6 +20,7 @@ type StoreCatalogContentProps = {
 	markers: readonly StoreMapMarker[];
 	onEditLocation: (product: CatalogProduct) => void;
 	onRemoveLocation: (product: CatalogProduct) => void;
+	onEditQuantity: (product: CatalogProduct) => void;
 	query: string;
 	onQueryChange: (query: string) => void;
 	categoryId: string;
@@ -39,6 +40,7 @@ export function CatalogContent({
 	markers,
 	onEditLocation,
 	onRemoveLocation,
+	onEditQuantity,
 	query,
 	onQueryChange,
 	categoryId,
@@ -85,8 +87,8 @@ export function CatalogContent({
 					categoryId={categoryId}
 					order={order}
 					onQueryChange={onQueryChange}
-				onCategoryChange={onCategoryChange}
-				onOrderChange={onOrderChange}
+					onCategoryChange={onCategoryChange}
+					onOrderChange={onOrderChange}
 				/>
 				<div className="flex flex-1 flex-col p-3 sm:p-4">
 					<p className="mb-4 text-sm font-medium text-muted">
@@ -117,6 +119,7 @@ export function CatalogContent({
 							totalPages={meta?.totalPages ?? 1}
 							onEditLocation={editCatalogProduct}
 							onRemoveLocation={removeCatalogProduct}
+							onEditQuantity={onEditQuantity}
 							onHighlightedProductLocationChange={
 								setHighlightedProductLocationId
 							}
