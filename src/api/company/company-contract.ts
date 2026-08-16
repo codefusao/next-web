@@ -1,0 +1,53 @@
+import { z } from "zod";
+import { type Company, CompanyStatus } from "@/types/company";
+
+export const companySchema = z.object({
+	id: z.uuid(),
+	parentId: z.uuid().nullable(),
+	name: z.string(),
+	cnpj: z.string().length(14),
+	description: z.string().nullable(),
+	address: z.string(),
+	bannerUrl: z.url().nullable(),
+	status: z.enum(CompanyStatus).nullable(),
+	manager: z.string().nullable(),
+	phone: z.string().nullable(),
+	email: z.email().nullable(),
+	area: z.number().positive().nullable(),
+	createdAt: z.string(),
+	updatedAt: z.string(),
+});
+
+export const companiesResponseSchema = z.object({
+	companies: z.array(companySchema),
+	meta: z.object({
+		totalPages: z.number().int().nonnegative(),
+		currentPage: z.number().int().positive(),
+		totalRecords: z.number().int().nonnegative(),
+	}),
+});
+
+type CompanyProfileInput = {
+	bannerUrl?: string;
+	status?: CompanyStatus;
+	manager?: string;
+	phone?: string;
+	email?: string;
+	area?: number;
+};
+
+export type CreateCompanyInput = Omit<
+	Company,
+	| "id"
+	| "createdAt"
+	| "updatedAt"
+	| "parentId"
+	| "description"
+	| keyof CompanyProfileInput
+> &
+	CompanyProfileInput & {
+		parentId?: string | null;
+		description?: string | null;
+	};
+
+export type UpdateCompanyInput = Partial<CreateCompanyInput>;

@@ -1,0 +1,46 @@
+import { ImageUp } from "lucide-react";
+import { InteractiveStoreMap } from "@/components/catalog/map/interactive-store-map";
+import { Button } from "@/components/ui/button";
+import { ContentCard } from "@/components/ui/content-card";
+import { useStoreMapQuery } from "@/hooks/use-store-map-query";
+import type { CompanyListItem } from "@/types/company";
+
+type StoreFloorMapProps = {
+	store: CompanyListItem;
+	onChangeMap: () => void;
+};
+
+export function StoreFloorMap({ store, onChangeMap }: StoreFloorMapProps) {
+	const { data: storeMap = null, isLoading } = useStoreMapQuery(store.id);
+
+	return (
+		<ContentCard aria-labelledby="store-map-title" className="mt-6 p-5 sm:p-6">
+			<div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+				<div>
+					<h2 id="store-map-title" className="text-lg font-bold">
+						Mapa interno da loja
+					</h2>
+					<p className="mt-1 text-sm text-muted">
+						Consulte a disposição dos setores dentro da loja.
+					</p>
+				</div>
+				<Button variant="outline" size="compact" onClick={onChangeMap}>
+					<ImageUp aria-hidden="true" className="size-4" />
+					Alterar mapa
+				</Button>
+			</div>
+			<div className="mt-5">
+				{isLoading ? (
+					<div className="flex aspect-[3/2] items-center justify-center rounded-[var(--radius-control)] bg-muted text-sm text-muted">
+						Carregando mapa interno...
+					</div>
+				) : (
+					<InteractiveStoreMap
+						storeMapUrl={storeMap?.imageUrl ?? null}
+						storeName={store.name}
+					/>
+				)}
+			</div>
+		</ContentCard>
+	);
+}
