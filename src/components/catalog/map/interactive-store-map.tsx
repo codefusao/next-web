@@ -9,6 +9,7 @@ import {
 	type StoreMapMarker,
 } from "@/components/catalog/map/map-types";
 import { StoreMapMarkers } from "@/components/catalog/map/store-map-markers";
+import { StoreMapReferencePoints } from "@/components/catalog/map/store-map-reference-points";
 import { useMapMarkerPreview } from "@/hooks/use-map-marker-preview";
 import { useStoreMapTransform } from "@/hooks/use-store-map-transform";
 import { getMapPositionFromPointer } from "@/lib/store-map-position";
@@ -24,6 +25,7 @@ type InteractiveStoreMapProps = {
 	onMarkerClick?: (markerId: string) => void;
 	onMarkerRemove?: (markerId: string) => void;
 	onMarkerHover?: (markerId: string | null) => void;
+	referencePoints?: readonly (StoreMapPosition | null)[];
 };
 
 const defaultMarkerSize = 32;
@@ -47,6 +49,7 @@ export function InteractiveStoreMap({
 	onMarkerClick,
 	onMarkerRemove,
 	onMarkerHover,
+	referencePoints = [],
 }: InteractiveStoreMapProps) {
 	const [imageSize, setImageSize] = useState<MapImageSize>(defaultMapImageSize);
 	const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
@@ -121,9 +124,10 @@ export function InteractiveStoreMap({
 						type="button"
 						className="absolute inset-0 cursor-crosshair focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary"
 						onClick={selectPosition}
-						aria-label="Selecione a posição do produto no mapa"
+						aria-label="Selecione uma posição no mapa"
 					/>
 				) : null}
+				<StoreMapReferencePoints points={referencePoints} imageSize={imageSize} />
 				<StoreMapMarkers
 					markers={markers}
 					selectedPosition={selectedPosition}
@@ -132,7 +136,6 @@ export function InteractiveStoreMap({
 					hoveredMarkerId={markerPreview.hoveredMarkerId}
 					imageSize={imageSize}
 					markerSize={markerSize}
-					zoom={mapTransform.zoom}
 					onSelectMarker={selectMarker}
 					onPreviewMarker={previewMarker}
 					onSchedulePreviewClose={markerPreview.schedulePreviewClose}

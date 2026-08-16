@@ -4,4 +4,5 @@ export type InventoryItem = Product & {
 	stockId: string;
 	quantity: number;
 	availableQuantity: number;
+	highlight: boolean;
 };

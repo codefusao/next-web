@@ -27,6 +27,8 @@ export function useCatalogProductReferences(
 						...referenceProduct,
 						referenceProductId: referenceProduct.id,
 						id: catalogProduct.id,
+						quantity: catalogProduct.quantity,
+						maxQuantity: catalogProduct.maxQuantity,
 						location: catalogProduct.location,
 					},
 				]

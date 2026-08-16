@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownUp, ListFilter } from "lucide-react";
+import { ArrowDownUp, ListFilter, X } from "lucide-react";
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { SearchInput } from "@/components/ui/search-input";
@@ -16,6 +16,7 @@ type CatalogProductControlsProps = {
 	onOrderChange: (order: ProductOrder) => void;
 	searchLabel?: string;
 	searchPlaceholder?: string;
+	idPrefix?: string;
 	action?: ReactNode;
 };
 
@@ -33,15 +34,18 @@ export function CatalogProductControls({
 	onOrderChange,
 	searchLabel = "Buscar no catálogo da loja",
 	searchPlaceholder = "Buscar por produto ou categoria",
+	idPrefix = "catalog",
 	action,
 }: CatalogProductControlsProps) {
 	const [isFilterOpen, setIsFilterOpen] = useState(false);
 	const [isOrderOpen, setIsOrderOpen] = useState(false);
 	const { data: categories = [] } = useCategoriesQuery();
 	const activeFilterLabel = categories.find((category) => category.id === categoryId)?.name;
+	const filterId = `${idPrefix}-category-filter`;
+	const orderId = `${idPrefix}-order-options`;
 
 	return (
-		<div className="border-b border-border p-4 sm:p-5">
+		<div className="p-4 sm:p-5">
 			<div className="flex gap-2">
 				<SearchInput
 					query={query}
@@ -64,14 +68,24 @@ export function CatalogProductControls({
 										setIsOrderOpen(false);
 									}}
 						aria-expanded={isFilterOpen}
-						aria-controls="catalog-category-filter"
+						aria-controls={filterId}
 					>
 						<ListFilter aria-hidden="true" className="size-4" />
 						<span className="hidden sm:inline">Filtros</span>
 					</button>
+					{categoryId ? (
+						<button
+							type="button"
+							onClick={() => onCategoryChange("")}
+							className="absolute -right-1 -top-1 z-10 inline-flex size-5 cursor-pointer items-center justify-center rounded-full border border-primary bg-background text-primary shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+							aria-label={`Remover filtro${activeFilterLabel ? ` ${activeFilterLabel}` : ""}`}
+						>
+							<X aria-hidden="true" className="size-3" />
+						</button>
+					) : null}
 					{isFilterOpen ? (
 						<div
-							id="catalog-category-filter"
+							id={filterId}
 							className="absolute right-0 z-30 mt-2 w-64 rounded-[var(--radius-control)] border border-border bg-card p-2 shadow-lg"
 						>
 							<p className="px-2 py-1.5 text-xs font-bold uppercase tracking-wide text-muted">
@@ -120,13 +134,13 @@ export function CatalogProductControls({
 								setIsFilterOpen(false);
 							}}
 							aria-expanded={isOrderOpen}
-							aria-controls="catalog-order-options"
+							aria-controls={orderId}
 						>
 							<ArrowDownUp aria-hidden="true" className="size-4" />
 							<span className="hidden sm:inline">Ordenar</span>
 						</button>
 						{isOrderOpen ? (
-							<div id="catalog-order-options" className="absolute right-0 z-30 mt-2 w-56 rounded-[var(--radius-control)] border border-border bg-card p-2 shadow-lg">
+							<div id={orderId} className="absolute right-0 z-30 mt-2 w-56 rounded-[var(--radius-control)] border border-border bg-card p-2 shadow-lg">
 								{orderOptions.map((option) => (
 									<button
 										key={option.value}

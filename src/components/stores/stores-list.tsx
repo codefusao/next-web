@@ -1,7 +1,8 @@
 "use client";
 
 import { Store } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { AddStoreModal } from "@/components/stores/modals/add-store-modal";
 import { StoreCard } from "@/components/stores/store-card";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -12,9 +13,16 @@ import { useCompaniesQuery } from "@/hooks/use-companies-query";
 export function StoresList() {
 	const [activePage, setActivePage] = useState(1);
 	const [query, setQuery] = useState("");
-	const { data } = useCompaniesQuery(activePage, query);
+	const { data, error, isError, isPending } = useCompaniesQuery(activePage, query);
 	const companies = data?.companies ?? [];
 	const totalPages = data?.meta.totalPages ?? 1;
+
+	useEffect(() => {
+		if (!isError) return;
+
+		console.error(error);
+		toast.error("Não foi possível carregar as lojas.");
+	}, [error, isError]);
 
 	function setSearchQuery(nextQuery: string) {
 		setQuery(nextQuery);
@@ -41,7 +49,9 @@ export function StoresList() {
 				/>
 				<AddStoreModal />
 			</div>
-			{companies.length === 0 ? (
+			{isPending ? (
+				<div className="py-10 text-center text-sm text-muted">Carregando lojas…</div>
+			) : isError ? null : companies.length === 0 ? (
 				<EmptyState
 					icon={Store}
 					title="Nenhuma loja encontrada"

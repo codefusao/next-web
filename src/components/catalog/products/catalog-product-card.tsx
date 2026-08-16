@@ -10,6 +10,7 @@ type CatalogProductCardProps = {
 	isHighlighted: boolean;
 	onEditLocation: (product: CatalogProduct) => void;
 	onRemoveLocation: (product: CatalogProduct) => void;
+	onEditQuantity: (product: CatalogProduct) => void;
 	onHighlightedProductLocationChange: (catalogProductId: string | null) => void;
 };
 
@@ -18,6 +19,7 @@ export function CatalogProductCard({
 	isHighlighted,
 	onEditLocation,
 	onRemoveLocation,
+	onEditQuantity,
 	onHighlightedProductLocationChange,
 }: CatalogProductCardProps) {
 	return (
@@ -51,10 +53,11 @@ export function CatalogProductCard({
 					/>
 					<span>{product.location.description}</span>
 				</p>
-				<div className="mt-1 flex justify-end">
+				<div className="flex justify-end">
 					<CatalogProductActions
 						productName={product.nome}
 						onEdit={() => onEditLocation(product)}
+						onEditQuantity={() => onEditQuantity(product)}
 						onDelete={() => onRemoveLocation(product)}
 					/>
 				</div>

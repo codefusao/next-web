@@ -13,11 +13,18 @@ import type { InventoryQuery } from "@/api/inventory";
 
 export function useInventoryQuery(
 	storeId: string,
-	{ query = "", page = 1, limit = 10 }: InventoryQuery = {},
+	{ query = "", categoryId = "", order = "name", page = 1, limit = 10 }: InventoryQuery = {},
 ) {
 	return useQuery({
-		queryKey: queryKeys.companies.inventory(storeId, query, page),
-		queryFn: () => getInventory(storeId, { query, page, limit }),
+		queryKey: queryKeys.companies.inventory(
+			storeId,
+			query,
+			categoryId,
+			order,
+			page,
+			limit,
+		),
+		queryFn: () => getInventory(storeId, { query, categoryId, order, page, limit }),
 		staleTime: 30_000,
 	});
 }

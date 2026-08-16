@@ -5,7 +5,7 @@ const mapCoordinateSchema = z
 	.min(0, "A posição deve estar dentro do mapa")
 	.max(100, "A posição deve estar dentro do mapa");
 
-export const storeCatalogLocationSchema = z.object({
+const storeCatalogLocationBaseSchema = z.object({
 	x: mapCoordinateSchema,
 	y: mapCoordinateSchema,
 	departmentId: z.string().uuid("Selecione um departamento"),
@@ -14,6 +14,8 @@ export const storeCatalogLocationSchema = z.object({
 	module: z.string().trim().min(1, "Informe o módulo"),
 	level: z.string().trim().min(1, "Informe o nível"),
 });
+
+export const storeCatalogLocationSchema = storeCatalogLocationBaseSchema;
 
 export type StoreCatalogLocationFields = z.infer<
 	typeof storeCatalogLocationSchema

@@ -20,6 +20,12 @@ type StoreMetadataFormInputs = {
 	email: string;
 	area: number | "";
 	bannerUrl: string;
+	storeHours: {
+		mondayToSaturday: string;
+		sundaysAndHolidays: string;
+	};
+	latitude: number | "";
+	longitude: number | "";
 };
 
 function inputClass(hasError: boolean) {
@@ -28,6 +34,12 @@ function inputClass(hasError: boolean) {
 
 function fieldName<T extends FieldValues>(name: keyof StoreMetadataFormInputs) {
 	return name as Path<T>;
+}
+
+function storeHoursFieldName<T extends FieldValues>(
+	name: keyof StoreMetadataFormInputs["storeHours"],
+) {
+	return `storeHours.${name}` as Path<T>;
 }
 
 export function StoreMetadataFormFields<T extends FieldValues>({
@@ -116,6 +128,77 @@ export function StoreMetadataFormFields<T extends FieldValues>({
 						aria-invalid={Boolean(metadataErrors.area)}
 					/>
 				</FormField>
+				<FormField
+					label="Latitude"
+					inputId="store-latitude"
+					error={metadataErrors.latitude?.message}
+				>
+					<input
+						{...register(fieldName<T>("latitude"))}
+						id="store-latitude"
+						type="number"
+						step="any"
+						placeholder="Ex.: -23.5505"
+						className={inputClass(Boolean(metadataErrors.latitude))}
+						aria-invalid={Boolean(metadataErrors.latitude)}
+					/>
+				</FormField>
+				<FormField
+					label="Longitude"
+					inputId="store-longitude"
+					error={metadataErrors.longitude?.message}
+				>
+					<input
+						{...register(fieldName<T>("longitude"))}
+						id="store-longitude"
+						type="number"
+						step="any"
+						placeholder="Ex.: -46.6333"
+						className={inputClass(Boolean(metadataErrors.longitude))}
+						aria-invalid={Boolean(metadataErrors.longitude)}
+					/>
+				</FormField>
+			</div>
+			<div className="mt-5">
+				<h4 className="text-sm font-semibold text-foreground">
+					Horário de funcionamento
+				</h4>
+				<div className="mt-3 grid gap-5 md:grid-cols-2">
+					<FormField
+						label="Segunda a sábado"
+						inputId="store-hours-monday-to-saturday"
+						error={metadataErrors.storeHours?.mondayToSaturday?.message}
+					>
+						<input
+							{...register(storeHoursFieldName<T>("mondayToSaturday"))}
+							id="store-hours-monday-to-saturday"
+							placeholder="Ex.: 08:00 às 22:00"
+							className={inputClass(
+								Boolean(metadataErrors.storeHours?.mondayToSaturday),
+							)}
+							aria-invalid={Boolean(
+								metadataErrors.storeHours?.mondayToSaturday,
+							)}
+						/>
+					</FormField>
+					<FormField
+						label="Domingos e feriados"
+						inputId="store-hours-sundays-and-holidays"
+						error={metadataErrors.storeHours?.sundaysAndHolidays?.message}
+					>
+						<input
+							{...register(storeHoursFieldName<T>("sundaysAndHolidays"))}
+							id="store-hours-sundays-and-holidays"
+							placeholder="Ex.: 09:00 às 20:00"
+							className={inputClass(
+								Boolean(metadataErrors.storeHours?.sundaysAndHolidays),
+							)}
+							aria-invalid={Boolean(
+								metadataErrors.storeHours?.sundaysAndHolidays,
+							)}
+						/>
+					</FormField>
+				</div>
 			</div>
 			<div className="mt-5">
 				<FormField

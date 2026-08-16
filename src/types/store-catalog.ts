@@ -17,11 +17,15 @@ export type StoreCatalogProductLocation = StoreMapPosition & {
 export type StoreCatalogProduct = {
 	id: string;
 	referenceProductId: string;
+	quantity: number;
+	maxQuantity: number;
 	location: StoreCatalogProductLocation;
 };
 
 export type CatalogProduct = Omit<Product, "id"> & {
 	id: string;
 	referenceProductId: string;
+	quantity: number;
+	maxQuantity: number;
 	location: StoreCatalogProductLocation;
 };

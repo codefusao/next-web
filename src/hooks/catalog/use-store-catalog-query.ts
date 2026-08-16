@@ -8,19 +8,33 @@ import {
 	getStoreCatalog,
 	type RemoveStoreCatalogProductInput,
 	removeStoreCatalogProduct,
-	type UpdateStoreCatalogProductInput,
-	type UpdateStoreCatalogProductResult,
-	updateStoreCatalogProduct,
 	type StoreCatalogQuery,
+	type UpdateStoreCatalogProductInput,
+	type UpdateStoreCatalogProductQuantityInput,
+	updateStoreCatalogProduct,
+	updateStoreCatalogProductQuantity,
 } from "@/api/store-catalog";
 
 export function useStoreCatalogQuery(
 	storeId: string,
-	{ query = "", categoryId = "", order = "name", page = 1, limit = 10 }: StoreCatalogQuery = {},
+	{
+		query = "",
+		categoryId = "",
+		order = "name",
+		page = 1,
+		limit = 6,
+	}: StoreCatalogQuery = {},
 ) {
 	return useQuery({
-		queryKey: queryKeys.companies.catalog(storeId, query, categoryId, order, page),
-		queryFn: () => getStoreCatalog(storeId, { query, categoryId, order, page, limit }),
+		queryKey: queryKeys.companies.catalog(
+			storeId,
+			query,
+			categoryId,
+			order,
+			page,
+		),
+		queryFn: () =>
+			getStoreCatalog(storeId, { query, categoryId, order, page, limit }),
 		staleTime: 30_000,
 	});
 }
@@ -50,6 +64,25 @@ export function useUpdateStoreCatalogProductMutation() {
 			queryClient.invalidateQueries({
 				queryKey: queryKeys.companies.catalog(storeId),
 			});
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.companies.inventory(storeId),
+			});
+		},
+	});
+}
+
+export function useUpdateStoreCatalogProductQuantityMutation() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: updateStoreCatalogProductQuantity,
+		onSuccess: (_, { storeId }: UpdateStoreCatalogProductQuantityInput) => {
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.companies.catalog(storeId),
+			});
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.companies.inventory(storeId),
+			});
 		},
 	});
 }
@@ -62,6 +95,9 @@ export function useRemoveStoreCatalogProductMutation() {
 		onSuccess: ({ storeId }: RemoveStoreCatalogProductInput) => {
 			queryClient.invalidateQueries({
 				queryKey: queryKeys.companies.catalog(storeId),
+			});
+			queryClient.invalidateQueries({
+				queryKey: queryKeys.companies.inventory(storeId),
 			});
 		},
 	});

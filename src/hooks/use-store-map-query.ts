@@ -7,7 +7,7 @@ import {
 	getStoreMapByCompany,
 	updateStoreMap,
 } from "@/api/store-map";
-import type { StoreMap } from "@/types/store-map";
+import type { StoreMap, StoreMapReferencePoint } from "@/types/store-map";
 
 export function useStoreMapQuery(companyId: string) {
 	return useQuery({
@@ -29,8 +29,28 @@ export function useSaveStoreMapMutation() {
 	return useMutation({
 		mutationFn: ({ companyId, storeMap, imageUrl }: SaveStoreMapVariables) =>
 			storeMap
-				? updateStoreMap(storeMap.id, imageUrl)
+				? updateStoreMap(storeMap.id, { imageUrl })
 				: createStoreMap({ companyId, imageUrl }),
+		onSuccess: (storeMap) => {
+			queryClient.setQueryData(
+				queryKeys.companies.storeMap(storeMap.companyId),
+				storeMap,
+			);
+		},
+	});
+}
+
+type SaveStoreMapReferencePointsVariables = {
+	storeMap: StoreMap;
+	referencePoints: StoreMapReferencePoint[];
+};
+
+export function useSaveStoreMapReferencePointsMutation() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: ({ storeMap, referencePoints }: SaveStoreMapReferencePointsVariables) =>
+			updateStoreMap(storeMap.id, { referencePoints }),
 		onSuccess: (storeMap) => {
 			queryClient.setQueryData(
 				queryKeys.companies.storeMap(storeMap.companyId),

@@ -10,14 +10,17 @@ import { EmptyState } from "@/components/ui/empty-state";
 import type { CompanyListItem } from "@/types/company";
 import type { PaginationMeta, ProductOrder } from "@/types/product";
 import type { CatalogProduct } from "@/types/store-catalog";
+import type { StoreMapReferencePoint } from "@/types/store-map";
 
 type StoreCatalogContentProps = {
 	store: CompanyListItem;
 	storeMapUrl: string | null;
+	referencePoints: readonly StoreMapReferencePoint[] | null;
 	products: readonly CatalogProduct[];
 	markers: readonly StoreMapMarker[];
 	onEditLocation: (product: CatalogProduct) => void;
 	onRemoveLocation: (product: CatalogProduct) => void;
+	onEditQuantity: (product: CatalogProduct) => void;
 	query: string;
 	onQueryChange: (query: string) => void;
 	categoryId: string;
@@ -32,10 +35,12 @@ type StoreCatalogContentProps = {
 export function CatalogContent({
 	store,
 	storeMapUrl,
+	referencePoints,
 	products,
 	markers,
 	onEditLocation,
 	onRemoveLocation,
+	onEditQuantity,
 	query,
 	onQueryChange,
 	categoryId,
@@ -75,15 +80,15 @@ export function CatalogContent({
 	}
 
 	return (
-		<div className="mt-4 grid gap-3 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)]">
+		<div className="mt-4 grid items-start gap-3 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)]">
 			<section className="flex min-h-0 flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-background">
 				<CatalogProductControls
 					query={query}
 					categoryId={categoryId}
 					order={order}
 					onQueryChange={onQueryChange}
-				onCategoryChange={onCategoryChange}
-				onOrderChange={onOrderChange}
+					onCategoryChange={onCategoryChange}
+					onOrderChange={onOrderChange}
 				/>
 				<div className="flex flex-1 flex-col p-3 sm:p-4">
 					<p className="mb-4 text-sm font-medium text-muted">
@@ -114,6 +119,7 @@ export function CatalogContent({
 							totalPages={meta?.totalPages ?? 1}
 							onEditLocation={editCatalogProduct}
 							onRemoveLocation={removeCatalogProduct}
+							onEditQuantity={onEditQuantity}
 							onHighlightedProductLocationChange={
 								setHighlightedProductLocationId
 							}
@@ -123,7 +129,7 @@ export function CatalogContent({
 					)}
 				</div>
 			</section>
-			<section className="overflow-hidden rounded-[var(--radius-card)] border border-border bg-background p-2 sm:p-3">
+			<section className="self-start overflow-hidden rounded-[var(--radius-card)] border border-border bg-background p-2 sm:p-3">
 				<div className="mb-2 flex items-center justify-between gap-3 px-1">
 					<div>
 						<h2 className="font-bold">Mapa da loja</h2>
@@ -135,6 +141,7 @@ export function CatalogContent({
 				<InteractiveStoreMap
 					storeMapUrl={storeMapUrl}
 					storeName={store.name}
+					referencePoints={referencePoints ?? []}
 					markers={markers}
 					highlightedMarkerId={highlightedProductLocationId}
 					onMarkerClick={editMarker}

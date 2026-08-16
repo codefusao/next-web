@@ -1,6 +1,9 @@
 "use client";
 
-import type { PointerEvent as ReactPointerEvent } from "react";
+import {
+	useRef,
+	type PointerEvent as ReactPointerEvent,
+} from "react";
 import { MapLocationPin } from "@/components/catalog/map/map-location-pin";
 import { StoreMapMarkerPreview } from "@/components/catalog/map/map-marker-preview";
 import type {
@@ -18,7 +21,6 @@ type StoreMapMarkersProps = {
 	hoveredMarkerId: string | null;
 	imageSize: MapImageSize;
 	markerSize: number;
-	zoom: number;
 	onSelectMarker: (
 		event: React.MouseEvent<HTMLButtonElement>,
 		markerId: string,
@@ -42,7 +44,6 @@ export function StoreMapMarkers({
 	hoveredMarkerId,
 	imageSize,
 	markerSize,
-	zoom,
 	onSelectMarker,
 	onPreviewMarker,
 	onSchedulePreviewClose,
@@ -53,56 +54,24 @@ export function StoreMapMarkers({
 }: StoreMapMarkersProps) {
 	return (
 		<>
-			{markers.map((marker) => {
-				const isPreviewOpen =
-					selectedMarkerId === marker.id || hoveredMarkerId === marker.id;
-
-				return (
-					<div
-						key={marker.id}
-						style={getMapMarkerStyle(marker, undefined, imageSize)}
-						className={`absolute ${isPreviewOpen ? "z-40" : "z-20"}`}
-					>
-						<MapLocationPin
-							size={markerSize}
-							className={`pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 text-primary drop-shadow-md transition-[width,height,transform] duration-200 ${
-								highlightedMarkerId === marker.id ||
-								hoveredMarkerId === marker.id
-									? "scale-125"
-									: ""
-							}`}
-						/>
-						<button
-							type="button"
-							title={marker.label}
-							aria-label={marker.label}
-							onClick={(event) => onSelectMarker(event, marker.id)}
-							onPointerDown={(event) => event.stopPropagation()}
-							onPointerEnter={() => onPreviewMarker(marker.id)}
-							onPointerLeave={onSchedulePreviewClose}
-							onFocus={() => onPreviewMarker(marker.id)}
-							onBlur={onSchedulePreviewClose}
-							style={{
-								clipPath: markerHitArea,
-								height: markerSize,
-								width: markerSize,
-							}}
-							className="absolute z-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-						/>
-						{isPreviewOpen ? (
-							<StoreMapMarkerPreview
-								marker={marker}
-								zoom={zoom}
-								onEdit={onMarkerClick}
-								onRemove={onMarkerRemove}
-								onPointerEnter={onCancelPreviewClose}
-								onPointerLeave={onSchedulePreviewClose}
-								onPointerDown={onStopPointerDown}
-							/>
-						) : null}
-					</div>
-				);
-			})}
+			{markers.map((marker) => (
+				<StoreMapMarkerItem
+					key={marker.id}
+					marker={marker}
+					selectedMarkerId={selectedMarkerId}
+					highlightedMarkerId={highlightedMarkerId}
+					hoveredMarkerId={hoveredMarkerId}
+					imageSize={imageSize}
+					markerSize={markerSize}
+					onSelectMarker={onSelectMarker}
+					onPreviewMarker={onPreviewMarker}
+					onSchedulePreviewClose={onSchedulePreviewClose}
+					onCancelPreviewClose={onCancelPreviewClose}
+					onMarkerClick={onMarkerClick}
+					onMarkerRemove={onMarkerRemove}
+					onStopPointerDown={onStopPointerDown}
+				/>
+			))}
 			{selectedPosition ? (
 				<MapLocationPin
 					label="Posição selecionada"
@@ -112,5 +81,77 @@ export function StoreMapMarkers({
 				/>
 			) : null}
 		</>
+	);
+}
+
+type StoreMapMarkerItemProps = Omit<
+	StoreMapMarkersProps,
+	"markers" | "selectedPosition"
+> & {
+	marker: StoreMapMarker;
+};
+
+function StoreMapMarkerItem({
+	marker,
+	selectedMarkerId,
+	highlightedMarkerId,
+	hoveredMarkerId,
+	imageSize,
+	markerSize,
+	onSelectMarker,
+	onPreviewMarker,
+	onSchedulePreviewClose,
+	onCancelPreviewClose,
+	onMarkerClick,
+	onMarkerRemove,
+	onStopPointerDown,
+}: StoreMapMarkerItemProps) {
+	const markerRef = useRef<HTMLDivElement>(null);
+	const isPreviewOpen =
+		selectedMarkerId === marker.id || hoveredMarkerId === marker.id;
+
+	return (
+		<div
+			ref={markerRef}
+			style={getMapMarkerStyle(marker, undefined, imageSize)}
+			className={`absolute ${isPreviewOpen ? "z-40" : "z-20"}`}
+		>
+			<MapLocationPin
+				size={markerSize}
+				className={`pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 text-primary drop-shadow-md transition-[width,height,transform] duration-200 ${
+					highlightedMarkerId === marker.id || hoveredMarkerId === marker.id
+						? "scale-125"
+						: ""
+				}`}
+			/>
+			<button
+				type="button"
+				title={marker.label}
+				aria-label={marker.label}
+				onClick={(event) => onSelectMarker(event, marker.id)}
+				onPointerDown={(event) => event.stopPropagation()}
+				onPointerEnter={() => onPreviewMarker(marker.id)}
+				onPointerLeave={onSchedulePreviewClose}
+				onFocus={() => onPreviewMarker(marker.id)}
+				onBlur={onSchedulePreviewClose}
+				style={{
+					clipPath: markerHitArea,
+					height: markerSize,
+					width: markerSize,
+				}}
+				className="absolute z-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+			/>
+			{isPreviewOpen ? (
+				<StoreMapMarkerPreview
+					marker={marker}
+					anchorRef={markerRef}
+					onEdit={onMarkerClick}
+					onRemove={onMarkerRemove}
+					onPointerEnter={onCancelPreviewClose}
+					onPointerLeave={onSchedulePreviewClose}
+					onPointerDown={onStopPointerDown}
+				/>
+			) : null}
+		</div>
 	);
 }
