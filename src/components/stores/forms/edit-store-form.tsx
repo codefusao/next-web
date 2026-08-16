@@ -42,6 +42,12 @@ export function EditStoreForm({ store, onCancel, onSave }: EditStoreFormProps) {
 			phone: store.phone ?? "",
 			email: store.email ?? "",
 			area: store.area ?? "",
+			storeHours: {
+				mondayToSaturday: store.storeHours?.mondayToSaturday ?? "",
+				sundaysAndHolidays: store.storeHours?.sundaysAndHolidays ?? "",
+			},
+			latitude: store.latitude ?? "",
+			longitude: store.longitude ?? "",
 		},
 		reValidateMode: "onChange",
 	});

@@ -41,6 +41,48 @@ const optionalTextSchema = (minimumLength: number, message: string) =>
 		.refine((value) => !value || value.length >= minimumLength, message)
 		.transform((value) => value || undefined);
 
+const optionalCoordinateSchema = (
+	minimum: number,
+	maximum: number,
+	message: string,
+) =>
+	z
+		.union([
+			z.literal(""),
+			z.coerce.number(message).min(minimum, message).max(maximum, message),
+		])
+		.transform((value) => (value === "" ? undefined : value));
+
+const storeHoursSchema = z
+	.object({
+		mondayToSaturday: z
+			.string()
+			.trim()
+			.max(100, "O horário pode ter no máximo 100 caracteres"),
+		sundaysAndHolidays: z
+			.string()
+			.trim()
+			.max(100, "O horário pode ter no máximo 100 caracteres"),
+	})
+	.superRefine((hours, context) => {
+		if (!hours.sundaysAndHolidays || hours.mondayToSaturday) return;
+		context.addIssue({
+			code: "custom",
+			path: ["mondayToSaturday"],
+			message: "Informe o horário de segunda a sábado",
+		});
+	})
+	.transform((hours) => {
+		if (!hours.mondayToSaturday && !hours.sundaysAndHolidays) return undefined;
+
+		return {
+			mondayToSaturday: hours.mondayToSaturday,
+			...(hours.sundaysAndHolidays
+				? { sundaysAndHolidays: hours.sundaysAndHolidays }
+				: {}),
+		};
+	});
+
 const companyFieldsSchema = z.object({
 	address: z.string().trim().min(5, "Informe o endereço da loja"),
 	parentId: parentIdSchema.transform((value) => value || undefined),
@@ -79,6 +121,13 @@ const profileSchema = {
 				.positive("A área deve ser maior que zero"),
 		])
 		.transform((value) => (value === "" ? undefined : value)),
+	storeHours: storeHoursSchema,
+	latitude: optionalCoordinateSchema(-90, 90, "Informe uma latitude válida"),
+	longitude: optionalCoordinateSchema(
+		-180,
+		180,
+		"Informe uma longitude válida",
+	),
 };
 
 export const companySchema = companyFieldsSchema;

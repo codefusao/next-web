@@ -25,6 +25,21 @@ export function StoreSettings({
 		{ label: "E-mail", value: store.email ?? "Não informado" },
 		{ label: "Endereço", value: store.address },
 		{
+			label: "Coordenadas",
+			value:
+				store.latitude != null && store.longitude != null
+					? `${store.latitude}, ${store.longitude}`
+					: "Não informadas",
+		},
+		{
+			label: "Horário de segunda a sábado",
+			value: store.storeHours?.mondayToSaturday ?? "Não informado",
+		},
+		{
+			label: "Horário de domingos e feriados",
+			value: store.storeHours?.sundaysAndHolidays ?? "Não informado",
+		},
+		{
 			label: "Área da loja",
 			value: store.area
 				? `${store.area.toLocaleString("pt-BR")} m²`

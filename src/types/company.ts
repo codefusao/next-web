@@ -3,6 +3,11 @@ export enum CompanyStatus {
 	Closed = "CLOSED",
 }
 
+export type StoreHours = {
+	mondayToSaturday: string;
+	sundaysAndHolidays?: string;
+};
+
 export type Company = {
 	id: string;
 	parentId: string | null;
@@ -16,6 +21,9 @@ export type Company = {
 	phone: string | null;
 	email: string | null;
 	area: number | null;
+	storeHours: StoreHours | null;
+	latitude: number | null;
+	longitude: number | null;
 	createdAt: string;
 	updatedAt: string;
 };

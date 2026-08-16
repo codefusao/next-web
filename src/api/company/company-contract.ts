@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { type Company, CompanyStatus } from "@/types/company";
+import { type Company, CompanyStatus, type StoreHours } from "@/types/company";
+
+const storeHoursSchema = z.object({
+	mondayToSaturday: z.string(),
+	sundaysAndHolidays: z.string().optional(),
+});
 
 export const companySchema = z.object({
 	id: z.uuid(),
@@ -14,6 +19,9 @@ export const companySchema = z.object({
 	phone: z.string().nullable(),
 	email: z.email().nullable(),
 	area: z.number().positive().nullable(),
+	storeHours: storeHoursSchema.nullable(),
+	latitude: z.number().min(-90).max(90).nullable(),
+	longitude: z.number().min(-180).max(180).nullable(),
 	createdAt: z.string(),
 	updatedAt: z.string(),
 });
@@ -34,6 +42,9 @@ type CompanyProfileInput = {
 	phone?: string;
 	email?: string;
 	area?: number;
+	storeHours?: StoreHours;
+	latitude?: number;
+	longitude?: number;
 };
 
 export type CreateCompanyInput = Omit<
