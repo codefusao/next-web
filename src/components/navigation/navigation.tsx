@@ -1,6 +1,6 @@
 "use client";
 
-import { Boxes, Menu, Store, X } from "lucide-react";
+import { Boxes, ChartNoAxesCombined, Menu, Store, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 const navigationItems = [
 	{ href: "/products", label: "Produtos", icon: Boxes },
 	{ href: "/stores", label: "Lojas", icon: Store },
+	{ href: "/metrics", label: "Métricas", icon: ChartNoAxesCombined },
 ] as const;
 
 type NavigationProps = {
