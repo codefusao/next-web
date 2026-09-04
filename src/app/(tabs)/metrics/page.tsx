@@ -1,9 +1,9 @@
-import { FunnelMetrics } from "@/components/metrics/funnel-metrics";
+import { MetricsDashboard } from "@/components/metrics/metrics-dashboard";
 
 export default function MetricsPage() {
 	return (
 		<section>
-			<FunnelMetrics />
+			<MetricsDashboard />
 		</section>
 	);
 }
