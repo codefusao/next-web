@@ -2,11 +2,11 @@
 
 import { MapPin, Pencil, Trash2 } from "lucide-react";
 import {
+	type PointerEvent as ReactPointerEvent,
+	type RefObject,
 	useLayoutEffect,
 	useRef,
 	useState,
-	type PointerEvent as ReactPointerEvent,
-	type RefObject,
 } from "react";
 import { createPortal } from "react-dom";
 import type { StoreMapMarker } from "@/components/catalog/map/map-types";
@@ -35,9 +35,10 @@ export function StoreMapMarkerPreview({
 }: StoreMapMarkerPreviewProps) {
 	const { mode } = useTheme();
 	const previewRef = useRef<HTMLDivElement>(null);
-	const [position, setPosition] = useState<{ left: number; top: number } | null>(
-		null,
-	);
+	const [position, setPosition] = useState<{
+		left: number;
+		top: number;
+	} | null>(null);
 
 	useLayoutEffect(() => {
 		function updatePosition() {
@@ -115,6 +116,10 @@ export function StoreMapMarkerPreview({
 						<p className="mt-2 flex items-center gap-1 text-xs text-muted">
 							<MapPin aria-hidden="true" className="size-3 text-primary" />
 							{marker.locationLabel}
+						</p>
+						<p className="mt-1 text-xs font-medium text-foreground">
+							{marker.quantity} {marker.quantity === 1 ? "unidade" : "unidades"}{" "}
+							nesta localização
 						</p>
 					</div>
 				</div>

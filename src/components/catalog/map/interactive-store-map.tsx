@@ -20,7 +20,7 @@ type InteractiveStoreMapProps = {
 	storeName: string;
 	markers?: readonly StoreMapMarker[];
 	selectedPosition?: StoreMapPosition | null;
-	highlightedMarkerId?: string | null;
+	highlightedMarkerIds?: readonly string[];
 	onPositionSelect?: (position: StoreMapPosition) => void;
 	onMarkerClick?: (markerId: string) => void;
 	onMarkerRemove?: (markerId: string) => void;
@@ -44,7 +44,7 @@ export function InteractiveStoreMap({
 	storeName,
 	markers = [],
 	selectedPosition = null,
-	highlightedMarkerId = null,
+	highlightedMarkerIds = [],
 	onPositionSelect,
 	onMarkerClick,
 	onMarkerRemove,
@@ -127,12 +127,15 @@ export function InteractiveStoreMap({
 						aria-label="Selecione uma posição no mapa"
 					/>
 				) : null}
-				<StoreMapReferencePoints points={referencePoints} imageSize={imageSize} />
+				<StoreMapReferencePoints
+					points={referencePoints}
+					imageSize={imageSize}
+				/>
 				<StoreMapMarkers
 					markers={markers}
 					selectedPosition={selectedPosition}
 					selectedMarkerId={selectedMarkerId}
-					highlightedMarkerId={highlightedMarkerId}
+					highlightedMarkerIds={highlightedMarkerIds}
 					hoveredMarkerId={markerPreview.hoveredMarkerId}
 					imageSize={imageSize}
 					markerSize={markerSize}

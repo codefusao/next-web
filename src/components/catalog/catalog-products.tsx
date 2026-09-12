@@ -11,10 +11,8 @@ type StoreCatalogProductsProps = {
 	highlightedProductLocationId: string | null;
 	activePage: number;
 	totalPages: number;
-	onEditLocation: (product: CatalogProduct) => void;
-	onRemoveLocation: (product: CatalogProduct) => void;
-	onEditQuantity: (product: CatalogProduct) => void;
-	onHighlightedProductLocationChange: (catalogProductId: string | null) => void;
+	onShowLocations: (products: CatalogProduct[]) => void;
+	onProductHover: (referenceProductId: string | null) => void;
 	onPreviousPage: () => void;
 	onNextPage: () => void;
 };
@@ -24,27 +22,33 @@ export function CatalogProducts({
 	highlightedProductLocationId,
 	activePage,
 	totalPages,
-	onEditLocation,
-	onRemoveLocation,
-	onEditQuantity,
-	onHighlightedProductLocationChange,
+	onShowLocations,
+	onProductHover,
 	onPreviousPage,
 	onNextPage,
 }: StoreCatalogProductsProps) {
+	const productGroups = Array.from(
+		products.reduce((groups, product) => {
+			const locations = groups.get(product.referenceProductId) ?? [];
+			locations.push(product);
+			groups.set(product.referenceProductId, locations);
+			return groups;
+		}, new Map<string, CatalogProduct[]>()),
+	);
+
 	return (
 		<div className="flex flex-1 flex-col">
 			<div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
-				{products.map((product) => (
+				{productGroups.map(([productId, locations]) => (
 					<CatalogProductCard
-						key={product.id}
-						product={product}
-						isHighlighted={highlightedProductLocationId === product.id}
-						onEditLocation={onEditLocation}
-						onRemoveLocation={onRemoveLocation}
-						onEditQuantity={onEditQuantity}
-						onHighlightedProductLocationChange={
-							onHighlightedProductLocationChange
-						}
+						key={productId}
+						product={locations[0]}
+						locationsCount={locations.length}
+						isHighlighted={locations.some(
+							(location) => location.id === highlightedProductLocationId,
+						)}
+						onShowLocations={() => onShowLocations(locations)}
+						onProductHover={onProductHover}
 					/>
 				))}
 			</div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { EllipsisVertical, Map, Pencil, Trash2 } from "lucide-react";
+import { EllipsisVertical, Map as MapIcon, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ type MenuPosition = {
 };
 
 type CatalogProductActionsProps = {
+	catalogProductId: string;
 	productName: string;
 	onEdit: () => void;
 	onEditQuantity: () => void;
@@ -19,6 +20,7 @@ type CatalogProductActionsProps = {
 };
 
 export function CatalogProductActions({
+	catalogProductId,
 	productName,
 	onEdit,
 	onEditQuantity,
@@ -26,7 +28,7 @@ export function CatalogProductActions({
 }: CatalogProductActionsProps) {
 	const { mode } = useTheme();
 	const [menuPosition, setMenuPosition] = useState<MenuPosition | null>(null);
-	const menuId = `catalog-product-actions-${productName}`;
+	const menuId = `catalog-product-actions-${catalogProductId}`;
 
 	function toggleMenu(event: React.MouseEvent<HTMLButtonElement>) {
 		if (menuPosition) {
@@ -78,7 +80,7 @@ export function CatalogProductActions({
 										onEdit();
 									}}
 								>
-									<Map aria-hidden="true" className="size-4 text-primary" />
+									<MapIcon aria-hidden="true" className="size-4 text-primary" />
 									Editar localização
 								</button>
 								<button

@@ -7,11 +7,13 @@ import { CatalogHeader } from "@/components/catalog/catalog-header";
 import type { StoreMapMarker } from "@/components/catalog/map/map-types";
 import { EditProductQuantityDialog } from "@/components/catalog/modals/edit-product-quantity-dialog";
 import { CatalogLocationMapModal } from "@/components/catalog/modals/location-map-modal";
+import { ProductLocationsDialog } from "@/components/catalog/modals/product-locations-dialog";
 import {
 	type CatalogProductPickerItem,
 	CatalogProductPickerModal,
 } from "@/components/catalog/modals/product-picker-modal";
 import { RemoveCatalogLocationDialog } from "@/components/catalog/modals/remove-location-dialog";
+import { SelectProductQuantityDialog } from "@/components/catalog/modals/select-product-quantity-dialog";
 import { CatalogProductControls } from "@/components/catalog/products/catalog-product-controls";
 import { StoreNotFoundState } from "@/components/stores/store-not-found-state";
 import { PaginationControls } from "@/components/ui/pagination-controls";
@@ -41,7 +43,9 @@ type StoreCatalogProps = {
 enum CatalogProductDialogType {
 	Closed = "closed",
 	ProductPicker = "product-picker",
+	SelectingQuantity = "selecting-quantity",
 	Locating = "locating",
+	ViewingLocations = "viewing-locations",
 	Editing = "editing",
 	EditingQuantity = "editing-quantity",
 	Removing = "removing",
@@ -51,8 +55,17 @@ type CatalogProductDialogState =
 	| { type: CatalogProductDialogType.Closed }
 	| { type: CatalogProductDialogType.ProductPicker }
 	| {
+			type: CatalogProductDialogType.SelectingQuantity;
+			product: CatalogProductPickerItem;
+	  }
+	| {
 			type: CatalogProductDialogType.Locating;
 			product: CatalogProductPickerItem;
+			quantity: number;
+	  }
+	| {
+			type: CatalogProductDialogType.ViewingLocations;
+			products: CatalogProduct[];
 	  }
 	| { type: CatalogProductDialogType.Editing; product: CatalogProduct }
 	| { type: CatalogProductDialogType.EditingQuantity; product: CatalogProduct }
@@ -106,6 +119,7 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 				id: product.id,
 				label: product.nome,
 				referenceProductId: product.referenceProductId,
+				quantity: product.quantity,
 				productName: product.nome,
 				productCategory: product.categoria.label,
 				productImage: product.image,
@@ -167,6 +181,7 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 				storeId,
 				storeMapId: storeMap?.id ?? "",
 				productStockId: dialog.product.stockId,
+				quantity: dialog.quantity,
 				location: position,
 			});
 			closeDialog();
@@ -249,14 +264,17 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 				referencePoints={storeMap?.referencePoints ?? null}
 				products={catalogProducts}
 				markers={markers}
+				onShowLocations={(products) =>
+					setDialog({
+						type: CatalogProductDialogType.ViewingLocations,
+						products,
+					})
+				}
 				onEditLocation={(product) =>
 					setDialog({ type: CatalogProductDialogType.Editing, product })
 				}
 				onRemoveLocation={(product) =>
 					setDialog({ type: CatalogProductDialogType.Removing, product })
-				}
-				onEditQuantity={(product) =>
-					setDialog({ type: CatalogProductDialogType.EditingQuantity, product })
 				}
 				query={catalogQuery}
 				onQueryChange={updateCatalogQuery}
@@ -311,7 +329,23 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 					}
 					onClose={closeDialog}
 					onSelect={(product) =>
-						setDialog({ type: CatalogProductDialogType.Locating, product })
+						setDialog({
+							type: CatalogProductDialogType.SelectingQuantity,
+							product,
+						})
+					}
+				/>
+			) : null}
+			{dialog.type === CatalogProductDialogType.SelectingQuantity ? (
+				<SelectProductQuantityDialog
+					product={dialog.product}
+					onClose={closeDialog}
+					onConfirm={(quantity) =>
+						setDialog({
+							type: CatalogProductDialogType.Locating,
+							product: dialog.product,
+							quantity,
+						})
 					}
 				/>
 			) : null}
@@ -324,6 +358,24 @@ export function Catalog({ storeId }: StoreCatalogProps) {
 					onCreateDepartment={createCatalogDepartment}
 					onClose={closeDialog}
 					onSave={saveNewLocation}
+				/>
+			) : null}
+			{dialog.type === CatalogProductDialogType.ViewingLocations ? (
+				<ProductLocationsDialog
+					products={dialog.products}
+					onClose={closeDialog}
+					onEditLocation={(product) =>
+						setDialog({ type: CatalogProductDialogType.Editing, product })
+					}
+					onEditQuantity={(product) =>
+						setDialog({
+							type: CatalogProductDialogType.EditingQuantity,
+							product,
+						})
+					}
+					onRemoveLocation={(product) =>
+						setDialog({ type: CatalogProductDialogType.Removing, product })
+					}
 				/>
 			) : null}
 			{dialog.type === CatalogProductDialogType.Editing ? (

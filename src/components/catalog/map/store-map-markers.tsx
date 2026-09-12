@@ -1,9 +1,6 @@
 "use client";
 
-import {
-	useRef,
-	type PointerEvent as ReactPointerEvent,
-} from "react";
+import { type PointerEvent as ReactPointerEvent, useRef } from "react";
 import { MapLocationPin } from "@/components/catalog/map/map-location-pin";
 import { StoreMapMarkerPreview } from "@/components/catalog/map/map-marker-preview";
 import type {
@@ -17,7 +14,7 @@ type StoreMapMarkersProps = {
 	markers: readonly StoreMapMarker[];
 	selectedPosition: StoreMapPosition | null;
 	selectedMarkerId: string | null;
-	highlightedMarkerId: string | null;
+	highlightedMarkerIds: readonly string[];
 	hoveredMarkerId: string | null;
 	imageSize: MapImageSize;
 	markerSize: number;
@@ -40,7 +37,7 @@ export function StoreMapMarkers({
 	markers,
 	selectedPosition,
 	selectedMarkerId,
-	highlightedMarkerId,
+	highlightedMarkerIds,
 	hoveredMarkerId,
 	imageSize,
 	markerSize,
@@ -59,7 +56,7 @@ export function StoreMapMarkers({
 					key={marker.id}
 					marker={marker}
 					selectedMarkerId={selectedMarkerId}
-					highlightedMarkerId={highlightedMarkerId}
+					highlightedMarkerIds={highlightedMarkerIds}
 					hoveredMarkerId={hoveredMarkerId}
 					imageSize={imageSize}
 					markerSize={markerSize}
@@ -94,7 +91,7 @@ type StoreMapMarkerItemProps = Omit<
 function StoreMapMarkerItem({
 	marker,
 	selectedMarkerId,
-	highlightedMarkerId,
+	highlightedMarkerIds,
 	hoveredMarkerId,
 	imageSize,
 	markerSize,
@@ -119,7 +116,8 @@ function StoreMapMarkerItem({
 			<MapLocationPin
 				size={markerSize}
 				className={`pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 text-primary drop-shadow-md transition-[width,height,transform] duration-200 ${
-					highlightedMarkerId === marker.id || hoveredMarkerId === marker.id
+					highlightedMarkerIds.includes(marker.id) ||
+					hoveredMarkerId === marker.id
 						? "scale-125"
 						: ""
 				}`}

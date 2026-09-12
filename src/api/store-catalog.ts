@@ -30,8 +30,20 @@ const catalogItemSchema = z.object({
 		),
 	}),
 });
-const catalogItemsResponseSchema = z.object({
-	productStockLocations: z.array(catalogItemSchema),
+const catalogProductStockSchema = z.object({
+	id: z.string().uuid(),
+	quantity: z.number().int().nonnegative(),
+	product: z.object({ id: z.string().uuid() }),
+	catalogItems: z.array(
+		z.object({
+			id: z.string().uuid(),
+			quantity: z.number().int().positive(),
+			location: catalogItemSchema.shape.location,
+		}),
+	),
+});
+const catalogProductsResponseSchema = z.object({
+	productStocks: z.array(catalogProductStockSchema),
 	meta: z.object({
 		totalPages: z.number(),
 		currentPage: z.number(),
@@ -54,6 +66,7 @@ export type CreateStoreCatalogProductInput = {
 	storeId: string;
 	storeMapId: string;
 	productStockId: string;
+	quantity: number;
 	location: StoreCatalogLocationFields;
 };
 export type UpdateStoreCatalogProductInput = {
@@ -114,6 +127,36 @@ function toCatalogProduct(
 	};
 }
 
+function toCatalogProducts(
+	stock: z.infer<typeof catalogProductStockSchema>,
+): StoreCatalogProduct[] {
+	return stock.catalogItems.map((item) => {
+		const node = item.location.mapNodes[0];
+		if (!node)
+			throw new Error("A localização do catálogo não possui posição no mapa.");
+		return {
+			id: item.id,
+			referenceProductId: stock.product.id,
+			quantity: item.quantity,
+			maxQuantity:
+				stock.quantity -
+				stock.catalogItems
+					.filter((catalogItem) => catalogItem.id !== item.id)
+					.reduce((sum, catalogItem) => sum + catalogItem.quantity, 0),
+			location: {
+				x: node.x,
+				y: node.y,
+				description: locationLabel(item.location),
+				departmentId: item.location.departmentId,
+				aisle: item.location.aisle,
+				shelf: item.location.shelf,
+				module: item.location.module,
+				level: item.location.level,
+			},
+		};
+	});
+}
+
 export async function getStoreCatalog(
 	storeId: string,
 	{
@@ -129,15 +172,16 @@ export async function getStoreCatalog(
 		limit: String(limit),
 		companyId: storeId,
 		order,
+		catalogOnly: "true",
 	});
 	if (query.trim()) search.set("query", query.trim());
 	if (categoryId) search.set("categoryId", categoryId);
 	const response = await apiRequest(
-		`/product-stock-location?${search.toString()}`,
-		catalogItemsResponseSchema,
+		`/product-stock?${search.toString()}`,
+		catalogProductsResponseSchema,
 	);
 	return {
-		products: response.productStockLocations.map(toCatalogProduct),
+		products: response.productStocks.flatMap(toCatalogProducts),
 		meta: response.meta,
 	};
 }
@@ -172,7 +216,7 @@ export async function createStoreCatalogProduct(
 			body: {
 				productStockId: input.productStockId,
 				locationId: location.id,
-				quantity: 1,
+				quantity: input.quantity,
 			},
 		}),
 	);

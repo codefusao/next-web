@@ -4,6 +4,7 @@ export type StoreMapMarker = StoreMapPosition & {
 	id: string;
 	label: string;
 	referenceProductId: string;
+	quantity: number;
 	productName: string;
 	productCategory: string;
 	productImage: string | null;
