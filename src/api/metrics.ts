@@ -1,12 +1,6 @@
 import { z } from "zod";
 import { apiRequest } from "@/api/client";
 
-import {
-  mockMetricsOverview,
-  mockTopCompanies,
-  mockTopPaths,
-} from "@/api/mock-metrics";
-
 const requestsByDaySchema = z.object({
 	date: z.string(),
 	count: z.number(),
