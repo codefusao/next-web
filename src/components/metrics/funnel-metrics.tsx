@@ -1,140 +1,191 @@
+"use client";
+
 import {
+	Activity,
 	ArrowDown,
 	ChartNoAxesCombined,
 	CreditCard,
 	MapPin,
+	MousePointerClick,
+	PackageSearch,
 	Search,
 	ShoppingBasket,
+	ShoppingCart,
+	Sparkles,
 	TrendingDown,
 	TrendingUp,
-	PackageSearch,
-	MousePointerClick,
-	Sparkles,
-	ShoppingCart,
 } from "lucide-react";
-import { ContentCard } from "@/components/ui/content-card";
 
-type FunnelStep = {
-	id: string;
+import type {
+	FunnelMetrics as FunnelMetricsData,
+	JourneyStepType,
+	RecoveryStepType,
+} from "@/api/metrics";
+import { ContentCard } from "@/components/ui/content-card";
+import { useFunnelMetricsQuery } from "@/hooks/use-metrics-query";
+
+type StepMeta = {
 	label: string;
 	description: string;
-	value: number;
 	icon: typeof Search;
 };
 
-const funnelSteps: FunnelStep[] = [
-	{
-		id: "search",
+type FunnelStep = StepMeta & {
+	id: string;
+	value: number;
+};
+
+const journeyStepMeta: Record<JourneyStepType, StepMeta> = {
+	PRODUCT_SEARCHED: {
 		label: "Buscaram um produto",
 		description: "Usuários que pesquisaram por algum produto no aplicativo",
-		value: 12840,
 		icon: Search,
 	},
-	{
-		id: "store",
+	STORE_VISITED: {
 		label: "Foram até a loja",
 		description: "Usuários que seguiram as orientações até uma loja",
-		value: 7640,
 		icon: MapPin,
 	},
-	{
-		id: "product",
+	PRODUCT_FOUND: {
 		label: "Encontraram o produto",
 		description: "Usuários que localizaram e pegaram o produto",
-		value: 6215,
 		icon: ShoppingBasket,
 	},
-	{
-		id: "checkout",
+	CHECKOUT_COMPLETED: {
 		label: "Pagaram no caixa",
 		description: "Usuários que concluíram a compra",
-		value: 4380,
 		icon: CreditCard,
 	},
-];
+};
 
-const alternativeFunnelSteps = [
-	{
-		id: "not-found",
+const recoveryStepMeta: Record<RecoveryStepType, StepMeta> = {
+	PRODUCT_NOT_FOUND: {
 		label: 'Clicaram em "Não encontrei"',
-		description: "Usuários que não encontraram o produto na localização indicada",
-		value: 1425,
+		description:
+			"Usuários que não encontraram o produto na localização indicada",
 		icon: PackageSearch,
 	},
-	{
-		id: "recommendations",
+	RECOMMENDATIONS_VIEWED: {
 		label: "Receberam recomendações",
 		description: "Usuários que visualizaram produtos similares recomendados",
-		value: 1425,
 		icon: Sparkles,
 	},
-	{
-		id: "selected-product",
+	ALTERNATIVE_SELECTED: {
 		label: "Selecionaram uma alternativa",
 		description: "Usuários que escolheram um produto recomendado",
-		value: 896,
 		icon: MousePointerClick,
 	},
-	{
-		id: "alternative-found",
+	ALTERNATIVE_FOUND: {
 		label: "Encontraram o produto alternativo",
 		description: "Usuários que conseguiram localizar a nova recomendação",
-		value: 721,
 		icon: ShoppingBasket,
 	},
-	{
-		id: "alternative-checkout",
+	ALTERNATIVE_CHECKOUT_COMPLETED: {
 		label: "Finalizaram a compra",
 		description: "Usuários que pagaram por um produto recomendado",
-		value: 584,
 		icon: ShoppingCart,
 	},
-];
+};
+
+function toSteps<T extends string>(
+	steps: { type: T; count: number }[],
+	meta: Record<T, StepMeta>,
+): FunnelStep[] {
+	return steps.map((step) => ({
+		id: step.type,
+		value: step.count,
+		...meta[step.type],
+	}));
+}
 
 function formatNumber(value: number) {
 	return new Intl.NumberFormat("pt-BR").format(value);
 }
 
-function getConversion(currentValue: number, previousValue: number) {
-	return Math.round((currentValue / previousValue) * 100);
+function formatDuration(seconds: number | null) {
+	if (seconds === null) {
+		return "—";
+	}
+
+	if (seconds < 60) {
+		return `${seconds} s`;
+	}
+
+	return `${Math.round(seconds / 60)} min`;
 }
 
-function getAlternativeConversion() {
-	const firstStep = alternativeFunnelSteps[0].value;
-	const lastStep =
-		alternativeFunnelSteps[alternativeFunnelSteps.length - 1].value;
-
-	return Math.round((lastStep / firstStep) * 100);
+function percentage(value: number, total: number) {
+	return total > 0 ? Math.round((value / total) * 100) : 0;
 }
 
-function getDropOff(currentValue: number, previousValue: number) {
-	return previousValue - currentValue;
-}
+function getBiggestDropOff(steps: FunnelStep[]) {
+	return steps
+		.slice(1)
+		.map((step, index) => {
+			const previousStep = steps[index];
+			const dropOff = Math.max(previousStep.value - step.value, 0);
 
-function getTotalConversion() {
-	const firstStep = funnelSteps[0].value;
-	const lastStep = funnelSteps[funnelSteps.length - 1].value;
-
-	return Math.round((lastStep / firstStep) * 100);
+			return {
+				from: previousStep.label,
+				to: step.label,
+				value: dropOff,
+				percentage: percentage(dropOff, previousStep.value),
+			};
+		})
+		.reduce((previous, current) =>
+			current.percentage > previous.percentage ? current : previous,
+		);
 }
 
 export function FunnelMetrics() {
-	const totalConversion = getTotalConversion();
+	const funnelQuery = useFunnelMetricsQuery();
 
-	const dropOffs = funnelSteps.slice(1).map((step, index) => {
-		const previousStep = funnelSteps[index];
-		const dropOff = getDropOff(step.value, previousStep.value);
+	if (funnelQuery.isLoading) {
+		return (
+			<div className="flex min-h-[300px] items-center justify-center">
+				<div className="text-center">
+					<Activity className="mx-auto size-8 animate-pulse text-primary" />
 
-		return {
-			label: `${previousStep.label} → ${step.label}`,
-			value: dropOff,
-			percentage: Math.round((dropOff / previousStep.value) * 100),
-		};
-	});
+					<p className="mt-3 text-sm font-semibold text-foreground">
+						Carregando funil...
+					</p>
+				</div>
+			</div>
+		);
+	}
 
-	const biggestDropOff = dropOffs.reduce((previous, current) =>
-		current.value > previous.value ? current : previous,
-	);
+	if (funnelQuery.isError || !funnelQuery.data) {
+		return (
+			<ContentCard className="p-6">
+				<div className="flex items-start gap-4">
+					<div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-destructive/10 text-destructive">
+						<Activity className="size-5" />
+					</div>
+
+					<div>
+						<h2 className="font-semibold text-foreground">
+							Não foi possível carregar o funil
+						</h2>
+
+						<p className="mt-1 text-sm text-muted">
+							Verifique se o backend está disponível e se o usuário possui
+							permissão de administrador.
+						</p>
+					</div>
+				</div>
+			</ContentCard>
+		);
+	}
+
+	return <JourneyFunnel data={funnelQuery.data} />;
+}
+
+function JourneyFunnel({ data }: { data: FunnelMetricsData }) {
+	const funnelSteps = toSteps(data.journey.steps, journeyStepMeta);
+	const firstStep = funnelSteps[0];
+	const lastStep = funnelSteps[funnelSteps.length - 1];
+	const totalConversion = percentage(lastStep.value, firstStep.value);
+	const biggestDropOff = getBiggestDropOff(funnelSteps);
 
 	return (
 		<div className="space-y-6">
@@ -159,12 +210,11 @@ export function FunnelMetrics() {
 					value={`${totalConversion}%`}
 					description="Da busca até o pagamento"
 					icon={TrendingUp}
-					trend="Positivo"
 				/>
 
 				<MetricCard
 					title="Compras concluídas"
-					value={formatNumber(funnelSteps[3].value)}
+					value={formatNumber(lastStep.value)}
 					description="Usuários chegaram ao caixa"
 					icon={CreditCard}
 				/>
@@ -172,7 +222,7 @@ export function FunnelMetrics() {
 				<MetricCard
 					title="Maior abandono"
 					value={`${biggestDropOff.percentage}%`}
-					description="Entre busca e visita à loja"
+					description={`${biggestDropOff.from} → ${biggestDropOff.to}`}
 					icon={TrendingDown}
 					trend="Atenção"
 					variant="destructive"
@@ -180,7 +230,7 @@ export function FunnelMetrics() {
 
 				<MetricCard
 					title="Tempo médio"
-					value="18 min"
+					value={formatDuration(data.journey.averageDurationSeconds)}
 					description="Da busca até a compra"
 					icon={ChartNoAxesCombined}
 				/>
@@ -197,80 +247,7 @@ export function FunnelMetrics() {
 					</p>
 				</div>
 
-				<div className="space-y-3">
-					{funnelSteps.map((step, index) => {
-						const Icon = step.icon;
-						const previousStep = funnelSteps[index - 1];
-						const conversion =
-							index === 0
-								? 100
-								: getConversion(step.value, previousStep.value);
-
-						const width = Math.max(
-							35,
-							Math.round((step.value / funnelSteps[0].value) * 100),
-						);
-
-						return (
-							<div key={step.id}>
-								{index > 0 ? (
-									<div className="flex items-center gap-3 py-2 pl-7 sm:pl-10">
-										<div className="flex items-center gap-2 text-xs font-semibold text-muted">
-											<ArrowDown className="size-4 text-primary" />
-
-											<span>
-												{conversion}% avançaram para esta etapa
-											</span>
-										</div>
-									</div>
-								) : null}
-
-								<div className="rounded-[var(--radius-control)] border border-border bg-background p-4 sm:p-5">
-									<div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-										<div className="flex items-start gap-3">
-											<div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-												<Icon className="size-5" />
-											</div>
-
-											<div>
-												<p className="font-semibold text-foreground">
-													{step.label}
-												</p>
-
-												<p className="mt-1 text-sm text-muted">
-													{step.description}
-												</p>
-											</div>
-										</div>
-
-										<div className="sm:text-right">
-											<p className="text-2xl font-bold text-foreground">
-												{formatNumber(step.value)}
-											</p>
-
-											<p className="text-xs font-medium text-muted">
-												usuários
-											</p>
-										</div>
-									</div>
-
-									<div className="h-3 overflow-hidden rounded-full bg-border">
-										<div
-											className="h-full rounded-full bg-primary transition-all"
-											style={{ width: `${width}%` }}
-										/>
-									</div>
-
-									<div className="mt-2 flex justify-between text-xs text-muted">
-										<span>{conversion}% de conversão</span>
-
-										<span>{width}% do volume inicial</span>
-									</div>
-								</div>
-							</div>
-						);
-					})}
-				</div>
+				<FunnelStepList steps={funnelSteps} volumeLabel="do volume inicial" />
 			</ContentCard>
 
 			<div className="grid gap-6 lg:grid-cols-2">
@@ -293,7 +270,7 @@ export function FunnelMetrics() {
 								{formatNumber(biggestDropOff.value)} usuários abandonaram a
 								jornada entre{" "}
 								<span className="font-semibold text-foreground">
-									{biggestDropOff.label}
+									{biggestDropOff.from} → {biggestDropOff.to}
 								</span>
 								.
 							</p>
@@ -313,12 +290,13 @@ export function FunnelMetrics() {
 							</p>
 
 							<h2 className="mt-1 text-xl font-bold text-foreground">
-								Há oportunidade na navegação até a loja
+								Há oportunidade na etapa &quot;{biggestDropOff.to}&quot;
 							</h2>
 
 							<p className="mt-2 text-sm leading-6 text-muted">
-								Quase 41% dos usuários que buscam um produto não chegam à
-								loja. Melhorar as instruções de localização pode aumentar a
+								{biggestDropOff.percentage}% dos usuários que{" "}
+								{biggestDropOff.from.toLowerCase()} não avançam para a etapa
+								seguinte. Melhorar essa etapa da jornada pode aumentar a
 								conversão do funil.
 							</p>
 						</div>
@@ -326,10 +304,89 @@ export function FunnelMetrics() {
 				</ContentCard>
 			</div>
 
-            <div className="border-t border-border pt-10">
-	            <AlternativeFunnel />
-            </div>
+			<div className="border-t border-border pt-10">
+				<AlternativeFunnel data={data} />
+			</div>
+		</div>
+	);
+}
 
+function FunnelStepList({
+	steps,
+	volumeLabel,
+}: {
+	steps: FunnelStep[];
+	volumeLabel: string;
+}) {
+	const initialValue = steps[0].value;
+
+	return (
+		<div className="space-y-3">
+			{steps.map((step, index) => {
+				const Icon = step.icon;
+				const previousStep = steps[index - 1];
+				const conversion =
+					index === 0 ? 100 : percentage(step.value, previousStep.value);
+				const volume = percentage(step.value, initialValue);
+				const width = Math.max(35, volume);
+
+				return (
+					<div key={step.id}>
+						{index > 0 ? (
+							<div className="flex items-center gap-3 py-2 pl-7 sm:pl-10">
+								<div className="flex items-center gap-2 text-xs font-semibold text-muted">
+									<ArrowDown className="size-4 text-primary" />
+
+									<span>{conversion}% avançaram para esta etapa</span>
+								</div>
+							</div>
+						) : null}
+
+						<div className="rounded-[var(--radius-control)] border border-border bg-background p-4 sm:p-5">
+							<div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+								<div className="flex items-start gap-3">
+									<div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+										<Icon className="size-5" />
+									</div>
+
+									<div>
+										<p className="font-semibold text-foreground">
+											{step.label}
+										</p>
+
+										<p className="mt-1 text-sm text-muted">
+											{step.description}
+										</p>
+									</div>
+								</div>
+
+								<div className="sm:text-right">
+									<p className="text-2xl font-bold text-foreground">
+										{formatNumber(step.value)}
+									</p>
+
+									<p className="text-xs font-medium text-muted">usuários</p>
+								</div>
+							</div>
+
+							<div className="h-3 overflow-hidden rounded-full bg-border">
+								<div
+									className="h-full rounded-full bg-primary transition-all"
+									style={{ width: `${width}%` }}
+								/>
+							</div>
+
+							<div className="mt-2 flex justify-between text-xs text-muted">
+								<span>{conversion}% de conversão</span>
+
+								<span>
+									{volume}% {volumeLabel}
+								</span>
+							</div>
+						</div>
+					</div>
+				);
+			})}
 		</div>
 	);
 }
@@ -389,27 +446,12 @@ function MetricCard({
 	);
 }
 
-export function AlternativeFunnel() {
-	const totalConversion = getAlternativeConversion();
-
-	const biggestDropOff = alternativeFunnelSteps
-		.slice(1)
-		.map((step, index) => {
-			const previousStep = alternativeFunnelSteps[index];
-			const dropOff = previousStep.value - step.value;
-
-			return {
-				from: previousStep.label,
-				to: step.label,
-				value: dropOff,
-				percentage: Math.round(
-					(dropOff / previousStep.value) * 100,
-				),
-			};
-		})
-		.reduce((previous, current) =>
-			current.value > previous.value ? current : previous,
-		);
+export function AlternativeFunnel({ data }: { data: FunnelMetricsData }) {
+	const alternativeFunnelSteps = toSteps(data.recovery.steps, recoveryStepMeta);
+	const firstStep = alternativeFunnelSteps[0];
+	const lastStep = alternativeFunnelSteps[alternativeFunnelSteps.length - 1];
+	const totalConversion = percentage(lastStep.value, firstStep.value);
+	const biggestDropOff = getBiggestDropOff(alternativeFunnelSteps);
 
 	return (
 		<div className="space-y-6">
@@ -423,8 +465,8 @@ export function AlternativeFunnel() {
 				</h2>
 
 				<p className="mt-2 max-w-2xl text-sm text-muted sm:text-base">
-					Acompanhe o comportamento do usuário quando ele não encontra o
-					produto e utiliza as recomendações de produtos similares.
+					Acompanhe o comportamento do usuário quando ele não encontra o produto
+					e utiliza as recomendações de produtos similares.
 				</p>
 			</div>
 
@@ -439,11 +481,7 @@ export function AlternativeFunnel() {
 
 				<MetricCard
 					title="Compras recuperadas"
-					value={formatNumber(
-						alternativeFunnelSteps[
-							alternativeFunnelSteps.length - 1
-						].value,
-					)}
+					value={formatNumber(lastStep.value)}
 					description="Compras realizadas após recomendação"
 					icon={ShoppingCart}
 				/>
@@ -451,7 +489,7 @@ export function AlternativeFunnel() {
 				<MetricCard
 					title="Maior abandono"
 					value={`${biggestDropOff.percentage}%`}
-					description="Durante a escolha da alternativa"
+					description={`${biggestDropOff.from} → ${biggestDropOff.to}`}
 					icon={TrendingDown}
 					trend="Atenção"
 					variant="destructive"
@@ -459,7 +497,7 @@ export function AlternativeFunnel() {
 
 				<MetricCard
 					title="Tempo de recuperação"
-					value="6 min"
+					value={formatDuration(data.recovery.averageDurationSeconds)}
 					description="Até finalizar a compra alternativa"
 					icon={ChartNoAxesCombined}
 				/>
@@ -477,94 +515,10 @@ export function AlternativeFunnel() {
 					</p>
 				</div>
 
-				<div className="space-y-3">
-					{alternativeFunnelSteps.map((step, index) => {
-						const Icon = step.icon;
-						const previousStep = alternativeFunnelSteps[index - 1];
-
-						const conversion =
-							index === 0
-								? 100
-								: getConversion(
-										step.value,
-										previousStep.value,
-									);
-
-						const width = Math.max(
-							35,
-							Math.round(
-								(step.value /
-									alternativeFunnelSteps[0].value) *
-									100,
-							),
-						);
-
-						return (
-							<div key={step.id}>
-								{index > 0 ? (
-									<div className="flex items-center gap-3 py-2 pl-7 sm:pl-10">
-										<div className="flex items-center gap-2 text-xs font-semibold text-muted">
-											<ArrowDown className="size-4 text-primary" />
-
-											<span>
-												{conversion}% avançaram para esta etapa
-											</span>
-										</div>
-									</div>
-								) : null}
-
-								<div className="rounded-[var(--radius-control)] border border-border bg-background p-4 sm:p-5">
-									<div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-										<div className="flex items-start gap-3">
-											<div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-												<Icon className="size-5" />
-											</div>
-
-											<div>
-												<p className="font-semibold text-foreground">
-													{step.label}
-												</p>
-
-												<p className="mt-1 text-sm text-muted">
-													{step.description}
-												</p>
-											</div>
-										</div>
-
-										<div className="sm:text-right">
-											<p className="text-2xl font-bold text-foreground">
-												{formatNumber(step.value)}
-											</p>
-
-											<p className="text-xs font-medium text-muted">
-												usuários
-											</p>
-										</div>
-									</div>
-
-									<div className="h-3 overflow-hidden rounded-full bg-border">
-										<div
-											className="h-full rounded-full bg-primary"
-											style={{
-												width: `${width}%`,
-											}}
-										/>
-									</div>
-
-									<div className="mt-2 flex justify-between text-xs text-muted">
-										<span>
-											{conversion}% de conversão
-										</span>
-
-										<span>
-											{width}% do fluxo iniciado
-										</span>
-									</div>
-								</div>
-							</div>
-						);
-					})}
-				</div>
+				<FunnelStepList
+					steps={alternativeFunnelSteps}
+					volumeLabel="do fluxo iniciado"
+				/>
 			</ContentCard>
 
 			<div className="grid gap-6 lg:grid-cols-2">
@@ -580,18 +534,13 @@ export function AlternativeFunnel() {
 							</p>
 
 							<h2 className="mt-1 text-xl font-bold text-foreground">
-								{formatNumber(
-									alternativeFunnelSteps[
-										alternativeFunnelSteps.length - 1
-									].value,
-								)}{" "}
-								compras recuperadas
+								{formatNumber(lastStep.value)} compras recuperadas
 							</h2>
 
 							<p className="mt-2 text-sm leading-6 text-muted">
-								Usuários que não encontrariam o produto original
-								conseguiram concluir uma compra utilizando produtos
-								similares recomendados pelo aplicativo.
+								Usuários que não encontrariam o produto original conseguiram
+								concluir uma compra utilizando produtos similares recomendados
+								pelo aplicativo.
 							</p>
 						</div>
 					</div>
@@ -609,7 +558,7 @@ export function AlternativeFunnel() {
 							</p>
 
 							<h2 className="mt-1 text-xl font-bold text-foreground">
-								{biggestDropOff.percentage}% abandonam a escolha
+								{biggestDropOff.percentage}% abandonam nesta etapa
 							</h2>
 
 							<p className="mt-2 text-sm leading-6 text-muted">
@@ -621,8 +570,8 @@ export function AlternativeFunnel() {
 								<span className="font-semibold text-foreground">
 									{biggestDropOff.to}
 								</span>
-								. Melhorar a relevância das recomendações pode
-								recuperar mais vendas.
+								. Melhorar a relevância das recomendações pode recuperar mais
+								vendas.
 							</p>
 						</div>
 					</div>

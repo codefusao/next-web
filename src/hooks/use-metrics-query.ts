@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import {
+	getFunnelMetrics,
 	getMetricsOverview,
 	getTopCompanies,
 	getTopPaths,
@@ -37,5 +38,16 @@ export function useTopCompaniesQuery(params?: {
 	return useQuery({
 		queryKey: ["metrics", "top-companies", params],
 		queryFn: () => getTopCompanies(params),
+	});
+}
+
+export function useFunnelMetricsQuery(params?: {
+	from?: string;
+	to?: string;
+	companyId?: string;
+}) {
+	return useQuery({
+		queryKey: ["metrics", "funnel", params],
+		queryFn: () => getFunnelMetrics(params),
 	});
 }

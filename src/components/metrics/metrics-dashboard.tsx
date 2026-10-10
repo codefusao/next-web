@@ -368,7 +368,7 @@ export function MetricsDashboard() {
 												</span>
 
 												<span className="truncate text-sm font-medium text-foreground">
-													{item.companyId}
+													{item.companyName ?? item.companyId}
 												</span>
 											</div>
 
